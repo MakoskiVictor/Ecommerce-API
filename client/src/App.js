@@ -1,4 +1,5 @@
 import { Route, Switch } from "react-router-dom";
+import ErrorPage from "./components/ErrorPage/ErrorPage";
 import "./App.css";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         {/* <Route exact path="/login">aca va el componente de login/inicio de sesion</Route> */}
         {/* <Route exact path="/signup">aca va el componente de signup/registro</Route> */}
         {/* <Route exact path="/cart">aca va el componente del carrito de compras</Route> */}
+        <Route component={ErrorPage} />
       </Switch>
       {/* footer */}
     </div>
