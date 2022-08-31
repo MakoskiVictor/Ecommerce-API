@@ -1,0 +1,54 @@
+main {
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+}
+.ContainerAbout {
+   margin-top: 60px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   width: 100%;
+   text-align: center;
+   /* background-color: aqua; */
+}
+
+.ContainerAbout .imagePrincipal {
+   width: 80%;
+   height: 110px;
+   border-radius: 8px;
+   object-fit: cover;
+}
+
+.aboutTitle {
+   color: #333;
+   font-size: 3rem;
+   font-weight: bolder;
+   margin-top: 15px;
+   margin-bottom: 26px;
+}
+
+.aboutInfo {
+   color: #333;
+   font-size: 1.3rem;
+   margin-bottom: 10px;
+   padding: 0 40px;
+}
+
+.ContainerImagesAbout {
+   display: flex;
+   justify-content: space-evenly;
+   flex-wrap: wrap;
+   padding: 40px 10px;
+}
+
+.ContainerImagesAbout img {
+   border-radius: 8px;
+}
+
+.imageContain {
+   width: 250px;
+   height: 300px;
+   margin-bottom: 10px;
+   object-fit: cover;
+}
