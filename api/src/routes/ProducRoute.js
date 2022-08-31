@@ -6,7 +6,7 @@ const axios = require("axios");
 const router = Router();
 
 router.get("/", async (req, res, next) => {
-  const { name } = req.query;
+  const { name, category } = req.query;
   let ProductosTotales = await Product.findAll();
   if (ProductosTotales.length === 0) {
     const IDs = [8799, 3630, 9263, 4169, 2641, 4208, 7078, 3602, 5668, 14274];
@@ -54,12 +54,10 @@ router.get("/", async (req, res, next) => {
         });
         ProductosPorCategoria.push(createProduct);
       }
-    }
+    } 
   }
   try {
-    if (!name) {
-      res.send(ProductosTotales);
-    } else {
+    if (name) {
       let filteredProducts = await Product.findAll({
         where: {
           name: {
@@ -68,6 +66,15 @@ router.get("/", async (req, res, next) => {
         },
       });
       res.send(filteredProducts);
+    } else if(category){
+        let filteredProducts = await Product.findAll({
+            where: {
+              categoryId: category,
+            },
+          });
+          res.send(filteredProducts);
+    } else{
+      res.send(ProductosTotales);
     }
   } catch (err) {
     next(err);
