@@ -32,7 +32,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 const { Category, Product } = sequelize.models;
 
-Category.hasMany(Product)
+Category.hasMany(Product);
 Product.belongsTo(Category)
 
 
