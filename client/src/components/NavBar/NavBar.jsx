@@ -5,38 +5,33 @@ import { GrCart } from "react-icons/gr";
 
 export default function NavBar () {
     return(
-        <div>
+        <nav>
             <div>
                 <Link to={"/home"}>
                     <img src={favicon} alt="Not Found" />
                 </Link>
-            </div>
-            <div>
+
                 <Link to={"/products"}>
-                    <button>PRODUCTS</button>
+                    PRODUCTS
                 </Link>
-            </div>
-            <div>
+
                 <Link to={"/about"}>
-                    <button>ABOUT</button>
+                    ABOUT
                 </Link>
-            </div>
-            <div>
+
                 <Link to={"/contact"}>
-                    <button>CONTACT</button>
+                    CONTACT
                 </Link>
             </div>
             <div>
                 <Link to={"/cart"}>
                     <GrCart/>
                 </Link>
-            </div>
-            <div>
                 <Link to={"/login"}>
-                    <button>LOGIN</button>
+                    LOGIN
                 </Link>
             </div>
 
-        </div>
+        </nav> 
     )
 };
