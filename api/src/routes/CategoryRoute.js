@@ -3,7 +3,7 @@ const {Product, Category } = require("../db")
 
 const router = Router();
 
-router.get("/category", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
     try {
       let allCategory = await getAllCategory();
 
