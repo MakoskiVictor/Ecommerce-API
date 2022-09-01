@@ -1,4 +1,5 @@
 import { Route, Switch } from "react-router-dom";
+import Filter from './components/Filter/Filter.jsx';
 import "./App.css";
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
     <div className="App">
       {/* nav bar */}
       <Switch>
+        <Route exact path="/rutaPrueba"><Filter /></Route> 
         {/* <Route exact path="/">aca va el componente home</Route> */}
         {/* <Route exact path="/products">aca va el componente products</Route> */}
         {/* <Route path="/products/:id">aca va el componente detalles</Route> */}
