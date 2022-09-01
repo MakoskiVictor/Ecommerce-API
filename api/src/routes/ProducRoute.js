@@ -35,9 +35,9 @@ router.get("/", async (req, res, next) => {
           `https://asos2.p.rapidapi.com/products/v2/list?limit=30&store=US&offset=0&categoryId=${IDs[index]}&rapidapi-key=${apikey2}`
         )
       ).data;
-      let genero = index < 5 ? "Women" : "Man";
+      let categoryGenero = index < 5 ? "Women" : "Man";
       var createCategory = await Category.findOrCreate({
-        where: { name: api.categoryName, id: IDs[index], gender: genero },
+        where: { name: api.categoryName, id: IDs[index], gender: categoryGenero },
       });
       Categorias.push(createCategory);
 
