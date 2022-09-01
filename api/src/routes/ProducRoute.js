@@ -35,9 +35,9 @@ router.get("/", async (req, res, next) => {
           `https://asos2.p.rapidapi.com/products/v2/list?limit=30&store=US&offset=0&categoryId=${IDs[index]}&rapidapi-key=${apikey2}`
         )
       ).data;
-      let gender = index < 5 ? "Women" : "Man";
+      let categoryGenero = index < 5 ? "Women" : "Men";
       var createCategory = await Category.findOrCreate({
-        where: { name: api.categoryName, id: IDs[index], gender },
+        where: { name: api.categoryName, id: IDs[index], gender: categoryGenero },
       });
       Categorias.push(createCategory);
 
@@ -53,7 +53,7 @@ router.get("/", async (req, res, next) => {
 
     for (let index1 = 0; index1 < products.length; index1++) {
       let producsNew = products[index1];
-      let genero = index1 < 5 ? "Women" : "Man";
+      let genero = index1 < 5 ? "Women" : "Men";
       let ProductosPorCategoria = [];
       for (let index = 0; index < producsNew.length; index++) {
         var createProduct = await Product.findOrCreate({
@@ -63,7 +63,7 @@ router.get("/", async (req, res, next) => {
             price: producsNew[index].price.current.value,
             brand: producsNew[index].brandName,
             image: producsNew[index].imageUrl,
-            genere: genero,
+            gender: genero,
             categoryId: producsNew[index].categoryId,
           },
         });

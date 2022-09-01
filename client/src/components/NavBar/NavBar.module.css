@@ -1,0 +1,46 @@
+.NavBarComplete {
+	background: #925adb;
+	box-sizing: border-box;
+	width: 100%;
+	text-align: left;
+	font: bold 16px sans-serif;
+	padding: 00px 5px;
+	margin-top: 0px;
+}
+
+.NavBarComplete .left,
+.NavBarComplete .center,
+.NavBarComplete .right {
+    display: inline-block;
+	vertical-align: middle;
+}
+
+
+/* IZQUIERDA */
+
+.NavBarComplete .left{
+	width: 10%;
+}
+
+.NavBarComplete .logo {
+    border-radius: 5rem;
+    margin-left: 3rem;
+    }
+    .logo:hover {
+    transform: scale(1.025, 1.025);
+    filter: drop-shadow(0 0 12px white);
+    }; 
+
+
+/* CENTRO */
+
+
+
+
+/* DERECHA */
+
+.NavBarComplete .right {
+    width: 20%;
+}
+
+
