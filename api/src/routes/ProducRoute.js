@@ -21,8 +21,9 @@ router.get("/", async (req, res, next) => {
           `https://asos2.p.rapidapi.com/products/v2/list?limit=30&store=US&offset=0&categoryId=${IDs[index]}&rapidapi-key=${apikey2}`
         )
       ).data;
+      let genero = index < 5 ? "Women" : "Man";
       var createCategory = await Category.findOrCreate({
-        where: { name: api.categoryName, id: IDs[index] },
+        where: { name: api.categoryName, id: IDs[index], gender: genero },
       });
       Categorias.push(createCategory);
 
@@ -54,7 +55,7 @@ router.get("/", async (req, res, next) => {
         });
         ProductosPorCategoria.push(createProduct);
       }
-    } 
+    }
   }
   try {
     if (name) {
@@ -66,14 +67,14 @@ router.get("/", async (req, res, next) => {
         },
       });
       res.send(filteredProducts);
-    } else if(category){
-        let filteredProducts = await Product.findAll({
-            where: {
-              categoryId: category,
-            },
-          });
-          res.send(filteredProducts);
-    } else{
+    } else if (category) {
+      let filteredProducts = await Product.findAll({
+        where: {
+          categoryId: category,
+        },
+      });
+      res.send(filteredProducts);
+    } else {
       res.send(ProductosTotales);
     }
   } catch (err) {
