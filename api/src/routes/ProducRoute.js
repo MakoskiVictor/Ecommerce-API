@@ -5,6 +5,20 @@ const axios = require("axios");
 
 const router = Router();
 
+let id = 1;
+router.post("/", async (req, res, next) => {
+  const { name, price, image, brand, genere, categoryId } = req.body;
+  try {
+    const newProduct = await Product.findOrCreate({
+      where: { id, name, price, image, brand, genere, categoryId },
+    });
+    id++;
+    res.send("product created successfully")
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.get("/", async (req, res, next) => {
   const { name, category } = req.query;
   let ProductosTotales = await Product.findAll();
