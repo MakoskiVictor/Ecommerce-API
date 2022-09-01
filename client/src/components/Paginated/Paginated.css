@@ -1,0 +1,29 @@
+.NavPaginacion{
+    display: block;
+    text-align: center;
+    color:white;
+    background-color: black;
+  }
+
+  li.page-item{
+    display: inline;
+    padding: 10px;
+  }
+
+  li.page-item:hover{
+    color:red;
+    cursor: pointer;
+  }
+
+#pagSeleccionada{
+    color: #FFFFFF;
+text-shadow: 0 0 5px #FFF, 0 0 10px #FFF, 0 0 15px #FFF, 0 0 20px #49ff18, 0 0 30px #49FF18, 0 0 40px #49FF18, 0 0 55px #49FF18, 0 0 75px #49ff18;
+cursor: default;
+}
+
+#Inhabilitado{
+    color: black;
+}
+#Inhabilitado:hover{
+    cursor: default;
+  }
