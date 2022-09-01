@@ -1,0 +1,63 @@
+.containSearchBar {
+   margin-top: 40px;
+   /* quitar este margin-top si es necesario*/
+   text-align: center;
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+}
+
+.mainInput {
+   width: 230px;
+   margin: 0 auto;
+   margin-bottom: 10px;
+   /* background-color: aqua; */
+}
+
+.mainInputContainer {
+   width: 230px;
+   border-radius: 100px;
+   border: 1px solid #dfe1e5;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   transition-delay: all 6s;
+}
+
+.mainInputContainer:hover {
+   box-shadow: 0 1px 6px 0 #20212447;
+   border-color: #dfe1e500;
+}
+.mainInput input {
+   width: 200px;
+   height: 40px;
+   border: none;
+   outline: none;
+}
+
+/*    BUTTON     */
+
+.mainButtons {
+   width: 230px;
+   margin: 0 auto;
+}
+.mainButtons button {
+   height: 36px;
+   background-color: #8bc53d;
+   /* background-color, color pendiente */
+   border: none;
+   font-size: 18px;
+   color: #000;
+   /* color, color pendiente */
+   border-radius: 5px;
+   padding: 0 15px;
+}
+
+.mainButtons button:hover {
+   border: 1px solid #c6c6c6;
+   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+   color: #fff;
+   background-color: #108505;
+   /* colores pendientes */
+   cursor: pointer;
+}
