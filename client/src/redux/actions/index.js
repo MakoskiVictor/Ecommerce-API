@@ -8,6 +8,9 @@ export const GET_CATEGORYS="GET_CATEGORYS";
 export const CHANGE_FILTER_MIN="CHANGE_FILTER_MIN";
 export const CHANGE_FILTER_MAX="CHANGE_FILTER_MAX";
 export const CHANGE_FILTER_PRICE="CHANGE_FILTER_PRICE";
+export const CHANGE_PAGINATED_PRODUCTS="CHANGE_PAGINATED_PRODUCTS";
+export const CHANGE_PAGINATED_PAGE="CHANGE_PAGINATED_PAGE";
+
 
 
 
@@ -117,6 +120,32 @@ export function changeFilterPrice(checked) {
          return dispatch({
             type: CHANGE_FILTER_PRICE,
             payload: checked,
+         });
+      } catch (error) {
+         console.log(error);
+      }
+   };
+}
+
+export function changePaginatedProducts(nuevosProductos) {
+   return async function (dispatch) {
+      try {
+         return dispatch({
+            type: CHANGE_PAGINATED_PRODUCTS,
+            payload: nuevosProductos,
+         });
+      } catch (error) {
+         console.log(error);
+      }
+   };
+}
+
+export function changePaginatedPage(newPage) {
+   return async function (dispatch) {
+      try {
+         return dispatch({
+            type: CHANGE_PAGINATED_PAGE,
+            payload: newPage,
          });
       } catch (error) {
          console.log(error);

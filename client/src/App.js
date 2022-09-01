@@ -1,5 +1,6 @@
 import { Route, Switch } from "react-router-dom";
 import Filter from './components/Filter/Filter.jsx';
+import Paginated from './components/Paginated/Paginated.jsx';
 import ErrorPage from "./components/ErrorPage/ErrorPage";
 import Landing from "./components/Landing/Landing.jsx";
 import SearchBar from "./components/SearchBar/SearchBar.jsx";
@@ -10,7 +11,7 @@ function App() {
     <div className="App">
       {/* nav bar */}
       <Switch>
-        <Route exact path="/rutaPrueba"><Filter /></Route> 
+        <Route exact path="/rutaPrueba"> <Filter/> <Paginated /></Route> 
         {/* <Route exact path="/" component={Landing} /> */}
         {/* <Route exact path="/">aca va el componente home</Route> */}
         {/* <Route exact path="/products">aca va el componente products</Route> */}
