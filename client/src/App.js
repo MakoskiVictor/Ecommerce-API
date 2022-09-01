@@ -1,6 +1,8 @@
 import { Route, Switch } from "react-router-dom";
+import Filter from './components/Filter/Filter.jsx';
 import ErrorPage from "./components/ErrorPage/ErrorPage";
 import Landing from "./components/Landing/Landing.jsx";
+import SearchBar from "./components/SearchBar/SearchBar.jsx";
 import "./App.css";
 
 function App() {
@@ -8,6 +10,7 @@ function App() {
     <div className="App">
       {/* nav bar */}
       <Switch>
+        <Route exact path="/rutaPrueba"><Filter /></Route> 
         {/* <Route exact path="/" component={Landing} /> */}
         {/* <Route exact path="/">aca va el componente home</Route> */}
         {/* <Route exact path="/products">aca va el componente products</Route> */}
@@ -20,7 +23,7 @@ function App() {
         {/* <Route exact path="/login">aca va el componente de login/inicio de sesion</Route> */}
         {/* <Route exact path="/signup">aca va el componente de signup/registro</Route> */}
         {/* <Route exact path="/cart">aca va el componente del carrito de compras</Route> */}
-        <Route component={ErrorPage} />
+        {/*<Route component={ErrorPage} />*/}
       </Switch>
       {/* footer */}
     </div>
