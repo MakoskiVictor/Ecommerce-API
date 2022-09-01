@@ -1,35 +1,34 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { searchNameProduct, changeFilterGender, changeFilterCategory, changeFilterBrand } from '../../redux/actions'
+import { searchNameProduct, changeFilterGender, changeFilterCategory, changeFilterBrand, getCategorys, changeFilterMin, changeFilterMax,changeFilterPrice } from '../../redux/actions'
 //import style from "./Filter.module.css"
 //import { Link } from 'react-router-dom';
 
 //import Cards from './SubComponentes/Cards.jsx';
 //import Paginacion from "./SubComponentes/Paginacion.js";
-const IDs = [{ id: 8799, category: "Dress" }, { id: 3630, category: "Jeans" }, { id: 9263, category: "Shorts" }, { id: 4169, category: "Tops" }
-  , { id: 2641, category: "Coats & Jackets" }, { id: 4208, category: "Jeans" }, { id: 7078, category: "Shorts" }, { id: 3602, category: "Shirts" }
-  , { id: 5668, category: "Jackets" }, { id: 14274, category: "Joggers" }]
 
 export class Filter extends Component {
 
 
   componentDidMount() {
     this.props.searchNameProduct(this.props.filters.nameProductSearched)
+    this.props.getCategorys()
   }
 
   handleChange(event) {
     event.preventDefault();
     this.props.searchNameProduct(event.target.value)
+    this.props.getCategorys()
   }
 
 
-  obtenerproductosMostrarPagina(productosMostrar) {
+  /*obtenerproductosMostrarPagina(productosMostrar) {
     /*if(productosMostrar!==undefined){
       let Inicio=(this.props.page-1)*10;
       return productosMostrar.slice(Inicio, Inicio+10);
     }*/
-    return [];
-  }
+    /*return [];
+  }*/
 
   obtenerMarcas(Brands, productosNuevos) {
     for (let index = 0; index < productosNuevos.length; index++) {
@@ -40,80 +39,25 @@ export class Filter extends Component {
     return Brands
   }
 
-  Prueba(elemento) {
-    /*if(productosMostrar!==undefined){
-      let Inicio=(this.props.page-1)*10;
-      return productosMostrar.slice(Inicio, Inicio+10);
-    }*/
+  /*Prueba(elemento) {
     console.log(elemento);
-  }
-  /*
-    filtradoDeContinente(productosMostrar){
-      let arregloproductosMostrar=productosMostrar;
-      if(this.props.filtroContinente!=="Todos")
-      arregloproductosMostrar=productosMostrar.filter(countrie => countrie.continente==this.props.filtroContinente);
-    return arregloproductosMostrar;
-    }
-  
-    filtradoDeTurismo(productosMostrar){
-      if(this.props.filtroActividadTuristica!=="Todas"){
-        let arregloActividades=[];
-        for (const iterator of productosMostrar) {
-        for (const iterator2 of iterator.actividades) {
-            if(iterator2===this.props.filtroActividadTuristica){
-            arregloActividades.push(iterator);
-            break
-            }
-          }
-        }
-        productosMostrar=arregloActividades
-      }
-     return productosMostrar
-    }
-  
-    filtradoDePoblacionAlfabeto(productosMostrar){
-      for (let index = 0; index < productosMostrar.length; index++) {
-        let primerValor=productosMostrar[index];
-        let indiceMenor=index;
-        for (let index2 = index+1; index2 < productosMostrar.length; index2++) {
-        let valor=(this.props.filtroAlfPob==="Alfabético"?productosMostrar[index2].nombre:productosMostrar[index2].poblacion);
-        if((this.props.filtroAlfPob==="Alfabético"?productosMostrar[indiceMenor].nombre:productosMostrar[indiceMenor].poblacion)>valor)
-          indiceMenor=index2  
-        }
-        productosMostrar[index]=productosMostrar[indiceMenor];
-        productosMostrar[indiceMenor]=primerValor;
-      } 
-     return productosMostrar
-    }
-  
-    filtradoDeDireccion(productosMostrar){
-      if(this.props.filtroDireccion=="Descendente")
-      productosMostrar.reverse();
-      return productosMostrar;
-    }
-  */
+  }*/
 
   render() {
-    //const { nombreProducto } = this.props;
-    /*let productosMostrar=this.filtradoDeContinente(this.props.productosMostrar)
-    productosMostrar=this.filtradoDeTurismo(productosMostrar)
-    productosMostrar=this.filtradoDePoblacionAlfabeto(productosMostrar)
-    productosMostrar=this.filtradoDeDireccion(productosMostrar)*/
-    // const mostrarproductosMostrar=this.obtenerproductosMostrarPagina(this.props.productosMostrar);
-    console.log(this.props.filters)
-    const { nameProductSearched, filterGender,filterBrand,filterCategory} = this.props.filters;
+    const { nameProductSearched, filterGender, filterBrand, filterCategory,filterForPrice, min, max } = this.props.filters;
+    const { categorys, products } = this.props;
 
-    let productosNuevos = this.props.products.filter(element => element.gender === filterGender);
-    let IDsGender = filterGender === "Women" ? IDs.slice(0, 5) : IDs.slice(5, IDs.length);
+    let productosNuevos = products.filter(element => element.gender === filterGender);
+    let IDsGender = categorys.filter(element => filterGender == element.gender);
     let Brands = [];
-    console.log(productosNuevos); 
-    if(filterCategory.length!==0)
-    productosNuevos = productosNuevos.filter(element => filterCategory.includes(`${element.categoryId}`));
+    let ID_Category = (filterCategory === 0) ? (IDsGender.length > 0 ? (`${IDsGender[0].id}`) : 0) : filterCategory;
+    productosNuevos = productosNuevos.filter(element => `${element.categoryId}` === ID_Category);
+    Brands = this.obtenerMarcas(Brands, productosNuevos);
+    if (filterBrand.length !== 0)
+      productosNuevos = productosNuevos.filter(element => filterBrand.includes(element.brand));
+    if(filterForPrice)
+    productosNuevos = productosNuevos.filter(element => (min <= element.price && element.price <= max));
     console.log(productosNuevos);
-    Brands=this.obtenerMarcas(Brands,productosNuevos); 
-    if(filterBrand.length!==0)
-    productosNuevos = productosNuevos.filter(element => filterBrand.includes(element.brand));
-    console.log(productosNuevos); 
 
 
     return (
@@ -140,17 +84,14 @@ export class Filter extends Component {
             </li>
 
             <li className="menu">
-              <label > Category</label>
-              {
-                IDsGender.map((elemento) => {
-                  return (
-                    <div>
-                      <input type="checkbox" id={elemento.category} name={elemento.category} checked={filterCategory.includes(`${elemento.id}`)}
-                        value={elemento.id} onChange={(e) => this.props.changeFilterCategory(e.target)} />
-                      <label for={elemento.category}> {elemento.category}</label>
-                    </div>)
-                })
-              }
+              <p><label className="label" >Category: </label>
+                <select value={this.props.filterCategory} onChange={(e) => this.props.changeFilterCategory(e.target.value)}>
+                  {IDsGender.map((elemento) => {
+                    return (
+                      <option key={elemento.id} value={elemento.id}>{elemento.name}</option>)
+                  })
+                  }
+                </select></p>
             </li>
 
             <li className="menu">
@@ -166,6 +107,15 @@ export class Filter extends Component {
                 })
               }
             </li>
+            <li className="menu">
+              <input type="checkbox" id={"ActivateFilterPrice"} name={"ActivateFilterPrice"} value={"ActivateFilterPrice"} checked={filterForPrice}
+                onChange={(e) => this.props.changeFilterPrice(e.target.checked)} />
+              <label for={"ActivateFilterPrice"}> {"Filter for Price"}</label>
+              <input type="number" min="0" step="50" placeholder="Precio Minimo" value={min} onChange={(e) => this.props.changeFilterMin(e)} />
+              <label >{" a "}</label>
+              <input type="number" min="0" step="50" placeholder="Precio Maximo" value={max} onChange={(e) => this.props.changeFilterMax(e)} />
+            </li>
+
 
             {/*
         <li className="menu">
@@ -211,15 +161,8 @@ export class Filter extends Component {
 function mapStateToProps(state) {
   return {
     products: state.products,
-    //page: state.page,
-
+    categorys: state.categorys,
     filters: state.filters,
-    //filtroContinente: state.filtroContinente,
-    //filtroActividadTuristica:state.filtroActividadTuristica,
-    //filtroAlfPob:state.filtroAlfPob,
-    //filtroDireccion:state.filtroDireccion,
-    //actividades:state.actividades,
-    //cargado:state.cargado
   }
 }
 
@@ -230,7 +173,10 @@ function mapDispatchToProps(dispatch) {
     changeFilterGender: (gender) => dispatch(changeFilterGender(gender)),
     changeFilterCategory: (category) => dispatch(changeFilterCategory(category)),
     changeFilterBrand: (brand) => dispatch(changeFilterBrand(brand)),
-    //cambioFiltro:  (e,Filtro) => dispatch(cambioFiltro(e,Filtro)),
+    getCategorys: () => dispatch(getCategorys()),
+    changeFilterMin: (e) => dispatch(changeFilterMin(e)),
+    changeFilterMax: (e) => dispatch(changeFilterMax(e)),
+    changeFilterPrice:(e)=> dispatch(changeFilterPrice(e)),
   }
 }
 
