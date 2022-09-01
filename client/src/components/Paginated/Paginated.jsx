@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {changePaginatedPage}  from '../../redux/actions'
-//import './Paginacion.module.css';
+import './Paginated.css';
 
 class Paginated extends Component { 
   
