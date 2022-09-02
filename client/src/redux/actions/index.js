@@ -10,6 +10,8 @@ export const CHANGE_FILTER_MAX="CHANGE_FILTER_MAX";
 export const CHANGE_FILTER_PRICE="CHANGE_FILTER_PRICE";
 export const CHANGE_PAGINATED_PRODUCTS="CHANGE_PAGINATED_PRODUCTS";
 export const CHANGE_PAGINATED_PAGE="CHANGE_PAGINATED_PAGE";
+export const SEARCH_PRODUCT_ID = "SEARCH_PRODUCT_ID";
+export const DELETE_DETAILS = "DELETE_DETAILS";
 
 
 
@@ -28,6 +30,29 @@ export function searchNameProduct(name) {
          console.log(error);
       }
    };
+}
+
+export function searchProductId(id) {
+   return function(dispatch) {
+       fetch(`http://localhost:3001/product/${id}`)
+       .then(response => response.json())
+       .then((product) =>{
+           dispatch({
+               type: SEARCH_PRODUCT_ID,
+               payload: product
+           })
+       })
+       .catch((error)=>{
+           console.log(error)
+       })
+   }
+};
+
+export function deleteDetails() {
+   return {
+       type: DELETE_DETAILS,
+       payload: []
+   }
 }
 
 export function getCategorys() {
