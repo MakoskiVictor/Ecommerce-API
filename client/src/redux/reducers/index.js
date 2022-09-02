@@ -1,13 +1,14 @@
 import {
    SEARCH_NAME, CHANGE_FILTER_GENDER, CHANGE_FILTER_CATEGORY,
    CHANGE_FILTER_BRAND, GET_CATEGORYS, CHANGE_FILTER_MAX, CHANGE_FILTER_MIN, CHANGE_FILTER_PRICE,
-   CHANGE_PAGINATED_PRODUCTS, CHANGE_PAGINATED_PAGE
+   CHANGE_PAGINATED_PRODUCTS, CHANGE_PAGINATED_PAGE, SEARCH_PRODUCT_ID, DELETE_DETAILS
 } from "../actions";
 
 const PAGE_START = 1;
 
 const initialState = {
    products: [],
+   details: [],
    categorys: [],
    filters: {
       nameProductSearched: "", filterGender: "Men", filterBrand: [],
@@ -26,6 +27,16 @@ const rootReducer = (state = initialState, action) => {
             products: action.payload.products,
             filters: { ...state.filters, nameProductSearched: action.payload.nameProductSearched, filterBrand: [] },
             paginated: { ...state.paginated, page: PAGE_START }
+         };
+      case SEARCH_PRODUCT_ID:
+         return {
+            ...state,
+            details: action.payload
+         };
+      case DELETE_DETAILS:
+         return {
+             ...state,
+             details: action.payload
          };
       case GET_CATEGORYS:
          return {
