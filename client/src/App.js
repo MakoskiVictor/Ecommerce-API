@@ -17,12 +17,14 @@ function App() {
       <Switch>
       
       <Route exact path="/rutaPrueba"> <Filter/> <Paginated /> <ProductCards/></Route>
+      <Route exact path="/"><Home/></Route>
         {/* <Route exact path="/" component={Landing} /> */}
         {/* <Route exact path="/">aca va el componente home</Route> */}
         {/* <Route exact path="/products">aca va el componente products</Route> */}
         {/* <Route path="/products/:id">aca va el componente detalles</Route> */}
         {/* <Route exact path="/about">aca va el componente about</Route> */}
         {/* <Route exact path="/contact">aca va el componente contacto</Route> */}
+        <Route component={ErrorPage}></Route> 
 
         {/* sprint 2 */}
         {/* <Route exact path="/profile">aca va el componente del perfil de usuario</Route> */}
