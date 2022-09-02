@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {changePaginatedPage}  from '../../redux/actions'
 import './Paginated.css';
-
 class Paginated extends Component { 
   
  Actualizar(){
@@ -33,7 +32,6 @@ class Paginated extends Component {
 
     render() {
        const {IndiceFinal,IndicesArray}=this.Actualizar();
-       console.log(this.props.paginated.page)
        return (
           <nav aria-label="Countries Pagination" className="NavPaginacion">
             <ul className="pagination">
