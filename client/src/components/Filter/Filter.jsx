@@ -41,7 +41,7 @@ export class Filter extends Component {
       productosNuevos = productosNuevos.filter(element => filterBrand.includes(element.brand));
     if (filterForPrice)
       productosNuevos = productosNuevos.filter(element => (min <= element.price && element.price <= max));
-     console.log(productosNuevos);
+     //console.log(productosNuevos);
 
     if (JSON.stringify(paginated.productsView) !== JSON.stringify(productosNuevos))
       this.props.changePaginatedProducts(productosNuevos)
