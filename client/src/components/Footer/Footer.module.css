@@ -1,11 +1,13 @@
 .footerDistributed{
-	background: #925adb;
+    /* background-color: #b2785b; */
+	background-color: #343a40;
 	box-sizing: border-box;
 	width: 100%;
 	text-align: left;
 	font: bold 16px sans-serif;
-	padding: 55px 50px;
+	padding: 0px 30px;
 	margin-top: 30px;
+	border-top: 5px solid white;
 }
 
 .footerDistributed .footerLeft,
@@ -64,12 +66,13 @@
 
 
 .img{
-    height: 12rem;
+    height: 10%;
     width: auto;
-      margin: 5px 5px;
-      vertical-align: middle;
-      border-radius: 6rem;
-  }
+	justify-content: center;
+    margin: 5px 5px;
+    vertical-align: middle;
+    border-radius: 6rem;
+}
 
 
 /* DERECHA */
@@ -84,9 +87,10 @@
 	font-size: 13px;
 	font-weight: normal;
 	margin: 0;
+	
 }
 
-.footerDistributed .footerCompanyAbout span{
+.footerDistributed .footerCompanyAbout {
 	display: block;
 	color:  #ffffff;
 	font-size: 14px;

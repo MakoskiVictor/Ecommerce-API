@@ -7,10 +7,10 @@ const router = Router();
 
 let id = 1;
 router.post("/", async (req, res, next) => {
-  const { name, price, image, brand, genere, categoryId } = req.body;
+  const { name, price, image, brand, gender, categoryId } = req.body;
   try {
     const newProduct = await Product.findOrCreate({
-      where: { id, name, price, image, brand, genere, categoryId },
+      where: { id, name, price, image, brand, gender, categoryId },
     });
     id++;
     res.send("product created successfully")
