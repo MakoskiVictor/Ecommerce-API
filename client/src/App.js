@@ -4,6 +4,7 @@ import {Home} from "./components/Home/Home";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
 import Landing from "./components/Landing/Landing.jsx";
 import SearchBar from "./components/SearchBar/SearchBar.jsx";
+import Details from "./components/Details/Details.jsx";
 
 import ProductCards from "./components/Products/ProductCards.jsx";
 import Filter from "./components/Filter/Filter.jsx";
@@ -18,6 +19,7 @@ function App() {
       
       <Route exact path="/rutaPrueba"> <Filter/> <Paginated /> <ProductCards/></Route>
       <Route exact path="/"><Home/></Route>
+      <Route path="/details/:id" component={Details}></Route>
         {/* <Route exact path="/" component={Landing} /> */}
         {/* <Route exact path="/">aca va el componente home</Route> */}
         {/* <Route exact path="/products">aca va el componente products</Route> */}

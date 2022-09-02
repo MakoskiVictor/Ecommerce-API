@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteDetails, searchProductId } from "../../redux/actions";
 
 export default function Details (props) {
+    console.log(props)
 
     const dispatch = useDispatch();
     const detail = useSelector((state) => state.details)
@@ -14,18 +15,23 @@ export default function Details (props) {
         dispatch(deleteDetails())
     }, [dispatch]);
 
+    console.log(detail)
+    console.log(detail.brand)
+
     return (
         <div>
             <div>
-                {detail.length > 0?
+                { Object.keys(detail).length> 0?
                     <div>
-                        <h1>{detail[0].name}</h1>
-                        <img src={detail[0].images} alt="Not Found" />
-                        <p>Brand: {detail[0].brand} </p>
-                        <p>Price: ${detail[0].price} </p>
-                        <p>Genre: {detail[0].gender} </p>
-                        <p>Type: {detail[0].type} </p>
-                        <p>Info: {detail[0].info} </p>
+                        <h1>{detail.name}</h1>
+                        <img src={`https://${detail.images[0].url}`} alt="Not Found" />
+                        <p>Brand: {detail.brand.name} </p>
+                        <p>Price: ${detail.price.text} </p>
+                        <p>Genre: {detail.gender} </p>
+                        <p>Type: {detail.type} </p>
+                        <p>aboutMe: {`${detail.info.aboutMe}`} </p>
+                        <p>careInfo: {`${detail.info.careInfo}`} </p>
+                        <p>sizeAndFit: {`${detail.info.sizeAndFit}`} </p>
 
                     </div>
                     :
@@ -33,7 +39,7 @@ export default function Details (props) {
                 }
             </div>
             <div>
-                <Link to="/product">
+                <Link to="/rutaPrueba">
                     <button>Go Back</button>
                 </Link>
             </div>
