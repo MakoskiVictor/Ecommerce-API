@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { deleteDetails, searchProductId } from "../../redux/actions";
 
-export default function Details (props) {
+export default function Details(props) {
     console.log(props)
 
     const dispatch = useDispatch();
@@ -21,17 +21,21 @@ export default function Details (props) {
     return (
         <div>
             <div>
-                { Object.keys(detail).length> 0?
+                {detail.length > 0 ?
                     <div>
-                        <h1>{detail.name}</h1>
-                        <img src={`https://${detail.images[0].url}`} alt="Not Found" />
-                        <p>Brand: {detail.brand.name} </p>
-                        <p>Price: ${detail.price.text} </p>
-                        <p>Genre: {detail.gender} </p>
+                        <h1>{detail[0].name}</h1>
+                        <img src={`https://${detail[0].image}`} alt="Not Found" />
+                        <p>Brand: {detail[0].brand} </p>
+                        <p>Price: ${detail[0].price} </p>
+                        <p>Genre: {detail[0].gender} </p>
+                        <p>Category: {detail[0].category.name}</p>
+
+                        {/* esta informacion no estan en la base de datos interna:
+
                         <p>Type: {detail.type} </p>
                         <p>aboutMe: {`${detail.info.aboutMe}`} </p>
                         <p>careInfo: {`${detail.info.careInfo}`} </p>
-                        <p>sizeAndFit: {`${detail.info.sizeAndFit}`} </p>
+                        <p>sizeAndFit: {`${detail.info.sizeAndFit}`} </p> */}
 
                     </div>
                     :
