@@ -1,0 +1,76 @@
+*{
+    text-decoration: none;
+}
+.container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.letra{
+    text-align:initial;
+    justify-content: space-between;
+    color: white;
+    text-decoration: none;
+    width: 100px;
+    margin-left: 80px;
+}
+
+.letra:hover { 
+    color: green;
+}
+
+.NavUl{
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    list-style: none;
+    width: 80%;
+}
+
+.NavBarComplete {
+    /* background-color: #b2785b; */
+    background-color: #343a40;
+       /* background-color: #f77f00; */
+	box-sizing: border-box;
+    display: flex;
+    align-items: center;
+	width: 100%;
+	text-align: left;
+	font: bold 16px sans-serif;
+	padding: 3px 5px;
+	margin-top: 0px;
+    border-bottom: 5px solid white;
+}
+
+
+/* IZQUIERDA */
+
+.left{
+	width: 20%;
+}
+.center{
+    width: 40%;
+}
+
+.NavBarComplete .logo {
+    border-radius: 5rem;
+    margin-left: 3rem;
+    }
+    .logo:hover {
+    transform: scale(1.025, 1.025);
+    filter: drop-shadow(0 0 12px white);
+    }; 
+
+
+/* CENTRO */
+
+
+
+
+/* DERECHA */
+
+.right {
+    width: 20%;
+}
+
+

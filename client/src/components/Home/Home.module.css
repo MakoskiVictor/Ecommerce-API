@@ -1,0 +1,25 @@
+.container{
+    /* background-color: white; */
+    /* background-color: #ddb892; */
+
+    /* margin: 0; */
+    width: auto;
+    overflow: auto;
+    background-image: url(../image/fondo.png);
+    /* background-image: url(../image/Fondo2.png); */
+
+    background-size: 50% auto;
+}
+
+
+
+.image{
+    align-items: center;
+    margin: 3% 0% 3% 0%;
+    border-radius: 6rem;
+
+}
+
+.img{
+    box-shadow: 7px 15px 15px -1px rgba(0,0,0,0.81);
+}
