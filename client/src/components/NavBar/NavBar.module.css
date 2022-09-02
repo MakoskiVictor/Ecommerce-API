@@ -1,25 +1,55 @@
+*{
+    text-decoration: none;
+}
+.container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.letra{
+    text-align:initial;
+    justify-content: space-between;
+    color: white;
+    text-decoration: none;
+    width: 100px;
+    margin-left: 80px;
+}
+
+.letra:hover { 
+    color: green;
+}
+
+.NavUl{
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    list-style: none;
+    width: 80%;
+}
+
 .NavBarComplete {
-	background: #925adb;
+    /* background-color: #b2785b; */
+    background-color: #343a40;
+       /* background-color: #f77f00; */
 	box-sizing: border-box;
+    display: flex;
+    align-items: center;
 	width: 100%;
 	text-align: left;
 	font: bold 16px sans-serif;
-	padding: 00px 5px;
+	padding: 3px 5px;
 	margin-top: 0px;
-}
-
-.NavBarComplete .left,
-.NavBarComplete .center,
-.NavBarComplete .right {
-    display: inline-block;
-	vertical-align: middle;
+    border-bottom: 5px solid white;
 }
 
 
 /* IZQUIERDA */
 
-.NavBarComplete .left{
-	width: 10%;
+.left{
+	width: 20%;
+}
+.center{
+    width: 40%;
 }
 
 .NavBarComplete .logo {
@@ -39,7 +69,7 @@
 
 /* DERECHA */
 
-.NavBarComplete .right {
+.right {
     width: 20%;
 }
 

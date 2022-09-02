@@ -1,9 +1,13 @@
 import { Route, Switch } from "react-router-dom";
 
+import {Home} from "./components/Home/Home";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
 import Landing from "./components/Landing/Landing.jsx";
 import SearchBar from "./components/SearchBar/SearchBar.jsx";
 import Product from "./components/Product/Product";
+import Filter from "./components/Filter/Filter";
+import Paginated from "./components/Paginated/Paginated";
+
 import "./App.css";
 
 function App() {
@@ -11,7 +15,13 @@ function App() {
     <div className="App">
       {/* nav bar */}
       <Switch>
-
+        <Route exact path="/rutaPrueba">
+          {" "}
+          <Filter /> <Paginated></Paginated>
+        </Route>
+        <Route exact path="/">
+          <Home />
+        </Route>
         {/* <Route exact path="/" component={Landing} /> */}
         {/* <Route exact path="/">aca va el componente home</Route> */}
         {/* <Route exact path="/products">aca va el componente products</Route> */}
