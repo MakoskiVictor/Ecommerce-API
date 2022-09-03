@@ -22,10 +22,10 @@ export default function NavBar () {
                         PRODUCTS
                     </Link> */}
                     <li>
-                        <Link to={"/men"} className={Style.letra}>
+                        <Link to={"/products/Men"} className={Style.letra}>
                             MEN
                         </Link>
-                        <Link to={"/women"} className={Style.letra}>
+                        <Link to={"/products/Women"} className={Style.letra}>
                             WOMEN
                         </Link>
                     </li>
@@ -38,14 +38,15 @@ export default function NavBar () {
                     <Link to={"/contact"} className={Style.letra}>
                         CONTACT
                     </Link>
-                    <Link to={"/about"} className={Style.letra}>
+                    {/*<Link to={"/about"} className={Style.letra}>
                         LOGIN
                     </Link>
-                    <Link to={"/about"} className={Style.letra}>
+                    <Link to={"/register"} className={Style.letra}>
                         REGISTER
+                    </Link>*/}
+                    <Link to={"/createProduct"} className={Style.letra}>
+                        CREATE_PRODUCT
                     </Link>
-
-
                     </li>
                 </ul>
 

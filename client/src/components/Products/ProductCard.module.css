@@ -1,7 +1,8 @@
 .productContainer {
-  width: 200px;
-  border: 1px solid black;
-  padding: 10px;
+  width: 250px;
+  background-color: #343a40;
+  color: white;
+  padding: 15px 10px;
   margin: 15px auto;
   display: flex;
   flex-direction: column;
@@ -15,11 +16,15 @@
 }
 
 .photoContainer {
-  width: 150px;
-  height: 150px;
-  border: 1px solid red;
+  width: 200px;
+  height: 200px;
   margin-bottom: 10px;
   border-radius: 15px;
+}
+
+.photoContainer img {
+  border-radius: 15px;
+  width: 100%;
 }
 
 .priceCartContainer {
@@ -30,13 +35,16 @@
 }
 
 .priceCartContainer button {
-  background-color: yellow;
-  border: 1px solid black;
-  padding: 7px 10px;
+  background-color: #008000;
+  padding: 10px 13px;
   border-radius: 10px;
   cursor: pointer;
+  border: none;
+  color: white;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
 }
 
 .priceCartContainer button:hover {
-  background-color: rgb(218, 218, 46);
+  background-color: #02d302;
 }

@@ -12,6 +12,7 @@ export const CHANGE_PAGINATED_PRODUCTS = "CHANGE_PAGINATED_PRODUCTS";
 export const CHANGE_PAGINATED_PAGE = "CHANGE_PAGINATED_PAGE";
 export const SEARCH_PRODUCT_ID = "SEARCH_PRODUCT_ID";
 export const DELETE_DETAILS = "DELETE_DETAILS";
+export const CHANGE_FILTER_NAME="CHANGE_FILTER_NAME";
 
 export function searchNameProduct(name) {
    return async function (dispatch) {
@@ -21,7 +22,20 @@ export function searchNameProduct(name) {
          );
          return dispatch({
             type: SEARCH_NAME,
-            payload: { products: json.data, nameProductSearched: name },
+            payload: json.data,
+         });
+      } catch (error) {
+         console.log(error);
+      }
+   };
+}
+
+export function changeFilternameProductSearched(name) {
+   return async function (dispatch) {
+      try {
+         return dispatch({
+            type: CHANGE_FILTER_NAME,
+            payload: name,
          });
       } catch (error) {
          console.log(error);

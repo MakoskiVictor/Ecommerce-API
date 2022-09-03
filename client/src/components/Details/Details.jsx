@@ -6,18 +6,14 @@ import style from "./Details.module.css";
 import { deleteDetails, searchProductId } from "../../redux/actions";
 
 export default function Details(props) {
-  console.log(props);
-
   const dispatch = useDispatch();
   const detail = useSelector((state) => state.details);
+  const genderPrevius = useSelector((state) => state.filters.filterGender);
 
   useEffect(() => {
     dispatch(searchProductId(props.match.params.id));
     dispatch(deleteDetails());
   }, [dispatch]);
-
-  console.log(detail);
-  console.log(detail.brand);
 
   return (
     <div>
@@ -49,7 +45,7 @@ export default function Details(props) {
         )}
       </div>
       <div>
-        <Link to="/rutaPrueba">
+        <Link to={`/products/${genderPrevius}`}>
           <button className={style.btnDetails}>Go Back</button>
         </Link>
       </div>
