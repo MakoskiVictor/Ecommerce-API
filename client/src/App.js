@@ -12,6 +12,7 @@ import Filter from "./components/Filter/Filter.jsx";
 import Paginated from "./components/Paginated/Paginated.jsx";
 import NavBar from "./components/NavBar/NavBar.jsx";
 import Footer from "./components/Footer/Footer.jsx";
+import About from "./components/About/About.jsx";
 import "./App.css";
 
 function App() {
@@ -22,10 +23,11 @@ function App() {
          <Switch>
             <Route exact path="/"><Home /> </Route>
             <Route exact path="/products/:gender">
-               <Filter /> {/*<Paginated />*/} <ProductCards /> {/*Se pone asi porque los componentes estan creadas como Clase*/}
+               <Filter /><Paginated /> <ProductCards /> {/*Se pone asi porque los componentes estan creadas como Clase*/}
             </Route>
             <Route path="/details/:id" component={Details}></Route>  {/*Se pone asi porque los componentes estan creadas como Funcion*/}
             <Route exact path="/createProduct" component={Formulario} /> {/*Se pone asi porque los componentes estan creadas como Funcion*/}
+            <Route path="/about" component={About}></Route>
             {/* <Route exact path="/">aca va el componente home</Route> */}
             {/* <Route exact path="/products">aca va el componente products</Route> */}
             {/* <Route path="/products/:id">aca va el componente detalles</Route> */}
