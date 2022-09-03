@@ -1,6 +1,4 @@
 import React from 'react'
-import NavBar from '../NavBar/NavBar'
-import Footer from '../Footer/Footer'
 import s from "./Home.module.css"
 // import hombre from "../image/Hombre.png"
 // import mujer from "../image/Mujer.png"
@@ -12,7 +10,6 @@ import mujer2 from "../image/Foto.png"
 export const Home = () => {
   return (
       <div className={s.container}>
-        <NavBar></NavBar>
         <div className={s.image}>
             {/* <img src={hombre}alt="#" /> */}
             {/* <img className={s.img} src={mujer3} alt= "#" width="45%" height="45%"/> */}
@@ -20,8 +17,6 @@ export const Home = () => {
             {/* <img src={gift} alt="#" /> */}
             {/* <img src={foto} alt="#" /> */}
         </div>
-        <Footer></Footer>
-
     </div>
   )
 }

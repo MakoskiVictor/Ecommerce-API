@@ -10,22 +10,22 @@ import Formulario from "./components/Formulario/Formulario";
 import ProductCards from "./components/Products/ProductCards.jsx";
 import Filter from "./components/Filter/Filter.jsx";
 import Paginated from "./components/Paginated/Paginated.jsx";
+import NavBar from "./components/NavBar/NavBar.jsx";
+import Footer from "./components/Footer/Footer.jsx";
 import "./App.css";
 
 function App() {
    return (
       <div className="App">
          {/* nav bar */}
+         <NavBar />
          <Switch>
-            <Route exact path="/rutaPrueba">
-               {" "}
-               <Filter /> <Paginated /> <ProductCards />
+            <Route exact path="/"><Home /> </Route>
+            <Route exact path="/products/:gender">
+               <Filter /> {/*<Paginated />*/} <ProductCards /> {/*Se pone asi porque los componentes estan creadas como Clase*/}
             </Route>
-            <Route exact path="/">
-               <Home />
-            </Route>
-            <Route path="/details/:id" component={Details}></Route>
-            <Route exact path="/CrearProducto" component={Formulario} />
+            <Route path="/details/:id" component={Details}></Route>  {/*Se pone asi porque los componentes estan creadas como Funcion*/}
+            <Route exact path="/createProduct" component={Formulario} /> {/*Se pone asi porque los componentes estan creadas como Funcion*/}
             {/* <Route exact path="/">aca va el componente home</Route> */}
             {/* <Route exact path="/products">aca va el componente products</Route> */}
             {/* <Route path="/products/:id">aca va el componente detalles</Route> */}
@@ -39,7 +39,7 @@ function App() {
             {/* <Route exact path="/signup">aca va el componente de signup/registro</Route> */}
             {/* <Route exact path="/cart">aca va el componente del carrito de compras</Route> */}
          </Switch>
-         {/* footer */}
+         <Footer/>
       </div>
    );
 }
