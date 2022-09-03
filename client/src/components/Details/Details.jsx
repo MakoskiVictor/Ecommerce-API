@@ -6,7 +6,6 @@ import style from "./Details.module.css";
 import { deleteDetails, searchProductId } from "../../redux/actions";
 
 export default function Details(props) {
-  
   const dispatch = useDispatch();
   const detail = useSelector((state) => state.details);
   const genderPrevius = useSelector((state) => state.filters.filterGender);
@@ -15,9 +14,6 @@ export default function Details(props) {
     dispatch(searchProductId(props.match.params.id));
     dispatch(deleteDetails());
   }, [dispatch]);
-
-  //console.log(detail);
-  //console.log(detail.brand);
 
   return (
     <div>

@@ -1,5 +1,7 @@
-.productContainerGlobal{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: flex-end;
 }
