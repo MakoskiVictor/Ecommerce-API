@@ -15,7 +15,7 @@ function Formulario() {
     const [input, SetInput] = useState({
         id: Math.floor(Math.random() * 1000),
         name: "",
-        price: null,
+        price: 25,
         image: "",
         brand: "",
         gender: "",
@@ -46,17 +46,20 @@ function Formulario() {
 
     function handleSubmit(e) {
         e.preventDefault();
+        if(input.id && input.name && input.price && input.image 
+            && input.brand && input.gender && input.categoryId){
         dispatch(CreateNewProduct(input));
         alert("Product Created")
         SetInput({
             name: "",
-            price: null,
+            price: 25,
             image: "",
             brand: "",
             gender: "",
             categoryId: null
         });
-        history.push("/RutaPrueba")
+        history.push("/")}
+        else alert(" missing data for the creation of a new product");
     }
 
     return (
@@ -76,6 +79,7 @@ function Formulario() {
                     <p>Price: </p>
                     <input
                         type="number"
+                        min="0" step="25"
                         value={input.price}
                         name="price"
                         onChange={(e) => handleChange(e)}
