@@ -46,7 +46,7 @@
 }
 
 .btnDetails:hover {
-  color: #343a40;
-  background-color: white;
-  border: 2px solid #343a40;
+  color: white;
+  background-color: #008000;
+  border: 2px solid #02d302;
 }
