@@ -46,31 +46,36 @@ function Formulario() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        if(input.id && input.name && input.price && input.image 
-            && input.brand && input.gender && input.categoryId){
-        dispatch(CreateNewProduct(input));
-        alert("Product Created")
-        SetInput({
-            name: "",
-            price: 25,
-            image: "",
-            brand: "",
-            gender: "",
-            categoryId: null
-        });
-        history.push("/")}
+        if (input.id && input.name && input.price && input.image
+            && input.brand && input.gender && input.categoryId) {
+            dispatch(CreateNewProduct(input));
+            alert("Product Created")
+            SetInput({
+                name: "",
+                price: 25,
+                image: "",
+                brand: "",
+                gender: "",
+                categoryId: null
+            });
+            history.push("/")
+        }
         else alert(" missing data for the creation of a new product");
     }
 
     return (
-        <div>
+        <div className={style.containerMain}>
+            <h2 className={style.titulo}>Creacion de Producto</h2>
             {console.log(input)}
             <form onSubmit={(e) => handleSubmit(e)}>
+
+
                 <div>
-                    <p>Nombre:</p>
+                    <p>Name:</p>
                     <input
                         type="text"
                         value={input.name}
+                        className={style.field}
                         name="name"
                         onChange={(e) => handleChange(e)}
                     />
@@ -80,30 +85,41 @@ function Formulario() {
                     <input
                         type="number"
                         min="0" step="25"
+                        className={style.field}
                         value={input.price}
                         name="price"
                         onChange={(e) => handleChange(e)}
                     />
                 </div>
+
                 <div>
-                    <p>Img:</p>
-                    <input
-                        type="text"
-                        value={input.image}
-                        name="image"
-                        onChange={(e) => handleChange(e)}
-                    />
+                    <div>
+                        <p>Img:</p>
+                        <input
+                            type="text"
+                            value={input.image}
+                            className={style.field}
+                            name="image"
+                            onChange={(e) => handleChange(e)}
+                        />
+                    </div>
+                    <div>
+                        <p>brand:</p>
+                        <input
+                            type="text"
+                            value={input.brand}
+                            className={style.field}
+                            name="brand"
+                            onChange={(e) => handleChange(e)}
+                        />
+                    </div>
                 </div>
-                <div>
-                    <p>brand:</p>
-                    <input
-                        type="text"
-                        value={input.brand}
-                        name="brand"
-                        onChange={(e) => handleChange(e)}
-                    />
-                </div>
-                <div>
+
+
+
+
+
+                <div className={style.select}>
                     <p>Select Gender:</p>
                     <select onChange={(e) => handleSelect(e)} >
                         <option selected disabled>Select Gender</option>
@@ -115,16 +131,18 @@ function Formulario() {
                     <p>Select Category:</p>
 
                     {input.gender === "Men" ?
-                        <select onChange={(e) => handleSelectCategory(e)} >
-                            <option selected disabled>Select Category</option>
-                            <option value="4208">Jeans</option>
-                            <option value="7078">Shorts</option>
-                            <option value="3602">Shirts</option>
-                            <option value="5668">jackets</option>
-                            <option value="14274">Joggers</option>
-                        </select>
+                        <div className={style.select}>
+                            <select onChange={(e) => handleSelectCategory(e)} >
+                                <option selected disabled>Select Category</option>
+                                <option value="4208">Jeans</option>
+                                <option value="7078">Shorts</option>
+                                <option value="3602">Shirts</option>
+                                <option value="5668">jackets</option>
+                                <option value="14274">Joggers</option>
+                            </select>
+                        </div>
                         :
-                        <div>
+                        <div className={style.select}>
                             <select onChange={(e) => handleSelectCategory(e)} >
                                 <option selected disabled>Select Category</option>
                                 <option value="8799">Dress</option>
@@ -134,14 +152,12 @@ function Formulario() {
                                 <option value="2641">Coats & jackets</option>
                             </select>
                         </div>
-
-
-
                     }
 
+
+                    {/* BUTTON */}
+                    <button className={style.submit} type='submit' onClick={(e) => handleSubmit(e)}>Create New Product</button>
                 </div>
-                {/* BUTTON */}
-                <button type='submit' onClick={(e) => handleSubmit(e)}>Create New Product</button>
             </form >
         </div >
     )
