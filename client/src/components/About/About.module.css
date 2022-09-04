@@ -1,3 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Merienda&display=swap");
+
+.container {
+   /* background-color: white; */
+   /* background-color: #ddb892; */
+
+   /* margin: 0; */
+   width: auto;
+   overflow: auto;
+   background-image: url(../image/fondo.png);
+   /* background-image: url(../image/Fondo2.png); */
+
+   background-size: 50% auto;
+}
+
 main {
    box-sizing: border-box;
    margin: 0;
@@ -13,18 +28,28 @@ main {
    /* background-color: aqua; */
 }
 
-.ContainerAbout .imagePrincipal {
+.ContainerAbout .aboutTextprincipal {
    width: 80%;
    height: 110px;
    border-radius: 8px;
-   object-fit: cover;
+   margin: 0 auto;
+   background-color: #161616;
+   text-align: center;
+}
+
+.ContainerAbout .aboutTextprincipal p {
+   color: #fff;
+   font-size: 45px;
+   font-family: "Merienda", cursive;
+   padding: 20px;
+   margin: 0;
 }
 
 .aboutTitle {
-   color: #333;
+   color: #000;
    font-size: 3rem;
    font-weight: bolder;
-   margin-top: 15px;
+   margin-top: 28px;
    margin-bottom: 26px;
 }
 
