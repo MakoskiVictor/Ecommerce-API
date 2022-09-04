@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 // import logo_wooly from "../../assets/logo_wooly.png";
 import logo from "../image/logo.png"
 
-export default function Footer () {
+export default function Footer() {
 
-    return(
+    return (
         <footer className={Style.footerDistributed}>
             <div className={Style.footerLeft}>
-            <div className={Style.footerLinks}>
-                {/* <Link to={"/"} >
+                <div className={Style.footerLinks}>
+                    {/* <Link to={"/"} >
                     <h4 className={Style.linkOne}>Home </h4>
                 </Link>
   
@@ -22,14 +22,19 @@ export default function Footer () {
                     <h4>Contact</h4>
                 </Link> */}
 
-            </div>
+                </div>
             </div>
 
-            <div className={Style.footerCenter}>
-                <Link to="/">
-                    <img src={logo} alt="Img Not Found" className={Style.img} />
-                </Link>
+            <div className={Style.containerCenter}>
+
+                <div className={Style.footerCenter}>
+                    <Link to="/">
+                        <img src={logo} alt="Img Not Found" className={Style.img} />
+                    </Link>
+                </div>
+
             </div>
+
 
             <div className={Style.footerRight}>
                 <p className={Style.footerCompanyAbout}>
