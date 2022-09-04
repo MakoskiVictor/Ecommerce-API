@@ -40,7 +40,7 @@ class Paginated extends Component {
   render() {
     const { IndiceFinal, IndicesArray } = this.Actualizar();
     return (
-      <nav aria-label="Countries Pagination" className="NavPaginacion">
+      <nav aria-label="Countries Pagination" className={style.paginationGlobal}>
         <ul className={style.pagination}>
           <li
             key={0}

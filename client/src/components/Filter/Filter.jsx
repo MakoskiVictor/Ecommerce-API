@@ -31,7 +31,7 @@ export class Filter extends Component {
     return Brands
   }
 
-  filtradoProductos(products, paginated, categorys, filterBrand, filterCategory, filterForPrice, min, max,gender) {
+  filtradoProductos(products, paginated, categorys, filterBrand, filterCategory, filterForPrice, min, max, gender) {
 
     let productosNuevos = products.filter(element => element.gender === gender);
     let IDsGender = categorys.filter(element => gender === element.gender);
@@ -44,29 +44,29 @@ export class Filter extends Component {
       productosNuevos = productosNuevos.filter(element => filterBrand.includes(element.brand));
     if (filterForPrice)
       productosNuevos = productosNuevos.filter(element => (min <= element.price && element.price <= max));
-     //console.log(productosNuevos);
+    //console.log(productosNuevos);
 
     if (JSON.stringify(paginated.productsView) !== JSON.stringify(productosNuevos))
       this.props.changePaginatedProducts(productosNuevos)
-    
+
 
     return { Brands: Brands, IDsGender: IDsGender }
   }
 
   render() {
-   console.log(document.getElementsByClassName(style.NameFilter).style);
+    console.log(document.getElementsByClassName(style.NameFilter).style);
 
-    const { nameProductSearched, filterBrand,filterGender, filterCategory, filterForPrice, min, max } = this.props.filters;
+    const { nameProductSearched, filterBrand, filterGender, filterCategory, filterForPrice, min, max } = this.props.filters;
     const { categorys, products, paginated } = this.props;
-    let values = this.filtradoProductos(products, paginated, categorys, filterBrand, 
-      filterCategory, filterForPrice, min, max,this.props.match.params.gender)
-    if(filterGender!==this.props.match.params.gender)
-    this.props.changeFilterGender(this.props.match.params.gender)
+    let values = this.filtradoProductos(products, paginated, categorys, filterBrand,
+      filterCategory, filterForPrice, min, max, this.props.match.params.gender)
+    if (filterGender !== this.props.match.params.gender)
+      this.props.changeFilterGender(this.props.match.params.gender)
 
     return (
       <div>
         <nav className={style.NavFilter}>
-          <ul className="menuFiltrado">
+          <ul >
             <li className={style.ItemFilter}>
               <label className={style.NameFilter} >Buscar Nombre Producto: </label>
               <input
@@ -102,14 +102,16 @@ export class Filter extends Component {
                 })
               }
             </li>
+            
             <li className={style.ItemFilter}>
               <input type="checkbox" id={"ActivateFilterPrice"} name={"ActivateFilterPrice"} value={"ActivateFilterPrice"} checked={filterForPrice}
                 onChange={(e) => this.props.changeFilterPrice(e.target.checked)} />
-              <label   className={style.NameFilter} for={"ActivateFilterPrice"}> {"Filter for Price"}</label>
+              <label className={style.NameFilter} for={"ActivateFilterPrice"}> {"Filter for Price"}</label>
               <input type="number" min="0" step="50" placeholder="Precio Minimo" value={min} onChange={(e) => this.props.changeFilterMin(e)} />
               <label >{" a "}</label>
               <input type="number" min="0" step="50" placeholder="Precio Maximo" value={max} onChange={(e) => this.props.changeFilterMax(e)} />
             </li>
+            
           </ul>
         </nav>
       </div>
@@ -142,7 +144,7 @@ function mapDispatchToProps(dispatch) {
     changeFilterMax: (e) => dispatch(changeFilterMax(e)),
     changeFilterPrice: (e) => dispatch(changeFilterPrice(e)),
     changePaginatedProducts: (e) => dispatch(changePaginatedProducts(e)),
-    changeFilternameProductSearched: (nameSearch)=> dispatch(changeFilternameProductSearched(nameSearch)),
+    changeFilternameProductSearched: (nameSearch) => dispatch(changeFilternameProductSearched(nameSearch)),
   }
 }
 

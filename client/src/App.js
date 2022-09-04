@@ -13,6 +13,7 @@ import Paginated from "./components/Paginated/Paginated.jsx";
 import NavBar from "./components/NavBar/NavBar.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import About from "./components/About/About.jsx";
+import ComponentProducts from "./components/ComponentProducts/ComponentProducts.jsx";
 import "./App.css";
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
          <Switch>
             <Route exact path="/"><Home /> </Route>
             <Route exact path="/products/:gender">
-               <Filter /><Paginated /> <ProductCards /> {/*Se pone asi porque los componentes estan creadas como Clase*/}
+               <ComponentProducts /> {/*Se pone asi porque los componentes estan creadas como Clase*/}
             </Route>
             <Route path="/details/:id" component={Details}></Route>  {/*Se pone asi porque los componentes estan creadas como Funcion*/}
             <Route exact path="/createProduct" component={Formulario} /> {/*Se pone asi porque los componentes estan creadas como Funcion*/}
