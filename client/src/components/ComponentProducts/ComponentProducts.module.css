@@ -1,0 +1,7 @@
+.containerProductsGlobal{
+    display: flex;
+}
+.containerProductsGlobal2{
+    display: flex;
+    flex-direction: column;
+}
