@@ -30,6 +30,7 @@ class Paginated extends Component {
       if (i !== Longitud - 1) IndicesArray.push(PaginaStart + i);
       else IndicesArray.push(IndiceFinal);
     }
+    IndiceFinal=IndiceFinal==0?1:IndiceFinal;
     return { IndiceFinal: IndiceFinal, IndicesArray: IndicesArray };
   }
 
