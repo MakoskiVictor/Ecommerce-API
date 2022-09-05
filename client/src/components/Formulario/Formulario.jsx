@@ -6,6 +6,79 @@ import { useSelector, useDispatch } from 'react-redux';
 import { CreateNewProduct } from "../../redux/actions"
 
 
+// validacion de errores
+function validate(input) {
+    let errores = {};
+    /*      NAME      */
+
+    if (!input.name) {
+        errores.name = "Name Product is required"
+    }
+    else if (input.name.length < 3) {
+        errores.name = "The name must contain at least 3 letters"
+    }
+    else if (/^\s+$/.test(input.name)) {
+        errores.name = "The name cannot be a blank space"
+    }
+    else if (!/^[a-zA-Z ]*$/.test(input.name)) {
+        errores.name = "The name must only contain letters"
+    }
+
+    /*      PRICE         */
+
+    else if (input.price === null) {
+        errores.price = "The Price is required"
+    }
+    else if (input.price < 0) {
+        errores.price = "The price must be a positive number"
+    }
+
+    /*    IMG    */
+
+    else if (!input.image) {
+        errores.image = "URL Image is required"
+    }
+    else if (input.image.length < 5) {
+        errores.image = "The URl must contain at least 5 letters"
+    }
+    else if (/^\s+$/.test(input.image)) {
+        errores.image = "The URL cannot be a blank space"
+    }
+    else if (input.image.includes("https://")) {
+        errores.image = "The URL must not contain the text 'https://'"
+    }
+    else if (input.image.includes("http://")) {
+        errores.image = "The URL must not contain the text 'http://'"
+    }
+
+    /*    BRAND   */
+
+    else if (!input.brand) {
+        errores.brand = "Brand name is required"
+    }
+    else if (input.brand.length < 3) {
+        errores.brand = "The Brand name must contain at least 3 letters"
+    }
+    else if (/^\s+$/.test(input.brand)) {
+        errores.brand = "The Brand name cannot be a blank space"
+    }
+    else if (!/^[a-zA-Z ]*$/.test(input.brand)) {
+        errores.brand = "The Brand name must only contain letters"
+    }
+    /*   GENDER     */
+    // else if (input.gender === "Men" && input.categoryId === 8799 ||
+    //     input.gender === "Men" && input.categoryId === 3630 ||
+    //     input.gender === "Men" && input.categoryId === 9263 ||
+    //     input.gender === "Men" && input.categoryId === 4169 ||
+    //     input.gender === "Men" && input.categoryId === 2641) {
+    //     errores.brand = "el genero elegido no tiene esa categoria, revisala de nuevo"
+    // }
+
+    // console.log(input.countries.length)
+    return errores // retornamos lo errores
+}
+
+
 function Formulario() {
 
     const dispatch = useDispatch();
@@ -15,7 +88,7 @@ function Formulario() {
     const [input, SetInput] = useState({
         id: Math.floor(Math.random() * 1000),
         name: "",
-        price: 25,
+        price: null,
         image: "",
         brand: "",
         gender: "",
@@ -26,7 +99,11 @@ function Formulario() {
         SetInput({
             ...input,
             [e.target.name]: e.target.value
-        })
+        });
+        SetErrors(validate({
+            ...input,
+            [e.target.name]: e.target.value
+        }));
     }
 
     function handleSelect(e) {
@@ -52,7 +129,7 @@ function Formulario() {
             alert("Product Created")
             SetInput({
                 name: "",
-                price: 25,
+                price: null,
                 image: "",
                 brand: "",
                 gender: "",
@@ -62,16 +139,29 @@ function Formulario() {
         }
         else alert(" missing data for the creation of a new product");
     }
+    //comprobacion de INPUT
+
+    function comprobacionInput(input) {
+        if (input.name && input.price &&
+            input.image && input.brand && input.gender && input.categoryId) {
+            return true
+        } else {
+            return false
+        }
+    }
 
     return (
         <div className={style.containerMain}>
-            <h2 className={style.titulo}>Creacion de Producto</h2>
-            {console.log(input)}
+            <h2 className={style.titulo}>Product creation</h2>
+            {console.log(error)}
             <form onSubmit={(e) => handleSubmit(e)}>
 
 
                 <div>
                     <p>Name:</p>
+                    {error.name && ( // si hay un error hara un <p> nuevo con el error
+                        <p className={style.error}>{error.name}</p>
+                    )}
                     <input
                         type="text"
                         value={input.name}
@@ -82,6 +172,9 @@ function Formulario() {
                 </div>
                 <div>
                     <p>Price: </p>
+                    {error.price && ( // si hay un error hara un <p> nuevo con el error
+                        <p className={style.error}>{error.price}</p>
+                    )}
                     <input
                         type="number"
                         min="0" step="25"
@@ -95,6 +188,9 @@ function Formulario() {
                 <div>
                     <div>
                         <p>Img:</p>
+                        {error.image && ( // si hay un error hara un <p> nuevo con el error
+                            <p className={style.error}>{error.image}</p>
+                        )}
                         <input
                             type="text"
                             value={input.image}
@@ -105,6 +201,9 @@ function Formulario() {
                     </div>
                     <div>
                         <p>brand:</p>
+                        {error.brand && ( // si hay un error hara un <p> nuevo con el error
+                            <p className={style.error}>{error.brand}</p>
+                        )}
                         <input
                             type="text"
                             value={input.brand}
@@ -120,6 +219,9 @@ function Formulario() {
 
 
                 <div className={style.select}>
+                    {input.gender.length === 0 && ( // si hay un error hara un <p> nuevo con el error
+                        <p className={style.error}>{"choose a gender"}</p>
+                    )}
                     <p>Select Gender:</p>
                     <select onChange={(e) => handleSelect(e)} >
                         <option selected disabled>Select Gender</option>
@@ -128,10 +230,14 @@ function Formulario() {
                     </select>
                 </div>
                 <div>
+
                     <p>Select Category:</p>
 
                     {input.gender === "Men" ?
                         <div className={style.select}>
+                            {input.categoryId === null && ( // si hay un error hara un <p> nuevo con el error
+                                <p className={style.error}>{"choose a category"}</p>
+                            )}
                             <select onChange={(e) => handleSelectCategory(e)} >
                                 <option selected disabled>Select Category</option>
                                 <option value="4208">Jeans</option>
@@ -156,7 +262,12 @@ function Formulario() {
 
 
                     {/* BUTTON */}
-                    <button className={style.submit} type='submit' onClick={(e) => handleSubmit(e)}>Create New Product</button>
+                    {(Object.keys(error).length === 0) && comprobacionInput(input) ? (
+                        <button className={style.submit} type="submit" onClick={(e) => handleSubmit(e)}>Create New Product</button>
+
+                    ) : <p className={style.todosCampos}>You must fill in all the fields, to be able to Create your product</p>}
+
+                    {/* <button className={style.submit} type='submit' onClick={(e) => handleSubmit(e)}>Create New Product</button> */}
                 </div>
             </form >
         </div >
