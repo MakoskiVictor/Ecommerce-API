@@ -9,6 +9,18 @@ import { CreateNewProduct } from "../../redux/actions"
 // validacion de errores
 function validate(input) {
     let errores = {};
+    let priceValidate;
+    function isNumeric(value) {
+        return /^-?\d+$/.test(value);
+    }
+    // for (let i = 0; i < input.price.length; i++) {
+    //     let index = input.price.charAt(i)
+    //     if(index>='0' && index<='9'){
+    //         priceValidate = true
+    //     } else {
+    //         priceValidate = false
+    //     }
+    // }
     /*      NAME      */
 
     if (!input.name) {
@@ -22,6 +34,10 @@ function validate(input) {
     }
     else if (!/^[a-zA-Z ]*$/.test(input.name)) {
         errores.name = "The name must only contain letters"
+    } else if(input.name.startsWith(' ')){
+        errores.name = "Dont input blank spaces"
+    } else if(input.name.endsWith(' ')){
+        errores.name = "Dont input blank space"
     }
 
     /*      PRICE         */
@@ -30,6 +46,11 @@ function validate(input) {
         errores.price = "The Price is required"
     }
     else if (input.price < 0) {
+        errores.price = "The price must be a positive number"
+    } else if(input.price.length===0){
+        errores.price = "The Price is required"
+    }
+    else if (!isNumeric(input.price)){
         errores.price = "The price must be a positive number"
     }
 
@@ -49,6 +70,10 @@ function validate(input) {
     }
     else if (input.image.includes("http://")) {
         errores.image = "The URL must not contain the text 'http://'"
+    } else if(input.image.startsWith(' ')){
+        errores.image = "Dont input blank spaces"
+    } else if(input.image.endsWith(' ')){
+        errores.image = "Dont input blank space"
     }
 
     /*    BRAND   */
@@ -64,6 +89,10 @@ function validate(input) {
     }
     else if (!/^[a-zA-Z ]*$/.test(input.brand)) {
         errores.brand = "The Brand name must only contain letters"
+    } else if(input.brand.startsWith(' ')){
+        errores.brand = "Dont input blank spaces"
+    } else if(input.brand.endsWith(' ')){
+        errores.brand = "Dont input blank space"
     }
     /*   GENDER     */
     // else if (input.gender === "Men" && input.categoryId === 8799 ||
@@ -84,16 +113,16 @@ function Formulario() {
     const dispatch = useDispatch();
     const [error, SetErrors] = useState({});
     const history = useHistory();
-
-    const [input, SetInput] = useState({
+    const initialState = {
         id: Math.floor(Math.random() * 1000),
         name: "",
-        price: undefined,
+        price: "",
         image: "",
         brand: "",
         gender: "",
         categoryId: undefined
-    });
+    }
+    const [input, SetInput] = useState(initialState);
 
     function handleChange(e) {
         SetInput({
@@ -127,14 +156,7 @@ function Formulario() {
             && input.brand && input.gender && input.categoryId) {
             dispatch(CreateNewProduct(input));
             alert("Product Created")
-            SetInput({
-                name: "",
-                price: null,
-                image: "",
-                brand: "",
-                gender: "",
-                categoryId: null
-            });
+            SetInput(initialState);
             history.push("/")
         }
         else alert(" missing data for the creation of a new product");
@@ -181,7 +203,7 @@ function Formulario() {
                         className={style.field}
                         value={input.price}
                         name="price"
-                        onChange={(e) => handleChange(e)}
+                        onChange={handleChange}
                     />
                 </div>
 
@@ -238,7 +260,7 @@ function Formulario() {
                             {input.categoryId === null && ( // si hay un error hara un <p> nuevo con el error
                                 <p className={style.error}>{"choose a category"}</p>
                             )}
-                            <select className={style.select} defaultValue="undefined" onChange={(e) => handleSelectCategory(e)} >
+                            <select className={style.select} onChange={(e) => handleSelectCategory(e)} >
                                 <option selected disabled>Select Category</option>
                                 <option value="4208">Jeans</option>
                                 <option value="7078">Shorts</option>
