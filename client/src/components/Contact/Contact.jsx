@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import emailjs from "@emailjs/browser";
 import { useHistory } from "react-router-dom";
-
+import style from "./Contact.module.css";
 export default function Contact () {
 
 
@@ -63,9 +63,9 @@ export default function Contact () {
     };
 
     return (
-        <div className='div-form'>
+        <div className={style.container}>
           <h1 className='title-form'>Contact Us</h1>
-          <form className='form-mail' onSubmit={sendEmail}>
+          <form className={style.form} onSubmit={sendEmail}>
             <label>Your Name</label>
             <input type="text" name='user_name' value={input.user_name} onChange={(e)=> handleChange(e)}/>
             <hr />
