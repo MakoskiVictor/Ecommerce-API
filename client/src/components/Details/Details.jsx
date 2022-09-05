@@ -14,9 +14,11 @@ export default function Details(props) {
     dispatch(searchProductId(props.match.params.id));
     dispatch(deleteDetails());
   }, [dispatch]);
-
+  function Number2Decimals(x) {
+    return Number.parseFloat(x).toFixed(2);
+  }
   return (
-    <div>
+    <div className={style.cardDetailMainContainer}>
       <div className={style.cardDetailContainer}>
         {detail.length > 0 ? (
           <div>
@@ -27,7 +29,7 @@ export default function Details(props) {
               </div>
               <div className={style.infoContainer}>
                 <p>Brand: {detail[0].brand} </p>
-                <p>Price: ${detail[0].price} </p>
+                <p>Price: {`$${Number2Decimals(detail[0].price)}`} </p>
                 <p>Genre: {detail[0].gender} </p>
                 <p>Category: {detail[0].category.name}</p>
               </div>

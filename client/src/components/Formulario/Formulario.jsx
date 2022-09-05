@@ -265,8 +265,8 @@ function Formulario() {
                                 <option value="4208">Jeans</option>
                                 <option value="7078">Shorts</option>
                                 <option value="3602">Shirts</option>
-                                <option value="5668">jackets</option>
-                                <option value="14274">Joggers</option>
+                                <option value="5668">Hoodies & Sweatshirts</option>
+                                <option value="14274">Sweatpants</option>
                             </select>
                         </div>
                         :

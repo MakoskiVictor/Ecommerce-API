@@ -12,6 +12,7 @@ export const ComponentProducts = () => {
             <div className={s.containerProductsGlobal2}>
             <Paginated />
             <ProductCards />
+            <Paginated />
             </div>
         </div>
     )
