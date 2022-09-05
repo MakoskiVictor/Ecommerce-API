@@ -68,7 +68,7 @@ export class Filter extends Component {
         <nav className={style.NavFilter}>
           <ul >
             <li className={style.ItemFilter}>
-              <label className={style.NameFilter} >Buscar Nombre Producto: </label>
+              <label className={style.NameFilter} >Search Product Name: </label>
               <input
                 type="text"
                 id="nombreProducto"
@@ -102,7 +102,7 @@ export class Filter extends Component {
                 })
               }
             </li>
-            
+
             <li className={style.ItemFilter}>
               <input type="checkbox" id={"ActivateFilterPrice"} name={"ActivateFilterPrice"} value={"ActivateFilterPrice"} checked={filterForPrice}
                 onChange={(e) => this.props.changeFilterPrice(e.target.checked)} />
@@ -111,7 +111,7 @@ export class Filter extends Component {
               <label >{" a "}</label>
               <input type="number" min="0" step="50" placeholder="Precio Maximo" value={max} onChange={(e) => this.props.changeFilterMax(e)} />
             </li>
-            
+
           </ul>
         </nav>
       </div>
