@@ -16,7 +16,7 @@ router.put("/:id", async (req, res, next) => {
       product.stock = product.stock - Number(stock);
     }
     await product.save();
-    res.send("stock actualizado correctamente")
+    res.send(product.stock)
   } catch (err) {
     next(err);
   }
