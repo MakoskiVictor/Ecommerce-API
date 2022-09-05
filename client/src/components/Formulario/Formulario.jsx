@@ -88,11 +88,11 @@ function Formulario() {
     const [input, SetInput] = useState({
         id: Math.floor(Math.random() * 1000),
         name: "",
-        price: null,
+        price: undefined,
         image: "",
         brand: "",
         gender: "",
-        categoryId: null
+        categoryId: undefined
     });
 
     function handleChange(e) {
@@ -238,7 +238,7 @@ function Formulario() {
                             {input.categoryId === null && ( // si hay un error hara un <p> nuevo con el error
                                 <p className={style.error}>{"choose a category"}</p>
                             )}
-                            <select className={style.select} onChange={(e) => handleSelectCategory(e)} >
+                            <select className={style.select} defaultValue="undefined" onChange={(e) => handleSelectCategory(e)} >
                                 <option selected disabled>Select Category</option>
                                 <option value="4208">Jeans</option>
                                 <option value="7078">Shorts</option>
