@@ -5,23 +5,6 @@ const axios = require("axios");
 
 const router = Router();
 
-router.put("/:id", async (req, res, next) => {
-  const { id } = req.params;
-  const { sumOrRes, stock } = req.query;
-  const product = await Product.findOne({ where: { id: id } });
-  try {
-    if (sumOrRes == "suma") {
-      product.stock = product.stock + Number(stock);
-    } else if (sumOrRes == "resta") {
-      product.stock = product.stock - Number(stock);
-    }
-    await product.save();
-    res.send(product.stock)
-  } catch (err) {
-    next(err);
-  }
-});
-
 router.post("/", async (req, res, next) => {
   const { id, name, price, image, brand, gender, categoryId, stock, size } =
     req.body;

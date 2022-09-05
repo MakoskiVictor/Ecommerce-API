@@ -13,4 +13,22 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+router.put("/:id", async (req, res, next) => {
+    const { id } = req.params;
+    const { sumOrRes, stock, size } = req.body;
+    const productStock = await Stock.findOne({ where: { productId: id, productSize: size } });
+    try {
+        console.log(typeof productStock, typeof stock)
+      if (sumOrRes == "suma") {
+        productStock.stock = productStock.stock + stock;
+      } else if (sumOrRes == "resta") {
+        productStock.stock = productStock.stock - stock;
+      }
+      await productStock.save();
+      res.send(productStock)
+    } catch (err) {
+      next(err);
+    }
+  });
+
 module.exports = router;
