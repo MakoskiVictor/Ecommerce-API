@@ -1,3 +1,7 @@
+.cardDetailMainContainer {
+  height: 100vh;
+}
+
 .cardDetailContainer {
   margin-bottom: 30px;
 }
