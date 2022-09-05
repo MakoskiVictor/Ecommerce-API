@@ -30,15 +30,7 @@ module.exports = (sequelize) => {
       gender: {
         type: DataTypes.STRING,
         allowNull: false,
-      },
-      stock: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      size: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+      }
     },
     {
       timestamps: false,

@@ -1,26 +1,9 @@
 const { Router } = require("express");
-const { Product, Category } = require("../db");
+const { Product, Category, Stock } = require("../db");
 const { Op } = require("sequelize");
 const axios = require("axios");
 
 const router = Router();
-
-router.put("/:id", async (req, res, next) => {
-  const { id } = req.params;
-  const { sumOrRes, stock } = req.query;
-  const product = await Product.findOne({ where: { id: id } });
-  try {
-    if (sumOrRes == "suma") {
-      product.stock = product.stock + Number(stock);
-    } else if (sumOrRes == "resta") {
-      product.stock = product.stock - Number(stock);
-    }
-    await product.save();
-    res.send(product.stock)
-  } catch (err) {
-    next(err);
-  }
-});
 
 router.post("/", async (req, res, next) => {
   const { id, name, price, image, brand, gender, categoryId, stock, size } =
@@ -41,7 +24,7 @@ router.get("/", async (req, res, next) => {
   if (ProductosTotales.length === 0) {
     const IDs = [8799, 3630, 9263, 4169, 2641, 4208, 7078, 3602, 5668, 14274];
     const size = ["S", "M", "L"];
-    const stock = [30, 40, 50];
+    const stock = [0, 5, 10, 20, 30, 40, 50];
     let products = [];
     let Categorias = [];
     const productsIds = [];
@@ -88,11 +71,16 @@ router.get("/", async (req, res, next) => {
               brand: producsNew[index].brandName,
               image: producsNew[index].imageUrl,
               gender: genero,
-              categoryId: producsNew[index].categoryId,
-              stock: stock[Math.floor(Math.random() * 3)],
-              size: size[Math.floor(Math.random() * 3)],
+              categoryId: producsNew[index].categoryId
             },
           });
+          size.forEach(item=>{
+            Stock.create({
+              productSize: item,
+              stock: stock[Math.floor(Math.random() * 7)],
+              productId: producsNew[index].id
+            })
+          })
         }
         ProductosPorCategoria.push(createProduct);
       }
