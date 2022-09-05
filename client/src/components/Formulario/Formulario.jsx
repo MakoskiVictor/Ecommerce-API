@@ -154,7 +154,7 @@ function Formulario() {
         <div className={style.containerMain}>
             <h2 className={style.titulo}>Product creation</h2>
             {console.log(error)}
-            <form onSubmit={(e) => handleSubmit(e)}>
+            <form className={style.form} onSubmit={(e) => handleSubmit(e)}>
 
 
                 <div>
@@ -223,7 +223,7 @@ function Formulario() {
                         <p className={style.error}>{"choose a gender"}</p>
                     )}
                     <p>Select Gender:</p>
-                    <select onChange={(e) => handleSelect(e)} >
+                    <select className={style.select} onChange={(e) => handleSelect(e)} >
                         <option selected disabled>Select Gender</option>
                         <option value="Men">Men</option>
                         <option value="Women">Women</option>
@@ -238,7 +238,7 @@ function Formulario() {
                             {input.categoryId === null && ( // si hay un error hara un <p> nuevo con el error
                                 <p className={style.error}>{"choose a category"}</p>
                             )}
-                            <select onChange={(e) => handleSelectCategory(e)} >
+                            <select className={style.select} onChange={(e) => handleSelectCategory(e)} >
                                 <option selected disabled>Select Category</option>
                                 <option value="4208">Jeans</option>
                                 <option value="7078">Shorts</option>
@@ -249,7 +249,7 @@ function Formulario() {
                         </div>
                         :
                         <div className={style.select}>
-                            <select onChange={(e) => handleSelectCategory(e)} >
+                            <select  className={style.select} onChange={(e) => handleSelectCategory(e)} >
                                 <option selected disabled>Select Category</option>
                                 <option value="8799">Dress</option>
                                 <option value="3630">Jeans</option>
