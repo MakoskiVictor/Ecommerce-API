@@ -1,25 +1,30 @@
 .form {
-    font-family: "Signika", sans-serif;
-    font-size: 20px;
-    font-weight: 500;
-    background-color: #343a40;
-    color: #fff;
-    padding: 10px 10px 30px;
-    margin: 0 auto;
-    margin-bottom: 30px;
-    width: 450px;
-    height: 350px;
-    border-radius: 10px;
- }
- 
+  font-family: "Signika", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  background-color: #343a40;
+  color: #fff;
+  padding: 10px 10px 30px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  width: 450px;
+  height: 350px;
+  border-radius: 10px;
+}
 
- .container{
-    width: auto;
-    overflow: auto;
-    background-image: url(../image/fondo.png);
-    /* background-image: url(../image/Fondo2.png); */
+.container {
+  width: auto;
+  overflow: auto;
+  background-image: url(../image/fondo.png);
+  /* background-image: url(../image/Fondo2.png); */
 
-    background-size: 60% auto;
-    height: 80vh;
- }
+  background-size: 60% auto;
+  height: 80vh;
+}
 
+.contactTextarea {
+  resize: none;
+}
+.todosCampos {
+  color: rgb(223, 16, 16);
+}
