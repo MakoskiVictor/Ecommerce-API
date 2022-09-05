@@ -152,7 +152,7 @@ function Formulario() {
 
     return (
         <div className={style.containerMain}>
-            <h2 className={style.titulo}>Creacion de Producto</h2>
+            <h2 className={style.titulo}>Product creation</h2>
             {console.log(error)}
             <form onSubmit={(e) => handleSubmit(e)}>
 
