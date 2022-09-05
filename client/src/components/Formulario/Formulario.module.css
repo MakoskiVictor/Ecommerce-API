@@ -96,6 +96,8 @@ input {
    font-size: 20px;
    font-weight: 500;
    background-color: #343a40;
+  /* background: url("../image/FondoCreateProduct.jpg");
+   background-size:     cover;  */
    color: #fff;
    padding: 10px 10px 30px;
    margin: 0 auto;
@@ -103,6 +105,8 @@ input {
    width: 380px;
    height: auto;
    border-radius: 10px;
+  /*-webkit-box-shadow: 5px 5px 50px 5px #000000; 
+  box-shadow: 5px 5px 50px 5px #000000;*/
 }
 
 /* input {

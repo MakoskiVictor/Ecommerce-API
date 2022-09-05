@@ -10,7 +10,8 @@ main {
    text-align: left;
    margin-bottom: 10px;
    color: white;
-   background: url("../image/FondoFilter.jpg");
+   background: url("../image/FondoTarjetas.jpg");
+   background-size:     cover;  
    padding-top: 10px;
    padding-bottom: 10px;
    border-radius: 8px;
