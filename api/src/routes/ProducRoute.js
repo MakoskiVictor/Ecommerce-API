@@ -11,9 +11,9 @@ router.put("/:id", async (req, res, next) => {
   const product = await Product.findOne({ where: { id: id } });
   try {
     if (sumOrRes == "suma") {
-      product.stock = product.stock + stock;
+      product.stock = product.stock + Number(stock);
     } else if (sumOrRes == "resta") {
-      product.stock = product.stock - stock;
+      product.stock = product.stock - Number(stock);
     }
     await product.save();
     res.send("stock actualizado correctamente")
