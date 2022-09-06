@@ -18,10 +18,9 @@ router.put("/:id", async (req, res, next) => {
     const { sumOrRes, stock, size } = req.body;
     const productStock = await Stock.findOne({ where: { productId: id, productSize: size } });
     try {
-        console.log(typeof productStock, typeof stock)
-      if (sumOrRes == "suma") {
+      if (sumOrRes) {
         productStock.stock = productStock.stock + stock;
-      } else if (sumOrRes == "resta") {
+      } else {
         productStock.stock = productStock.stock - stock;
       }
       await productStock.save();
