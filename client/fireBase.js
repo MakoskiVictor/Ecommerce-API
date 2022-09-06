@@ -2,13 +2,13 @@
 import firebase from "firebase";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAg7gBlE7U9uA67vJwSKfjMW5Td9RPuIqc",
-    authDomain: "cio-clothes.firebaseapp.com",
-    projectId: "cio-clothes",
-    storageBucket: "cio-clothes.appspot.com",
-    messagingSenderId: "471354747320",
-    appId: "1:471354747320:web:fdf0c10e5da658ae26474d",
-    measurementId: "G-SPS72NZVY0"
+    apiKey: "AIzaSyDbOFjInaJ2C5dZFF7kQ7D4H_IoPXtfzME",
+    authDomain: "cio-clothes-1c354.firebaseapp.com",
+    projectId: "cio-clothes-1c354",
+    storageBucket: "cio-clothes-1c354.appspot.com",
+    messagingSenderId: "355957269528",
+    appId: "1:355957269528:web:1029840c00a731dfa30f6d",
+    measurementId: "G-JG6CD38YD4"
   };
   
   // Initialize Firebase
