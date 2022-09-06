@@ -16,6 +16,7 @@ import About from "./components/About/About.jsx";
 import ComponentProducts from "./components/ComponentProducts/ComponentProducts.jsx";
 import Contact from "./components/Contact/Contact";
 import "./App.css";
+import GoogleLogin from 'react-google-login';
 
 function App() {
    return (
@@ -50,5 +51,16 @@ function App() {
       </BrowserRouter>
    );
 }
+
+//  const respuestaGoogle = (respuesta) =>{
+//   console.log(respuesta)
+//  }
+  // <GoogleLogin
+  //   clientId="658977310896-knrl3gka66fldh83dao2rhgbblmd4un9.apps.googleusercontent.com"
+  //   buttonText="Login"
+  //   onSuccess={responseGoogle}
+  //   onFailure={responseGoogle}
+  //   cookiePolicy={'single_host_origin'}
+  // />
 
 export default App;
