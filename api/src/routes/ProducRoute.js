@@ -6,12 +6,19 @@ const axios = require("axios");
 const router = Router();
 
 router.post("/", async (req, res, next) => {
-  const { id, name, price, image, brand, gender, categoryId, stock, size } =
+  const { id, name, price, image, brand, gender, categoryId, stock } =
     req.body;
   try {
-    const newProduct = await Product.findOrCreate({
-      where: { id, name, price, image, brand, gender, categoryId, stock, size },
+    await Product.findOrCreate({
+      where: { id, name, price, image, brand, gender, categoryId, stock },
     });
+    stock.forEach(item=>{
+      Stock.create({
+        productSize: item.size,
+        stock: item.stock,
+        productId: id
+      })
+    })
     res.status(202).send("product created successfully");
   } catch (err) {
     next(err);
