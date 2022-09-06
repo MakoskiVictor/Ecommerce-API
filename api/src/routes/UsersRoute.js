@@ -72,6 +72,57 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.put("/:userId", async (req, res, next) => {
+  const { type } = req.query;
+  const { userId } = req.params;
+  const user = await User.findOne({ where: { id: userId } });
+  try {
+    switch (type) {
+      case "admin":
+        if (user.isAdmin) {
+          user.isAdmin = false;
+          await user.save();
+          res.send(`the user ${user.name} is no longer an administrator`);
+        } else {
+          user.isAdmin = true;
+          await user.save();
+          res.send(`the user ${user.name} is now an administrator`);
+        }
+        break;
+      case "name":
+        const { name, lastName } = req.body;
+        user.name = name;
+        user.lastName = lastName;
+        await user.save();
+        res.send(`name changed successfully`);
+        break;
+      case "image":
+        const { newImage } = req.body;
+        user.image = newImage;
+        await user.save();
+        res.send(`image changed successfully`);
+      case 'address':
+        const { newAddress } = req.body;
+        user.address = newAddress;
+        await user.save()
+        res.send(`address changed successfully`)
+      case 'password':
+        const { oldPassword, newPassword } = req.body;
+        if(user.password === oldPassword){
+          user.password = newPassword;
+          await user.save()
+          res.send(`password changed successfully`)
+        } else {
+          res.send(`Password is incorrect`)
+        }
+      default:
+        break;
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
 // {
 //     "email": "enzoholgadocdb@gmail.com",
 //     "password": "huevos123",
