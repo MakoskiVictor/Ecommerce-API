@@ -12,7 +12,8 @@ export const CHANGE_PAGINATED_PRODUCTS = "CHANGE_PAGINATED_PRODUCTS";
 export const CHANGE_PAGINATED_PAGE = "CHANGE_PAGINATED_PAGE";
 export const SEARCH_PRODUCT_ID = "SEARCH_PRODUCT_ID";
 export const DELETE_DETAILS = "DELETE_DETAILS";
-export const CHANGE_FILTER_NAME="CHANGE_FILTER_NAME";
+export const CHANGE_FILTER_NAME = "CHANGE_FILTER_NAME";
+export const ADD_PRODUCT_CARRY = "ADD_PRODUCT_CARRY";
 
 export function searchNameProduct(name) {
    return async function (dispatch) {
@@ -186,6 +187,20 @@ export function changePaginatedPage(newPage) {
    };
 }
 
+export function addProductCarry(Size, idProduct) {
+   return async function (dispatch) {
+      try {
+         return dispatch({
+            type: ADD_PRODUCT_CARRY,
+            payload: { size: Size, id: idProduct },
+         });
+      } catch (error) {
+         console.log(error);
+      }
+   };
+   console.log("Entra weewweew");
+}
+
 /* CREAR PRODUCTO */
 
 export function CreateNewProduct(payload) {
@@ -197,3 +212,5 @@ export function CreateNewProduct(payload) {
       return response;
    };
 }
+
+

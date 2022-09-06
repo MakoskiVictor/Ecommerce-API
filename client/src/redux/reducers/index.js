@@ -1,7 +1,8 @@
 import {
    SEARCH_NAME, CHANGE_FILTER_GENDER, CHANGE_FILTER_CATEGORY,
    CHANGE_FILTER_BRAND, GET_CATEGORYS, CHANGE_FILTER_MAX, CHANGE_FILTER_MIN, CHANGE_FILTER_PRICE,
-   CHANGE_PAGINATED_PRODUCTS, CHANGE_PAGINATED_PAGE, SEARCH_PRODUCT_ID, DELETE_DETAILS,CHANGE_FILTER_NAME
+   CHANGE_PAGINATED_PRODUCTS, CHANGE_PAGINATED_PAGE, SEARCH_PRODUCT_ID, DELETE_DETAILS, CHANGE_FILTER_NAME,
+   ADD_PRODUCT_CARRY
 } from "../actions";
 
 const PAGE_START = 1;
@@ -15,6 +16,7 @@ const initialState = {
       filterCategory: 0, min: 0, max: 2000, filterForPrice: false
    },
    paginated: { page: PAGE_START, productsView: [] },
+   carryProducts: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -33,8 +35,8 @@ const rootReducer = (state = initialState, action) => {
          };
       case DELETE_DETAILS:
          return {
-             ...state,
-             details: action.payload
+            ...state,
+            details: action.payload
          };
       case GET_CATEGORYS:
          return {
@@ -98,6 +100,12 @@ const rootReducer = (state = initialState, action) => {
             ...state,
             filters: { ...state.filters, nameProductSearched: action.payload, filterBrand: [] },
             paginated: { ...state.paginated, page: PAGE_START }
+         };
+      case ADD_PRODUCT_CARRY:
+
+         return {
+            ...state,
+            carryProducts: [...state.carryProducts, { id: action.payload.id, size: action.payload.size }]
          };
       default:
          return state;
