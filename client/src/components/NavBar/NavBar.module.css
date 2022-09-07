@@ -1,76 +1,86 @@
-*{
-    text-decoration: none;
+* {
+   text-decoration: none;
 }
-.container{
-    display: flex;
-    justify-content: space-between;
-}
-
-.letra{
-    text-align:initial;
-    justify-content: space-between;
-    color: white;
-    text-decoration: none;
-    width: 100px;
-    margin-left: 80px;
+.container {
+   display: flex;
+   justify-content: space-between;
 }
 
-.letra:hover { 
-    color: green;
+.letra {
+   text-align: initial;
+   justify-content: space-between;
+   color: white;
+   text-decoration: none;
+   width: 100px;
+   margin-left: 80px;
 }
 
-.NavUl{
-    display: flex;
-    justify-content: space-between;
-    align-items:center;
-    list-style: none;
-    width: 80%;
+.letra:hover {
+   color: green;
+}
+
+.NavUl {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   list-style: none;
+   width: 80%;
 }
 
 .NavBarComplete {
-    /* background-color: #b2785b; */
-    background: url("../image/FondoNavBar.jpg");
-       /* background-color: #f77f00; */
-	box-sizing: border-box;
-    display: flex;
-    align-items: center;
-	width: 100%;
-	text-align: left;
-	font: bold 16px sans-serif;
-	padding: 3px 5px;
-	margin-top: 0px;
-    border-bottom: 5px solid white;
+   /* background-color: #b2785b; */
+   background: url("../image/FondoNavBar.jpg");
+   /* background-color: #f77f00; */
+   box-sizing: border-box;
+   display: flex;
+   align-items: center;
+   width: 100%;
+   text-align: left;
+   font: bold 16px sans-serif;
+   padding: 3px 5px;
+   margin-top: 0px;
+   border-bottom: 5px solid white;
 }
-
 
 /* IZQUIERDA */
 
-.left{
-	width: 20%;
+.left {
+   width: 20%;
 }
-.center{
-    width: 40%;
+.center {
+   width: 40%;
 }
 
 .NavBarComplete .logo {
-    border-radius: 5rem;
-    margin-left: 3rem;
-    }
-    .logo:hover {
-    transform: scale(1.025, 1.025);
-    filter: drop-shadow(0 0 12px white);
-    }; 
-
+   border-radius: 5rem;
+   margin-left: 3rem;
+}
+.logo:hover {
+   transform: scale(1.025, 1.025);
+   filter: drop-shadow(0 0 12px white);
+}
 
 /* CENTRO */
-
-
-
 
 /* DERECHA */
 
 .right {
-    width: 20%;
+   width: 20%;
 }
 
+/*     LOGIN   */
 
+.ModalAbiertoBackground {
+   position: absolute;
+   background-color: #273141c3;
+   top: 0;
+   width: 100%;
+   height: 100vh;
+}
+
+.ModalLogin {
+   position: absolute;
+   left: 50%;
+   transform: translateX(-50%);
+   top: 140%;
+}
