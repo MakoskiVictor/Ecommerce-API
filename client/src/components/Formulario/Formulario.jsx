@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { CreateNewProduct } from "../../redux/actions"
 
+// instalar sweetalert y usarla, crear nuevos inputs: talle, y stock 
+
 
 // validacion de errores
 function validate(input) {
@@ -34,9 +36,9 @@ function validate(input) {
     }
     else if (!/^[a-zA-Z ]*$/.test(input.name)) {
         errores.name = "The name must only contain letters"
-    } else if(input.name.startsWith(' ')){
+    } else if (input.name.startsWith(' ')) {
         errores.name = "Dont input blank spaces"
-    } else if(input.name.endsWith(' ')){
+    } else if (input.name.endsWith(' ')) {
         errores.name = "Dont input blank space"
     }
 
@@ -47,10 +49,10 @@ function validate(input) {
     }
     else if (input.price < 0) {
         errores.price = "The price must be a positive number"
-    } else if(input.price.length===0){
+    } else if (input.price.length === 0) {
         errores.price = "The Price is required"
     }
-    else if (!isNumeric(input.price)){
+    else if (!isNumeric(input.price)) {
         errores.price = "The price must be a positive number"
     }
 
@@ -70,9 +72,9 @@ function validate(input) {
     }
     else if (input.image.includes("http://")) {
         errores.image = "The URL must not contain the text 'http://'"
-    } else if(input.image.startsWith(' ')){
+    } else if (input.image.startsWith(' ')) {
         errores.image = "Dont input blank spaces"
-    } else if(input.image.endsWith(' ')){
+    } else if (input.image.endsWith(' ')) {
         errores.image = "Dont input blank space"
     }
 
@@ -89,9 +91,9 @@ function validate(input) {
     }
     else if (!/^[a-zA-Z ]*$/.test(input.brand)) {
         errores.brand = "The Brand name must only contain letters"
-    } else if(input.brand.startsWith(' ')){
+    } else if (input.brand.startsWith(' ')) {
         errores.brand = "Dont input blank spaces"
-    } else if(input.brand.endsWith(' ')){
+    } else if (input.brand.endsWith(' ')) {
         errores.brand = "Dont input blank space"
     }
     /*   GENDER     */
@@ -271,7 +273,7 @@ function Formulario() {
                         </div>
                         :
                         <div className={style.select}>
-                            <select  className={style.select} onChange={(e) => handleSelectCategory(e)} >
+                            <select className={style.select} onChange={(e) => handleSelectCategory(e)} >
                                 <option selected disabled>Select Category</option>
                                 <option value="8799">Dress</option>
                                 <option value="3630">Jeans</option>

@@ -7,27 +7,36 @@ const getApiProducts = require("./getApiProducts");
 const router = Router();
 
 router.post("/", async (req, res, next) => {
-  const { name, price, image, brand, gender, categoryId, stock, description } =
-    req.body;
-  // let id = 0;
-  // let l = UUID(id).uuid()
-  // console.log(l)
-  let id = uuidv4();
-  try {
-    const product = await Product.findOrCreate({
-      where: { id, name, price, image, brand, gender, categoryId, description },
-    });
-    stock.forEach((item) => {
-      Stock.create({
-        productSize: item.size,
-        stock: item.stock,
-        productId: id,
+   const { name, price, image, brand, gender, categoryId, stock, description } =
+      req.body;
+   // let id = 0;
+   // let l = UUID(id).uuid()
+   // console.log(l)
+   let id = uuidv4();
+   try {
+      const product = await Product.findOrCreate({
+         where: {
+            id,
+            name,
+            price,
+            image,
+            brand,
+            gender,
+            categoryId,
+            description,
+         },
       });
-    });
-    res.status(202).send("product created successfully");
-  } catch (err) {
-    next(err);
-  }
+      stock.forEach((item) => {
+         Stock.create({
+            productSize: item.size,
+            stock: item.stock,
+            productId: id,
+         });
+      });
+      res.status(202).send("product created successfully");
+   } catch (err) {
+      next(err);
+   }
 });
 
 router.get("/", async (req, res, next) => {
