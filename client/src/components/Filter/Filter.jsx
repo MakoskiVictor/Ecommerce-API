@@ -54,8 +54,6 @@ export class Filter extends Component {
   }
 
   render() {
-    console.log(document.getElementsByClassName(style.NameFilter).style);
-
     const { nameProductSearched, filterBrand, filterGender, filterCategory, filterForPrice, min, max } = this.props.filters;
     const { categorys, products, paginated } = this.props;
     let values = this.filtradoProductos(products, paginated, categorys, filterBrand,

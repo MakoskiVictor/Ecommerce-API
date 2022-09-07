@@ -15,8 +15,9 @@ import Footer from "./components/Footer/Footer.jsx";
 import About from "./components/About/About.jsx";
 import ComponentProducts from "./components/ComponentProducts/ComponentProducts.jsx";
 import Contact from "./components/Contact/Contact";
+import Carry from "./components/Carry/Carry";
 import "./App.css";
-import GoogleLogin from 'react-google-login';
+//import GoogleLogin from 'react-google-login';
 
 function App() {
    return (
@@ -33,6 +34,7 @@ function App() {
             <Route exact path="/createProduct" component={Formulario} /> {/*Se pone asi porque los componentes estan creadas como Funcion*/}
             <Route path="/about" component={About}></Route>
             <Route path="/contact" component={Contact} />
+            <Route path="/carry"><Carry /> </Route>
             {/* <Route exact path="/">aca va el componente home</Route> */}
             {/* <Route exact path="/products">aca va el componente products</Route> */}
             {/* <Route path="/products/:id">aca va el componente detalles</Route> */}
