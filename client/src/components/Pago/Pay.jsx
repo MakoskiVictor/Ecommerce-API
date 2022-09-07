@@ -90,7 +90,7 @@
 //     return actions.order.capture().then(async function (detalles) {
 //       // en detalles esta todo lo que pasa en nuestro pago en un objeto
 //     //   const arregloSoloId = detalles.purchase_units[0].items.map((e) => {
-//     //     let id = e.description.split("-")[1];
+//     //     let id = e.description.split("-")[1];payer
 //     //     return id;
 //     //   });
 //     //   const productsArray = detalles.purchase_units[0].items.map((e) => {
@@ -162,14 +162,9 @@
 //   //   status: "COMPLETED"
 //   //   update_time: "2022-06-29T17:22:20Z"
 
-//   const res = window.innerWidth;
 
-//   const style = {
-//     layout: "vertical",
-//     color: "gold",
-//     shape: "rect",
-//     label: "pay",
-//   };
+
+  
 
 //   const onCancel = (data) => {
 //     // en data hay un order id que es un objeto {orderID: '6V920429E17498936'}
@@ -178,7 +173,6 @@
 //       icon: "error",
 //       title: "Payment Cancelled",
 //       text: "Your payment has been cancelled and will not be charged",
-//       // footer: '<a href="">Why do I have this issue?</a>'
 //     });
 //   };
 
@@ -187,47 +181,33 @@
 //       icon: "error",
 //       title: "Payment Error",
 //       text: "There has been an error in your payment and will not be charged",
-//       // footer: '<a href="">Why do I have this issue?</a>'
 //     });
 //     console.log("Error: ", error);
 //   };
 
 //   return (
-//     <div className="flex flex-col select-none">
-//       <span className="bg-primary-200">
+//     <div className="">
+//       <span className="">
 //       <Link to = "/">
-//       <button className="ml-5 mt-5 rounded bg-primary-400 p-3 hover:bg-primary-300">Back to home</button>
+//       <button className="">Back to home</button>
 //       </Link>
 //       </span>
-//       <div className="mb-5 bg-primary-200 w-full">
+//       <div className="">
       
-//         <h1 className=" flex flex-col text-center text-primary-400 font-Open text-[90px] tracking-tight font-extrabold ">
+//         <h1 className="">
 //           CIOCLOTHES
 //         </h1>
 //       </div>
-//       <div className="w-full ">
+//       <div className="">
 //         <div
-//           name="holi"
-//           style={
-//             res < 768
-//               ? {
-//                   width: "90%",
-//                   height: "100%",
-//                   margin: "0 auto",
-//                 }
-//               : {
-//                   width: "500px",
-//                   height: "100%",
-//                   margin: "0 auto",
-//                 }
-//           }
+//           name="CIOCLOTHES"
 //         >
 //         <PayPalScriptProvider>
 //             <PayPalButtons
 //               createOrder={(data, actions) => createOrder(data, actions)}
 //               onApprove={(data, actions) => onApprove(data, actions)}
 //               onCancel={onCancel}
-//               style={style}
+             
 //               onError={onError}
 //             />
 //         </PayPalScriptProvider>
