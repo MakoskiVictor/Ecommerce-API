@@ -40,12 +40,11 @@ router.get("/", async (req, res, next) => {
     const stock = [0, 5, 10, 20, 30, 40, 50];
     let products = [];
     let Categorias = [];
-    const apiKey1 = "bbee7c4c6amsh633ef60fb92b041p1aabb2jsn29f64ef88bd5";
-    const apikey2 = "1a971a71b0mshb7b5121700413f3p13574ejsn31f0b3c12ee4";
+    const apiKey = "2590a61287mshdfce7dfafec10f7p1a19e2jsn9eaa4c140af5";
     for (let index = 0; index < IDs.length; index++) {
       let api = (
         await axios.get(
-          `https://asos2.p.rapidapi.com/products/v2/list?limit=48&store=US&offset=0&categoryId=${IDs[index]}&rapidapi-key=${apikey2}`
+          `https://asos2.p.rapidapi.com/products/v2/list?limit=48&store=US&offset=0&categoryId=${IDs[index]}&rapidapi-key=${apiKey}`
         )
       ).data;
       let categoryGenero = index < 5 ? "Women" : "Men";
