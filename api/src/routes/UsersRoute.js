@@ -6,8 +6,8 @@ const { Op } = require("sequelize");
 const router = Router();
 
 router.get("/login", async (req, res, next) => {
+   const { email, password } = req.body;
    try {
-      const { email, password } = req.body;
       const userValidate = await User.findAll({
          where: { email: email, password: password },
       });
@@ -21,17 +21,6 @@ router.get("/login", async (req, res, next) => {
             address: userValidate[0].dataValues.address,
             isAdmin: userValidate[0].dataValues.isAdmin,
          });
-         if (Object.entries(userValidate).length === 0) {
-            res.send(false);
-         } else {
-            res.send({
-               name: userValidate[0].dataValues.name,
-               lastName: userValidate[0].dataValues.lastName,
-               image: userValidate[0].dataValues.image,
-               address: userValidate[0].dataValues.address,
-               isAdmin: userValidate[0].dataValues.isAdmin,
-            });
-         }
       }
    } catch (err) {
       next(err);
