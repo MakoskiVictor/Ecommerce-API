@@ -19,6 +19,7 @@ import Contact from "./components/Contact/Contact";
 import "./App.css";
 // import GoogleLogin from "react-google-login";
 import Login from "./components/Login/Login";
+// import payment from "./components/Pago/Pay"
 
 function App() {
    return (
@@ -42,6 +43,7 @@ function App() {
                <Route path="/about" component={About}></Route>
                <Route path="/contact" component={Contact} />
                <Route exact path="/register" component={Register} />
+               {/* <Route exact path="/payment" component={payment} /> */}
                {/* <Route exact path="/products">aca va el componente products</Route> */}
                {/* <Route path="/products/:id">aca va el componente detalles</Route> */}
                {/* <Route exact path="/about">aca va el componente about</Route> */}
