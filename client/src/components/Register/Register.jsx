@@ -36,7 +36,7 @@ export default function Register() {
     }
   };
 
-  //REGISTER FUNCTION (POST)
+  // REGISTER FUNCTION (POST)
 
   const register = async () => {
     return await axios
