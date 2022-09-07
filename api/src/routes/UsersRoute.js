@@ -29,29 +29,40 @@ router.get("/login", async (req, res, next) => {
 
 router.get("/", async (req, res, next) => {
   const { name, email } = req.query;
+  let allUsers;
   try {
     if (name) {
-      const usersByName = await User.findAll({
+      allUsers = await User.findAll({
         where: {
           name: {
             [Op.iLike]: `%${name}%`,
           },
         },
-      })
-      res.send(usersByName)
+      });
     } else if (email) {
-      const usersByEmail = await User.findAll({
+      allUsers = await User.findAll({
         where: {
           email: {
             [Op.iLike]: `%${email}%`,
           },
         },
-      })
-      res.send(usersByEmail)
+      });
     } else {
-      const allUsers = await User.findAll();
-      res.send(allUsers);
+      allUsers = await User.findAll();
     }
+    let users = allUsers.map((item) => {
+      return {
+        id: item.id,
+        email: item.email,
+        name: item.name,
+        lastName: item.lastName,
+        image: item.image,
+        address: item.address,
+        isAdmin: item.isAdmin,
+        isBaned: item.isBaned,
+      };
+    });
+    res.send(users);
   } catch (err) {
     next(err);
   }
