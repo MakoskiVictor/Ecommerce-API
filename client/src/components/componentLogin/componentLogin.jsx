@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useDispatch} from "react-redux";
-import {postLogin, googleLog} from "../../../Redux/Reducer/reducer";
 import '../componentLogin/'
 import firebase from "../../../firebase"
 
