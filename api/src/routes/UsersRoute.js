@@ -1,10 +1,11 @@
 const { Router } = require("express");
 const { User } = require("../db");
 const axios = require("axios");
+const { Op } = require("sequelize");
 
 const router = Router();
 
-router.get("/", async (req, res, next) => {
+router.get("/login", async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const userValidate = await User.findAll({
@@ -20,6 +21,36 @@ router.get("/", async (req, res, next) => {
         address: userValidate[0].dataValues.address,
         isAdmin: userValidate[0].dataValues.isAdmin,
       });
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get("/", async (req, res, next) => {
+  const { name, email } = req.query;
+  try {
+    if (name) {
+      const usersByName = await User.findAll({
+        where: {
+          name: {
+            [Op.iLike]: `%${name}%`,
+          },
+        },
+      })
+      res.send(usersByName)
+    } else if (email) {
+      const usersByEmail = await User.findAll({
+        where: {
+          email: {
+            [Op.iLike]: `%${email}%`,
+          },
+        },
+      })
+      res.send(usersByEmail)
+    } else {
+      const allUsers = await User.findAll();
+      res.send(allUsers);
     }
   } catch (err) {
     next(err);
@@ -101,19 +132,19 @@ router.put("/:userId", async (req, res, next) => {
         user.image = newImage;
         await user.save();
         res.send(`image changed successfully`);
-      case 'address':
+      case "address":
         const { newAddress } = req.body;
         user.address = newAddress;
-        await user.save()
-        res.send(`address changed successfully`)
-      case 'password':
+        await user.save();
+        res.send(`address changed successfully`);
+      case "password":
         const { oldPassword, newPassword } = req.body;
-        if(user.password === oldPassword){
+        if (user.password === oldPassword) {
           user.password = newPassword;
-          await user.save()
-          res.send(`password changed successfully`)
+          await user.save();
+          res.send(`password changed successfully`);
         } else {
-          res.send(`Password is incorrect`)
+          res.send(`Password is incorrect`);
         }
       case "ban":
         if (user.isBaned) {
