@@ -115,6 +115,17 @@ router.put("/:userId", async (req, res, next) => {
         } else {
           res.send(`Password is incorrect`)
         }
+      case "ban":
+        if (user.isBaned) {
+          user.isBaned = false;
+          await user.save();
+          res.send(`the user ${user.name} has been unbanned`);
+        } else {
+          user.isBaned = true;
+          await user.save();
+          res.send(`the user ${user.name} has been banned`);
+        }
+        break;
       default:
         break;
     }
