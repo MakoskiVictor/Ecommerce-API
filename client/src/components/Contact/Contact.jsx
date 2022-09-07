@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import emailjs from "@emailjs/browser";
 import { useHistory } from "react-router-dom";
 import style from "./Contact.module.css";
+import swal from "sweetalert";
+
 export default function Contact() {
   const history = useHistory();
 
@@ -68,10 +70,20 @@ export default function Contact() {
           "ubztnK0ky6QEfP_4O"
         )
         .catch((error) => alert(error));
-      alert("Message sent succesfully");
+        swal({
+          title: "Message sent succesfull",
+          icon: "success",
+          button: "Ok",
+          timer: 2000
+        });
       history.push("/");
     } else {
-      alert("All fields must be completed");
+      swal({
+        title: "All fields must be completed",
+        icon: "error",
+        button: "Ok",
+        timer: 3000
+      });
     }
   };
   function comprobacionInput(input) {

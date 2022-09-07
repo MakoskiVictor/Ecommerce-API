@@ -4,30 +4,67 @@ const { Stock } = require("../db");
 const router = Router();
 
 router.get("/:id", async (req, res, next) => {
-    const {id} = req.params;
+  const { id } = req.params;
   try {
-    const stock = await Stock.findAll({where: {productId: id}})
-    res.send(stock)
+    const stock = await Stock.findAll({ where: { productId: id } });
+    res.send(stock);
   } catch (error) {
     next(error);
   }
 });
 
-router.put("/:id", async (req, res, next) => {
-    const { id } = req.params;
-    const { sumOrRes, stock, size } = req.body;
-    const productStock = await Stock.findOne({ where: { productId: id, productSize: size } });
-    try {
-      if (sumOrRes) {
-        productStock.stock = productStock.stock + stock;
-      } else {
-        productStock.stock = productStock.stock - stock;
+router.put("/drop", async (req, res, next) => {
+  const { stockProducts } = req.body;
+  const productsChanged = []
+  try {
+    for (let i = 0; i < stockProducts.length; i++) {
+      const productStock = await Stock.findOne({
+        where: { productId: stockProducts[i].id, productSize: stockProducts[i].size },
+      });
+      if(productStock.stock>0){
+        productStock.stock = await productStock.stock - Number(stockProducts[i].stock);
       }
       await productStock.save();
-      res.send(productStock)
-    } catch (err) {
-      next(err);
+      productsChanged.push(productStock)
     }
-  });
+    // stockProducts.forEach(async (item) => {
+    //   const productStock = await Stock.findOne({
+    //     where: { productId: item.id, productSize: item.size },
+    //   });
+    //   productStock.stock = await productStock.stock - Number(item.stock);
+    //   await productStock.save();
+    //   productsChanged.push(productStock)
+    // });
+    res.send(productsChanged);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put('/add', async (req, res, next)=> {
+  const { stockProducts } = req.body;
+  const productsChanged = []
+  try {
+    for (let i = 0; i < stockProducts.length; i++) {
+      const productStock = await Stock.findOne({
+        where: { productId: stockProducts[i].id, productSize: stockProducts[i].size },
+      });
+      productStock.stock = await productStock.stock + Number(stockProducts[i].stock);
+      await productStock.save();
+      productsChanged.push(productStock)
+    }
+    // stockProducts.forEach(async (item) => {
+    //   const productStock = await Stock.findOne({
+    //     where: { productId: item.id, productSize: item.size },
+    //   });
+    //   productStock.stock = await productStock.stock - Number(item.stock);
+    //   await productStock.save();
+    //   productsChanged.push(productStock)
+    // });
+    res.send(productsChanged);
+  } catch (err) {
+    next(err);
+  }
+})
 
 module.exports = router;
