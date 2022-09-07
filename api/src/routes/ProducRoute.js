@@ -2,7 +2,6 @@ const { Router } = require("express");
 const { Product, Category, Stock } = require("../db");
 const { Op } = require("sequelize");
 const axios = require("axios");
-const UUID = require("uuid-int");
 const { v4: uuidv4 } = require("uuid");
 
 const router = Router();
