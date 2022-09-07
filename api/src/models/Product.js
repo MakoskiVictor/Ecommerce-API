@@ -7,9 +7,9 @@ module.exports = (sequelize) => {
     "product",
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
-        primaryKey: true,
+        primaryKey: true
       },
       name: {
         type: DataTypes.STRING,
@@ -30,6 +30,10 @@ module.exports = (sequelize) => {
       gender: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      description: {
+        type: DataTypes.STRING(1000),
+        allowNull: false
       }
     },
     {
