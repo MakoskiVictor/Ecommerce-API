@@ -26,7 +26,7 @@ import Register from "./components/Register/Register.jsx";
 function App() {
    return (
       <BrowserRouter>
-         <div className="App">
+         <div className="App"> 
             {/* nav bar */}
             <NavBar />
             <Switch>
