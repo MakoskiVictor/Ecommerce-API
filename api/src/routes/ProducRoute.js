@@ -2,23 +2,29 @@ const { Router } = require("express");
 const { Product, Category, Stock } = require("../db");
 const { Op } = require("sequelize");
 const axios = require("axios");
+const UUID = require("uuid-int");
+const { v4: uuidv4 } = require("uuid");
 
 const router = Router();
 
 router.post("/", async (req, res, next) => {
-  const { id, name, price, image, brand, gender, categoryId, stock } =
+  const { name, price, image, brand, gender, categoryId, stock, description } =
     req.body;
+  // let id = 0;
+  // let l = UUID(id).uuid()
+  // console.log(l)
+  let id = uuidv4();
   try {
-    await Product.findOrCreate({
-      where: { id, name, price, image, brand, gender, categoryId, stock },
+    const product = await Product.findOrCreate({
+      where: { id, name, price, image, brand, gender, categoryId, description },
     });
-    stock.forEach(item=>{
+    stock.forEach((item) => {
       Stock.create({
         productSize: item.size,
         stock: item.stock,
-        productId: id
-      })
-    })
+        productId: id,
+      });
+    });
     res.status(202).send("product created successfully");
   } catch (err) {
     next(err);
@@ -37,7 +43,6 @@ router.get("/", async (req, res, next) => {
     const productsIds = [];
     const apiKey1 = "bbee7c4c6amsh633ef60fb92b041p1aabb2jsn29f64ef88bd5";
     const apikey2 = "1a971a71b0mshb7b5121700413f3p13574ejsn31f0b3c12ee4";
-
     for (let index = 0; index < IDs.length; index++) {
       let api = (
         await axios.get(
@@ -69,25 +74,27 @@ router.get("/", async (req, res, next) => {
       let genero = index1 < 5 ? "Women" : "Men";
       let ProductosPorCategoria = [];
       for (let index = 0; index < producsNew.length; index++) {
+        let id = uuidv4();
         if (!productsIds.includes(producsNew[index].id)) {
           var createProduct = await Product.findOrCreate({
             where: {
-              id: producsNew[index].id,
+              id: id,
               name: producsNew[index].name,
               price: producsNew[index].price.current.value,
               brand: producsNew[index].brandName,
               image: producsNew[index].imageUrl,
               gender: genero,
-              categoryId: producsNew[index].categoryId
+              categoryId: producsNew[index].categoryId,
+              description: `${producsNew[index].name} is very good quality clothing, made by the ${producsNew[index].brandName} brand in the USA with the best quality materials. We have different sizes and colors of this product so you can choose the one you like best.`,
             },
           });
-          size.forEach(item=>{
+          size.forEach((item) => {
             Stock.create({
               productSize: item,
               stock: stock[Math.floor(Math.random() * 7)],
-              productId: producsNew[index].id
-            })
-          })
+              productId: id,
+            });
+          });
         }
         ProductosPorCategoria.push(createProduct);
       }
