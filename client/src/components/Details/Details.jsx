@@ -45,7 +45,7 @@ export default function Details(props) {
     localStorage.setItem(CARRY_LOCALHOST, JSON.stringify(Data));
 
     return swal.fire({
-      title: `Producto Añadido ${elemento.details.name} al carrito!`,
+      title: `Product Added ${elemento.details.name} to shopping cart!`,
       position: 'bottom-start',
       icon: 'success',
       showConfirmButton: false,
@@ -56,7 +56,8 @@ export default function Details(props) {
   function changeQuanty(e) {
     SetstateQuanty(e.target.value);
   }
-  function changeSize(e, indice) {
+  function changeSize(e, indice,stock) {
+    if(stock>0)
     SetstateSize({ size: stock_by_ID[indice].productSize, stock: stock_by_ID[indice].stock })
   }
 
@@ -89,7 +90,7 @@ export default function Details(props) {
                   return (
                     <label id={sizeStock.productSize === stateSize.size ? style.SizeSeleccionada : style.SizeNoSeleccionada}
                     className={sizeStock.stock==0?style.SizeSoldOut:style.SizeOnSale}
-                      onClick={(e) => changeSize(e, index)}>
+                      onClick={(e) => changeSize(e, index,sizeStock.stock)}>
                       {sizeStock.productSize}  </label>)
                 })
                 }</p>
