@@ -20,12 +20,12 @@ import Carry from "./components/Carry/Carry";
 import "./App.css";
 // import GoogleLogin from "react-google-login";
 import Login from "./components/Login/Login";
-// import payment from "./components/Pago/Pay"
+import payment from "./components/Pago/Pay"
 
 function App() {
    return (
       <BrowserRouter>
-         <div className="App">
+         <div className="App"> 
             {/* nav bar */}
             <NavBar />
             <Switch>
@@ -45,7 +45,7 @@ function App() {
                <Route path="/contact" component={Contact} />
                <Route exact path="/register" component={Register} />
                <Route path="/carry"><Carry /> </Route>
-               {/* <Route exact path="/payment" component={payment} /> */}
+               <Route exact path="/payment" component={payment} />
                {/* <Route exact path="/products">aca va el componente products</Route> */}
                {/* <Route path="/products/:id">aca va el componente detalles</Route> */}
                {/* <Route exact path="/about">aca va el componente about</Route> */}

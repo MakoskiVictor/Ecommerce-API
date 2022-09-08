@@ -17,7 +17,6 @@ const initialState = {
       filterCategory: 0, min: 0, max: 500, filterForPrice: false
    },
    paginated: { page: PAGE_START, productsView: [] },
-   carryProducts: [],
    stock_by_ID: [],
    carryProductsStocks:[],
 };
