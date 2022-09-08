@@ -1,8 +1,9 @@
 .loginContainer {
   max-width: 350px;
-  margin: 0 auto;
+  margin: 15px auto;
   padding: 20px 15px;
-  background-color: #343a40;
+  background: url("../image/FondoNavBar.jpg");
+  background-size: cover;
   color: white;
   border-radius: 15px;
 }

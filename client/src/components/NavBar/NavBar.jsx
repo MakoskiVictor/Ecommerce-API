@@ -4,7 +4,8 @@ import logo_wooly from "../../assets/logo_wooly.png";
 import Style from "./NavBar.module.css"
 import logo from "../image/logo.png"
 import { useState } from "react";
-import ComponentLogin from "../ComponentLogin/ComponentLogin";
+// import ComponentLogin from "../ComponentLogin/ComponentLogin";
+import Login from "../Login/Login";
 /* import { GrCart } from "react-icons/gr"; */
 
 
@@ -55,6 +56,10 @@ export default function NavBar() {
                                     <Link to={"/contact"} className={Style.letra}>
                                         CONTACT
                                     </Link>
+
+                                    <Link to={"/carry"} className={Style.letra}>
+                                        CARRY
+                                    </Link>
                                     {/*<Link to={"/about"} className={Style.letra}>
                         LOGIN
                     </Link>
@@ -88,7 +93,7 @@ export default function NavBar() {
             }
             {openModal &&
                 <div className={Style.ModalLogin}>
-                    <ComponentLogin close={handleClose} />
+                    <Login close={handleClose} />
                 </div>
             }
         </header>

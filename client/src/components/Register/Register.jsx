@@ -4,10 +4,9 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import swal from "sweetalert";
 import { image, address } from "../../assets/constantes";
-
+import styles from "./Register.module.css";
 
 export default function Register() {
-
   //ESTADOS
 
   const [email, setEmail] = useState("");
@@ -15,7 +14,6 @@ export default function Register() {
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-
 
   const history = useHistory();
 
@@ -26,7 +24,7 @@ export default function Register() {
       return true;
     }
     return false;
-  };
+  }
 
   function ValidarName(name) {
     if (!/^[a-zA-Z\ áéíóúÁÉÍÓÚñÑ\s]*$/.test(name)) {
@@ -34,9 +32,9 @@ export default function Register() {
     } else {
       return true;
     }
-  };
+  }
 
-  // REGISTER FUNCTION (POST)
+  //REGISTER FUNCTION (POST)
 
   const register = async () => {
     return await axios
@@ -47,19 +45,16 @@ export default function Register() {
         lastName,
         image,
         address,
-
       })
       .then((response) => {
-        console.log(response)
+        console.log(response);
       });
   };
-
 
   //REGISTER
 
   const handleRegister = async (e) => {
     e.preventDefault();
-
 
     //PROBANDO LAS VALIDACIONES
 
@@ -108,7 +103,7 @@ export default function Register() {
         title: "Passwords not match!",
         icon: "error",
         button: "Ok",
-      })
+      });
     }
 
     if (ValidateEmail(email) === false) {
@@ -116,34 +111,30 @@ export default function Register() {
         title: "Need to use a valid mail!",
         icon: "error",
         button: "Ok",
-      })
+      });
     }
 
     //SI LAS VALIDACIONES ESTAN OK
 
     try {
-
       await register(name, lastName, password, email).then((response) => {
-
         swal({
           title: "User created successfully!",
           icon: "success",
           button: "Ok",
         }).then(() => {
           history.push("/");
-        })
+        });
       });
     } catch (error) {
       console.log(error);
     }
   };
 
-
-
   return (
-    <div>
+    <div className={styles.container}>
       <h1>Register</h1>
-      <form onSubmit={handleRegister}>
+      <form onSubmit={handleRegister} className={styles.inputContainer}>
         <div>
           <input
             type="text"
@@ -192,12 +183,10 @@ export default function Register() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <button
-          type="submit"
-        >
-          Register
+        <button type="submit" className={styles.btnRegister}>
+          REGISTER
         </button>
       </form>
     </div>
-  )
-};
+  );
+}

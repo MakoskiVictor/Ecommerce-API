@@ -16,6 +16,7 @@ import Footer from "./components/Footer/Footer.jsx";
 import About from "./components/About/About.jsx";
 import ComponentProducts from "./components/ComponentProducts/ComponentProducts.jsx";
 import Contact from "./components/Contact/Contact";
+import Carry from "./components/Carry/Carry";
 import "./App.css";
 // import GoogleLogin from "react-google-login";
 import Login from "./components/Login/Login";
@@ -43,6 +44,7 @@ function App() {
                <Route path="/about" component={About}></Route>
                <Route path="/contact" component={Contact} />
                <Route exact path="/register" component={Register} />
+               <Route path="/carry"><Carry /> </Route>
                {/* <Route exact path="/payment" component={payment} /> */}
                {/* <Route exact path="/products">aca va el componente products</Route> */}
                {/* <Route path="/products/:id">aca va el componente detalles</Route> */}
