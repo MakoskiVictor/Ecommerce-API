@@ -17,7 +17,7 @@ router.put("/drop", async (req, res, next) => {
   const { stockProducts } = req.body;
   const productsChanged = []
   try {
-    for (let i = 0; i < stockProducts.length; i++) {
+    for (let i = 0; i < stockProducts?.length; i++) {
       const productStock = await Stock.findOne({
         where: { productId: stockProducts[i].id, productSize: stockProducts[i].size },
       });
