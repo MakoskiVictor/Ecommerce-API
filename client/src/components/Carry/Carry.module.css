@@ -1,0 +1,23 @@
+
+
+.containCarry {
+    justify-content: center;
+    display: flex;
+    
+  }
+
+  .PriceTotal{
+    height: 100px;
+    border: 10px solid #2ac319;
+    border-radius: 10px 10px 10px 10px;
+-webkit-border-radius: 10px 10px 10px 10px;
+-moz-border-radius: 10px 10px 10px 10px;
+    position:sticky;
+    top: 40%;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 10px;
+    gap: 10px;
+  }
