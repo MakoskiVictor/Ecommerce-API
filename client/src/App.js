@@ -6,7 +6,8 @@ import Landing from "./components/Landing/Landing.jsx";
 import SearchBar from "./components/SearchBar/SearchBar.jsx";
 import Details from "./components/Details/Details.jsx";
 import Formulario from "./components/Formulario/Formulario";
-
+// register
+import Register from "./components/Register/Register.jsx";
 import ProductCards from "./components/Products/ProductCards.jsx";
 import Filter from "./components/Filter/Filter.jsx";
 import Paginated from "./components/Paginated/Paginated.jsx";
@@ -20,9 +21,6 @@ import "./App.css";
 // import GoogleLogin from "react-google-login";
 import Login from "./components/Login/Login";
 // import payment from "./components/Pago/Pay"
-
-// register
-import Register from "./components/Register/Register.jsx";
 
 function App() {
    return (
