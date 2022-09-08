@@ -1,13 +1,74 @@
-import React from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+// import { googleLog, postLogin } from "../../Redux/Reducer/reducer";
+// import { Link, useNavigate } from "react-router-dom";
 import style from "./Login.module.css";
+import firebase from "../../firebase.js";
 
-function Login() {
+
+
+
+function Login(props) {
+
+  // const navigate = useNavigate()
+  // const token = localStorage.getItem("token")
+
+  const [user, setUser] = useState({ user_mail: "", password: "" })
+  const dispatch = useDispatch()
+
+  const handleChange = (e) => {
+    e.prevent.default()
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value
+    });
+  }
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    let password = user.password
+    let user_mail = user.user_mail.toLowerCase();
+    let newLoggedUser = {
+      user_mail: user_mail, password: password
+    }
+    // dispatch(postLogin(newLoggedUser));
+    //hay que buscar la manera de que re-renderice la informacion (logeado y con toquen no actualiza el header, con f5 se arregla)
+    //posible solucion: renderizar navbar/header a lo ultimo en home
+    // navigate('/home')
+    props.close(false)
+    // toast.success("Logueado correctamente.", {position:"top-right"})
+  }
+
+  function handleClose() {
+    props.close(false)
+  }
+
+  // const googleLogin = async () => {
+  //   //ejecutamos la auth de firebase y guardamos la respuesta
+  //   let provider = new firebase.auth.GoogleAuthProvider()
+  //   //se ejecuta la verificacion con el usuario recibido
+  //   firebase.auth().signInWithPopup(provider)
+  //     .then((result) => {
+  //       //guardamos en user la respuesta de google
+  //       let user = result.user
+  //       console.log("el user", user)
+  //       //dispatch de la action para hacer la verificacion
+  //       dispatch(googleLog(user))
+  //     })
+  // }
+
+
+
+
   return (
     <div className={style.loginContainer}>
+      {console.log(firebase)}
       <div className={style.login}>
         <h1>Login</h1>
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
+        <input type="text" name="user_mail" onChange={(e) => handleChange(e)} placeholder="Email" />
+        <input type="password" name="password" onChange={(e) => handleChange(e)} placeholder="Password" />
         <button className={style.btnPrimary}>LOGIN</button>
         <p>Or log using google:</p>
         <button className={style.btnGoogle}>

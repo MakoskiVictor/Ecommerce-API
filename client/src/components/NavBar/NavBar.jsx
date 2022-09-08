@@ -3,10 +3,28 @@ import { Link } from "react-router-dom";
 import logo_wooly from "../../assets/logo_wooly.png";
 import Style from "./NavBar.module.css"
 import logo from "../image/logo.png"
+import { useState } from "react";
+// import ComponentLogin from "../ComponentLogin/ComponentLogin";
+import Login from "../Login/Login";
 /* import { GrCart } from "react-icons/gr"; */
 
-export default function NavBar () {
-    return(
+
+
+
+export default function NavBar() {
+    const [openModal, setOpenModal] = useState(false);
+
+    function handleOpen() {
+        setOpenModal(true)
+    }
+
+    function handleClose(value) {
+        setOpenModal(value)
+    }
+
+    return (
+        <header>
+            <div>
         <nav className={Style.NavBarComplete}>
             <div className={Style.left}>
                 <Link to={"/"}>
@@ -38,9 +56,9 @@ export default function NavBar () {
                     <Link to={"/contact"} className={Style.letra}>
                         CONTACT
                     </Link>
-                    
+
                     <Link to={"/carry"} className={Style.letra}>
-                        CARRY
+                         CARRY
                     </Link>
                     {/*<Link to={"/about"} className={Style.letra}>
                         LOGIN
@@ -51,7 +69,19 @@ export default function NavBar () {
                     <Link to={"/createProduct"} className={Style.letra}>
                         CREATE_PRODUCT
                     </Link>
+
+                    
                     </li>
+                    
+                    
+                        
+                  <button onClick={handleOpen} className={Style.buttonlogin}>Inicia sesión</button>
+                       
+                     
+                  <Link to='/register'><button className={Style.buttonregister}>Regístrate</button></Link>
+                
+                                         
+                          
                 </ul>
 
                 </div>
@@ -62,6 +92,17 @@ export default function NavBar () {
                 </Link>
             </div> */}
 
-        </nav> 
+        </nav>       
+        </div>
+            {openModal &&
+                <div className={Style.ModalAbiertoBackground}></div>
+            }
+            {openModal &&
+                <div className={Style.ModalLogin}>
+                    <Login close={handleClose} />
+                </div>
+            }
+        </header>
+
     )
 };
