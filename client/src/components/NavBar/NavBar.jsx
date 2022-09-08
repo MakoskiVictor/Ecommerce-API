@@ -38,6 +38,10 @@ export default function NavBar () {
                     <Link to={"/contact"} className={Style.letra}>
                         CONTACT
                     </Link>
+                    
+                    <Link to={"/carry"} className={Style.letra}>
+                        CARRY
+                    </Link>
                     {/*<Link to={"/about"} className={Style.letra}>
                         LOGIN
                     </Link>
