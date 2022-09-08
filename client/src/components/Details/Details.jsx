@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./Details.module.css";
 import CARRY_LOCALHOST from "../Globales";
+import swal from "sweetalert2";
 
-import { deleteDetails, searchProductId, addProductCarry,getStockbyID ,deleteStockbyID} from "../../redux/actions";
+import { deleteDetails, searchProductId, addProductCarry, getStockbyID, deleteStockbyID } from "../../redux/actions";
 
 export default function Details(props) {
   const dispatch = useDispatch();
@@ -13,14 +14,14 @@ export default function Details(props) {
   const carryProducts = useSelector((state) => state.carryProducts);
   const stock_by_ID = useSelector((state) => state.stock_by_ID);
 
-  const [stateSize, SetstateSize] = useState(undefined);
+  const [stateSize, SetstateSize] = useState({ size: undefined, stock: undefined });
   const [stateQuanty, SetstateQuanty] = useState(1);
   const [statecarryProducts, SetstatecarryProducts] = useState(undefined);
 
   useEffect(() => {
-   dispatch(getStockbyID(props.match.params.id));
-   dispatch(searchProductId(props.match.params.id));
-    return ()=>{
+    dispatch(getStockbyID(props.match.params.id));
+    dispatch(searchProductId(props.match.params.id));
+    return () => {
       dispatch(deleteDetails());
       dispatch(deleteStockbyID());
       SetstateSize(undefined);
@@ -32,30 +33,35 @@ export default function Details(props) {
   }
 
   function handleAddCarry() {
-    let id = props.match.params.id; 
-    let elemento={state:stateSize,id:id,amount:stateQuanty,details:detail[0]}
-    let Data=JSON.parse(localStorage.getItem(CARRY_LOCALHOST))
-    if(Data===undefined || Data===null){
-    Data=[];
-    Data.push(elemento)}
+    let id = props.match.params.id;
+    let elemento = { state: stateSize, id: id, amount: stateQuanty, details: detail[0] }
+    let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST))
+    if (Data === undefined || Data === null) {
+      Data = [];
+      Data.push(elemento)
+    }
     else
-    Data=AddOrModifyCarry(elemento,Data);
-    localStorage.setItem(CARRY_LOCALHOST,JSON.stringify(Data));
-    console.log(Data)
+      Data = AddOrModifyCarry(elemento, Data);
+    localStorage.setItem(CARRY_LOCALHOST, JSON.stringify(Data));
+
+    return swal.fire({
+      title: `Producto Añadido ${elemento.details.name} al carrito!`,
+      position: 'bottom-start',
+      icon: 'success',
+      showConfirmButton: false,
+      timer: 400
+    });
   }
 
-  function changeQuanty(e){
-   SetstateQuanty(e.target.value);
+  function changeQuanty(e) {
+    SetstateQuanty(e.target.value);
   }
-  function changeSize(e,indice){
-    SetstateSize({size:stock_by_ID[indice].productSize,stock:stock_by_ID[indice].stock})
-   }
-  
+  function changeSize(e, indice) {
+    SetstateSize({ size: stock_by_ID[indice].productSize, stock: stock_by_ID[indice].stock })
+  }
 
-  if(stateSize===undefined && stock_by_ID.length>0){
-  SetstateSize({size:stock_by_ID[0].productSize,stock:stock_by_ID[0].stock});}
-
-  console.log(carryProducts)
+  if(stateSize==undefined)
+  SetstateSize({ size: undefined, stock: undefined })
 
   return (
     <div className={style.cardDetailMainContainer}>
@@ -74,40 +80,36 @@ export default function Details(props) {
                 <p>Category: {detail[0].category.name}</p>
               </div>
             </div>
-            
-            {stock_by_ID.length>0 && stateSize!==undefined ?
-            
-            <div>
-              <p>Available sizes: {stock_by_ID.map((sizeStock,index) => {
-                    return (
-                      <label onClick={(e) =>changeSize(e,index)}>
-                        {sizeStock.productSize}  </label>)
-                  })
+
+            {(stateSize==undefined  ||stateSize.size == undefined) && <label className={style.textChooseSize}>Choose Size</label>}
+
+            {stock_by_ID.length > 0 && stateSize!==undefined ?
+              <div className={style.containerFormAddCarry}>
+                <p>Available sizes: {stock_by_ID.map((sizeStock, index) => {
+                  return (
+                    <label id={sizeStock.productSize === stateSize.size ? style.SizeSeleccionada : style.SizeNoSeleccionada}
+                    className={sizeStock.stock==0?style.SizeSoldOut:style.SizeOnSale}
+                      onClick={(e) => changeSize(e, index)}>
+                      {sizeStock.productSize}  </label>)
+                })
                 }</p>
-              {stateSize.stock>0?
-              <div>
-              <p>Quantity: 
-                {<input type="number" placeholder="Amount" min={1} max={stateSize.stock} value={stateQuanty} onChange={(e) => changeQuanty(e)} />}  
-                (Stock:{stateSize.stock})
-              </p>
-              <p>Total price:   
-              {`  $${Number2Decimals(detail[0].price*stateQuanty)}`} 
-              </p>
-              <button className={style.btnDetails} onClick={() => handleAddCarry()}>Add Carry</button>
+                
+                {stateSize.stock > 0 ?
+                  <div>
+                    <p>Quantity:
+                      {<input type="number" placeholder="Amount" min={1} max={stateSize.stock} value={stateQuanty} onChange={(e) => changeQuanty(e)} />}
+                      (Stock:{stateSize.stock})
+                    </p>
+                    <p>Total price:
+                      {`  $${Number2Decimals(detail[0].price * stateQuanty)}`}
+                    </p>
+                    <button className={style.btnAddCarry} onClick={() => handleAddCarry()}>Add Carry</button>
+                  </div>
+                  : (stateSize.size == undefined ? " " : "Sold out")
+                }
               </div>
-              : "Sold out"  
+              : <div>Loading Stock</div>
             }
-
-            </div>
-            :  <div>Loading Stock</div>
-          }
-
-            {/* esta informacion no estan en la base de datos interna:
-
-                        <p>Type: {detail.type} </p>
-                        <p>aboutMe: {`${detail.info.aboutMe}`} </p>
-                        <p>careInfo: {`${detail.info.careInfo}`} </p>
-                        <p>sizeAndFit: {`${detail.info.sizeAndFit}`} </p> */}
           </div>
         ) : (
           <p>LOADING...</p>
@@ -126,12 +128,12 @@ function AddOrModifyCarry(carryAdd, carryProducts) {
   let array = carryProducts;
   let indice = (carryProducts.findIndex(carry => (carry.id === carryAdd.id && JSON.stringify(carry.state) === JSON.stringify(carryAdd.state))))
   if (indice == -1) {
-     array.push(carryAdd)
+    array.push(carryAdd)
   }
   else {
-     let cantidad = array[indice].amount + carryAdd.amount;
-     cantidad = cantidad > carryAdd.state.stock ? carryAdd.state.stock : cantidad;
-     array[indice].amount = cantidad;
+    let cantidad = array[indice].amount + carryAdd.amount;
+    cantidad = cantidad > carryAdd.state.stock ? carryAdd.state.stock : cantidad;
+    array[indice].amount = cantidad;
   }
   return array;
 }
