@@ -5,12 +5,13 @@
 .SizeSoldOut{
   font-size: 30px;
   opacity: 0.5;
-  cursor: pointer;
+  cursor: default;
 }
 
 .SizeOnSale{
   font-size: 30px;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .textChooseSize{
