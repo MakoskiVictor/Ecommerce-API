@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import { googleLog, postLogin } from "../../Redux/Reducer/reducer";
-// import { Link, useNavigate } from "react-router-dom";
+import { Link, useHistory, } from "react-router-dom";
 import style from "./Login.module.css";
 import firebase from "../../firebase.js";
 
@@ -10,7 +10,7 @@ import firebase from "../../firebase.js";
 
 function Login(props) {
 
-  // const navigate = useNavigate()
+  const navigate = useHistory()
   // const token = localStorage.getItem("token")
 
   const [user, setUser] = useState({ user_mail: "", password: "" })
@@ -34,11 +34,12 @@ function Login(props) {
       user_mail: user_mail, password: password
     }
     // dispatch(postLogin(newLoggedUser));
-    //hay que buscar la manera de que re-renderice la informacion (logeado y con toquen no actualiza el header, con f5 se arregla)
-    //posible solucion: renderizar navbar/header a lo ultimo en home
-    // navigate('/home')
+    //hay que buscar la manera de que re - renderice la informacion(logeado y con toquen no actualiza el header, con f5 se arregla)
+    //posible solucion: renderizar navbar / header a lo ultimo en home
+    navigate('/home')
     props.close(false)
     // toast.success("Logueado correctamente.", {position:"top-right"})
+    // toast una libreria de notificaciones
   }
 
   function handleClose() {
@@ -67,9 +68,11 @@ function Login(props) {
       {console.log(firebase)}
       <div className={style.login}>
         <h1>Login</h1>
-        <input type="text" name="user_mail" onChange={(e) => handleChange(e)} placeholder="Email" />
-        <input type="password" name="password" onChange={(e) => handleChange(e)} placeholder="Password" />
-        <button className={style.btnPrimary}>LOGIN</button>
+        <form>
+          <input type="text" name="user_mail" onChange={(e) => handleChange(e)} placeholder="Email" />
+          <input type="password" name="password" onChange={(e) => handleChange(e)} placeholder="Password" />
+          <button type="submit" className={style.btnPrimary} onChange={(e) => handleSubmit(e)}>LOGIN</button>
+        </form>
         <p>Or log using google:</p>
         <button className={style.btnGoogle}>
           <svg

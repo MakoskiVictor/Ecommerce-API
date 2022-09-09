@@ -14,10 +14,9 @@ export const SEARCH_PRODUCT_ID = "SEARCH_PRODUCT_ID";
 export const DELETE_DETAILS = "DELETE_DETAILS";
 export const CHANGE_FILTER_NAME = "CHANGE_FILTER_NAME";
 export const ADD_PRODUCT_CARRY = "ADD_PRODUCT_CARRY";
-export const GET_STOCK_PRODUCT_BY_ID = "GET_STOCK_PRODUCT_BY_ID"
-export const DELETE_STOCK_ID = "DELETE_STOCK_ID"
-export const GET_STOCK_PRODUCT_BY_ID_TOTAL="GET_STOCK_PRODUCT_BY_ID_TOTAL"
-
+export const GET_STOCK_PRODUCT_BY_ID = "GET_STOCK_PRODUCT_BY_ID";
+export const DELETE_STOCK_ID = "DELETE_STOCK_ID";
+export const GET_STOCK_PRODUCT_BY_ID_TOTAL = "GET_STOCK_PRODUCT_BY_ID_TOTAL";
 
 export function searchNameProduct(name) {
    return async function (dispatch) {
@@ -51,9 +50,7 @@ export function changeFilternameProductSearched(name) {
 export function searchProductId(id) {
    return async function (dispatch) {
       try {
-         var json = await axios.get(
-            `http://localhost:3001/product/${id}`
-         );
+         var json = await axios.get(`http://localhost:3001/product/${id}`);
          return dispatch({
             type: SEARCH_PRODUCT_ID,
             payload: json.data,
@@ -62,7 +59,7 @@ export function searchProductId(id) {
          console.log(error);
       }
    };
-};
+}
 
 export function deleteDetails() {
    return {
@@ -198,13 +195,17 @@ export function changePaginatedPage(newPage) {
    };
 }
 
-export function addProductCarry(Size, idProduct,quanty,detail) {
+export function addProductCarry(Size, idProduct, quanty, detail) {
    return async function (dispatch) {
       try {
          return dispatch({
             type: ADD_PRODUCT_CARRY,
-            payload: { size: Size, id: idProduct ,
-               amount:quanty,detail:detail},
+            payload: {
+               size: Size,
+               id: idProduct,
+               amount: quanty,
+               detail: detail,
+            },
          });
       } catch (error) {
          console.log(error);
@@ -215,9 +216,7 @@ export function addProductCarry(Size, idProduct,quanty,detail) {
 export function getStockbyID(id) {
    return async function (dispatch) {
       try {
-         var json = await axios.get(
-            `http://localhost:3001/stock/${id}`
-         );
+         var json = await axios.get(`http://localhost:3001/stock/${id}`);
          return dispatch({
             type: GET_STOCK_PRODUCT_BY_ID,
             payload: json.data,
@@ -231,23 +230,22 @@ export function getStockbyID(id) {
 export function getStockbyIDTotal(carry) {
    return async function (dispatch) {
       try {
-         let Stocks=[];
+         let Stocks = [];
          for (let index = 0; index < carry.length; index++) {
-            const element = carry[index]
+            const element = carry[index];
             let json = await axios.get(
                `http://localhost:3001/stock/${element.id}`
             );
-            let array=json.data;
-            let elementoIndice=-1;
+            let array = json.data;
+            let elementoIndice = -1;
             for (let index = 0; index < array.length; index++) {
                const element2 = array[index];
-               if(element2.productSize===element.state.size){
-                  elementoIndice=array[index];
+               if (element2.productSize === element.state.size) {
+                  elementoIndice = array[index];
                   break;
                }
             }
-            if(elementoIndice!==-1)
-            Stocks.push(elementoIndice)
+            if (elementoIndice !== -1) Stocks.push(elementoIndice);
          }
          return dispatch({
             type: GET_STOCK_PRODUCT_BY_ID_TOTAL,
@@ -270,4 +268,33 @@ export function CreateNewProduct(payload) {
    };
 }
 
+//                 lOGIN FORMULARIO
 
+// export function postLogin(user) {
+//    return async (dispatch) => {
+//       try {
+//          // generamos el token conectando con el back
+//          const token = await axios.post("http://localhost:3001/users", user);
+//          // lo pasamos a json y lo guardamos en la consola en application local storage
+//          if (token.data === "invalid") {
+//             Swal.fire(
+//                "Email o contraseña incorrectos",
+//                "Recuerda activar tu cuenta si es la primera vez que inicias sesion",
+//                "warning"
+//             );
+//          } else if (token.data) {
+//             localStorage.setItem("token", JSON.stringify(token.data));
+//          }
+//          //desencryptamos el token
+//          const data = jwtDecode(token.data);
+//          // alojamos el id del usuario y los datos relevantes en el estado
+//          return dispatch(setCurrentUser(data));
+//       } catch (e) {
+//          Swal.fire(
+//             "Email o contraseña incorrectos",
+//             "Recuerda activar tu cuenta si es la primera vez que inicias sesión",
+//             "warning"
+//          );
+//       }
+//    };
+// }
