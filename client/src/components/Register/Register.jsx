@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import swal from "sweetalert";
 import { image, address } from "../../assets/constantes";
 import styles from "./Register.module.css";
-import { useAuth } from "../../context/authContext.jsx";
+/* import { useAuth } from "../../context/authContext.jsx"; */
 
 export default function Register() {
   //ESTADOS
@@ -18,7 +18,7 @@ export default function Register() {
 
   const history = useHistory();
   //EXTRAIGO EL SINGUP DEL OBJETO
-  const { singup } = useAuth();
+  /* const { singup } = useAuth(); */
 
   //VALIDACIONES
 
@@ -120,6 +120,7 @@ export default function Register() {
     //SI LAS VALIDACIONES ESTAN OK
 
     try {
+      /* singup(email, password) */
       await register(name, lastName, password, email).then((response) => {
         swal({
           title: "User created successfully!",
