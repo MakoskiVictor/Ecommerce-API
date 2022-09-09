@@ -5,7 +5,7 @@ import style from "./Details.module.css";
 import CARRY_LOCALHOST from "../Globales";
 import swal from "sweetalert2";
 
-import { deleteDetails, searchProductId, ChangeCarryProducts, getStockbyID, deleteStockbyID } from "../../redux/actions";
+import { deleteDetails, searchProductId, VerificarCambioCarrito, getStockbyID, deleteStockbyID } from "../../redux/actions";
 
 export default function Details(props) {
   const dispatch = useDispatch();
@@ -44,7 +44,8 @@ export default function Details(props) {
       Data = AddOrModifyCarry(elemento, Data);
     localStorage.setItem(CARRY_LOCALHOST, JSON.stringify(Data));
 
-    VerificarCambioCarrito();
+    dispatch(VerificarCambioCarrito(carryProducts));
+    SetstateQuanty(1);
 
     return swal.fire({
       title: `Product Added ${elemento.details.name} to shopping cart!`,
@@ -62,23 +63,6 @@ export default function Details(props) {
     //if(stock>0)
     SetstateSize({ size: stock_by_ID[indice].productSize, stock: stock_by_ID[indice].stock })
   }
-
-  function VerificarCambioCarrito() {
-    let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST))
-    var Numero=0
-    if(Data!==undefined && Data.length!==0)
-    {
-      var cantidad=0
-      for (let index = 0; index < Data.length; index++) {
-        const element = Data[index];
-        cantidad+=(Number.parseInt(element.amount));
-      }
-      Numero=cantidad
-    }
-    if (Numero !== carryProducts)
-      dispatch(ChangeCarryProducts(Numero));
-  }
-
 
   if (stateSize == undefined)
     SetstateSize({ size: undefined, stock: undefined })
@@ -159,7 +143,7 @@ function AddOrModifyCarry(carryAdd, carryProducts) {
     array.push(carryAdd)
   }
   else {
-    let cantidad = array[indice].amount + carryAdd.amount;
+    let cantidad = Number.parseInt(array[indice].amount) + Number.parseInt(carryAdd.amount);
     cantidad = cantidad > carryAdd.state.stock ? carryAdd.state.stock : cantidad;
     array[indice].amount = cantidad;
   }

@@ -128,7 +128,8 @@ const rootReducer = (state = initialState, action) => {
             carryProductsStocks: action.payload
          };
       case CHANGE_PRODUCTS_CARRY:
-         return {
+      console.log(action.payload)   
+      return {
             ...state,
             carryProducts: action.payload
          };
