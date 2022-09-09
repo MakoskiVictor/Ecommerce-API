@@ -20,10 +20,12 @@ import Carry from "./components/Carry/Carry";
 import "./App.css";
 // import GoogleLogin from "react-google-login";
 import Login from "./components/Login/Login";
-import payment from "./components/Pago/Pay"
+import payment from "./components/Pago/Pay";
+import {AuthProvider} from "./context/authContext.jsx";
 
 function App() {
    return (
+      {/* <AuthProvider> */}
       <BrowserRouter>
          <div className="App"> 
             {/* nav bar */}
@@ -59,6 +61,7 @@ function App() {
             <Footer />
          </div>
       </BrowserRouter>
+      {/* </AuthProvider> */}
    );
 }
 
