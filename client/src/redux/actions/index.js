@@ -17,6 +17,8 @@ export const ADD_PRODUCT_CARRY = "ADD_PRODUCT_CARRY";
 export const GET_STOCK_PRODUCT_BY_ID = "GET_STOCK_PRODUCT_BY_ID"
 export const DELETE_STOCK_ID = "DELETE_STOCK_ID"
 export const GET_STOCK_PRODUCT_BY_ID_TOTAL="GET_STOCK_PRODUCT_BY_ID_TOTAL"
+export const CHANGE_PRODUCTS_CARRY="CHANGE_PRODUCTS_CARRY"
+
 
 
 export function searchNameProduct(name) {
@@ -205,6 +207,18 @@ export function addProductCarry(Size, idProduct,quanty,detail) {
             type: ADD_PRODUCT_CARRY,
             payload: { size: Size, id: idProduct ,
                amount:quanty,detail:detail},
+         });
+      } catch (error) {
+         console.log(error);
+      }
+   };
+}
+export function ChangeCarryProducts(NumberNew){
+   return async function (dispatch) {
+      try {
+         return dispatch({
+            type: CHANGE_PRODUCTS_CARRY,
+            payload: NumberNew,
          });
       } catch (error) {
          console.log(error);

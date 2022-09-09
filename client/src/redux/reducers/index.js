@@ -3,8 +3,10 @@ import {
    SEARCH_NAME, CHANGE_FILTER_GENDER, CHANGE_FILTER_CATEGORY,
    CHANGE_FILTER_BRAND, GET_CATEGORYS, CHANGE_FILTER_MAX, CHANGE_FILTER_MIN, CHANGE_FILTER_PRICE,
    CHANGE_PAGINATED_PRODUCTS, CHANGE_PAGINATED_PAGE, SEARCH_PRODUCT_ID, DELETE_DETAILS, CHANGE_FILTER_NAME,
-   ADD_PRODUCT_CARRY, GET_STOCK_PRODUCT_BY_ID, DELETE_STOCK_ID, GET_STOCK_PRODUCT_BY_ID_TOTAL,
+   ADD_PRODUCT_CARRY, GET_STOCK_PRODUCT_BY_ID, DELETE_STOCK_ID, GET_STOCK_PRODUCT_BY_ID_TOTAL, CHANGE_PRODUCTS_CARRY
 } from "../actions";
+
+import CARRY_LOCALHOST from "../../components/Globales";
 
 const PAGE_START = 1;
 
@@ -18,7 +20,8 @@ const initialState = {
    },
    paginated: { page: PAGE_START, productsView: [] },
    stock_by_ID: [],
-   carryProductsStocks:[],
+   carryProductsStocks: [],
+   carryProducts: ObtenerInicialProductsCarry(),
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -124,8 +127,16 @@ const rootReducer = (state = initialState, action) => {
             ...state,
             carryProductsStocks: action.payload
          };
+<<<<<<< HEAD
          
 
+=======
+      case CHANGE_PRODUCTS_CARRY:
+         return {
+            ...state,
+            carryProducts: action.payload
+         };
+>>>>>>> bc9fdbe2d5f84212dc5b71bf67c8cb40e2b241dd
       default:
          return state;
    }
@@ -185,4 +196,18 @@ function AumentarCantidad(carryProducts, index) {
       array[index].amount = cantidad;
    }
    return array;
+}
+
+function ObtenerInicialProductsCarry() {
+   let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST))
+   var Numero = 0
+   if (Data !== undefined && Data.length !== 0) {
+      var cantidad = 0
+      for (let index = 0; index < Data.length; index++) {
+         const element = Data[index];
+         cantidad += (Number.parseInt(element.amount));
+      }
+      Numero = cantidad
+   }
+   return Numero
 }
