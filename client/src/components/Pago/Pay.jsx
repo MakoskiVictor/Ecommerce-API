@@ -1,10 +1,11 @@
-import React, {/* useState, useEffect, useContext */} from "react";
+import React from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { Link, /* useHistory */ } from "react-router-dom";
+import { /*Link, useHistory */ } from "react-router-dom";
 import CARRY_LOCALHOST from "../Globales";
-import {  VerificarCambioCarrito } from "../../redux/actions";
+
+import {  VerificarCambioCarrito,DeleteDrop} from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 
@@ -14,21 +15,19 @@ export default function Pay() {
 
   const PATH = 'http://localhost:3001'
 
+  const dispatch = useDispatch()
   
   console.log(JSON.parse(localStorage.getItem(CARRY_LOCALHOST)))
+  
 
   // const history = useHistory();
-//   const idUser = window.atob(localStorage.getItem('id'));
-//   const navigate = useNavigate();
-//   const username = window.atob(localStorage.getItem("username")); //julianpardeiro
-
+  //   const idUser = window.atob(localStorage.getItem('id'));
+  //   const navigate = useNavigate();
+  //   const username = window.atob(localStorage.getItem("username")); //julianpardeiro
 
   let product = (localStorage.getItem(CARRY_LOCALHOST));
-
-  // descomentar
   let productJSON = JSON.parse(product);
 
-// descomentar
   let articulos = productJSON.map((e) => {
     return {
       name: e.details.name,
@@ -42,7 +41,6 @@ export default function Pay() {
     };
   });
 
-  // descomentar
   let PrecioTotalArticulos = articulos[0].unit_amount.value * articulos[0].quantity;
 
   let multiplicacionEntreValueYQuantity = articulos.map((e) => {
@@ -56,7 +54,6 @@ export default function Pay() {
       }
     );
   }
-  console.log(PrecioTotalArticulos)
 
   const createOrder = (data, actions) => {
     return actions.order.create({
@@ -68,7 +65,6 @@ export default function Pay() {
             soft_descriptor: "HighFashions",
             amount: {
               currency_code: "USD",
-              //descomentar
                 value: PrecioTotalArticulos.toFixed(2),
             },
           },
@@ -81,6 +77,7 @@ export default function Pay() {
         return orderId;
       });
   };
+  
 
   const onApprove = (data, actions) => {
     return actions.order.capture().then(async function (detalles) {
@@ -100,7 +97,12 @@ export default function Pay() {
         title: "Payment Successful!",
       });
 
-      //descomentar
+      const arr = [];
+      for(let i = 0; i<productJSON.length;i++){
+        arr.push({id:productJSON[i].details.id,stock:productJSON[i].amount,size:productJSON[i].state.size})
+      }
+      dispatch(DeleteDrop(arr))
+   
       let arregloObjetosIdQuantity = articulos.map(
         (e) => {
           let id = e.description.split("-")[1];
@@ -155,33 +157,26 @@ export default function Pay() {
 
   return (
     <div className="">
-      <span className="">
-      <Link to = "/">
-        <button className="">Back to home</button>
-      </Link>
-      </span>
       <div className="">
-      
         <h1 className="">
           CIOCLOTHES
         </h1>
       </div>
-      <div className="">
-        <div
-          name="CIOCLOTHES"
-        >
+
+      <a href="/">
+          <button className="">Back to home</button>
+      </a>
+      <br />
+      <br />
         <PayPalScriptProvider>
             <PayPalButtons
               createOrder={(data, actions) => createOrder(data, actions)}
               onApprove={(data, actions) => onApprove(data, actions)}
               onCancel={onCancel}
-             
               onError={onError}
             />
         </PayPalScriptProvider>
 
-        </div>
       </div>
-    </div>
   );
 }
