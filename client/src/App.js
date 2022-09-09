@@ -15,11 +15,13 @@ import Carry from "./components/Carry/Carry";
 // import GoogleLogin from "react-google-login";
 import Login from "./components/Login/Login";
 import payment from "./components/Pago/Pay";
+import {AuthProvider} from "./context/authContext.jsx";
 import ModifyItem from "./components/ModifyITem/ModifyItem";
 
 function App() {
    return (
       <BrowserRouter>
+      {/* <AuthProvider> */}
          <div className="App"> 
             {/* nav bar */}
             <NavBar />
@@ -49,6 +51,7 @@ function App() {
 
             </Switch>
             <Footer />
+         { /* </AuthProvider> */ }
          </div>
       </BrowserRouter>
    );
