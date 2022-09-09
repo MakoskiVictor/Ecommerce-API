@@ -168,7 +168,7 @@ class Carry extends Component {
         {carryProducts.length !== 0 ?
          <div className={style.containCarry}>
           <div>
-          {carryProducts.map((c,index) => (
+          {carryProducts?.map((c,index) => (
             <CarryCard
               id={c.details.id}
               img={c.details.image}

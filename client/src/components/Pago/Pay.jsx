@@ -1,14 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {/* useState, useEffect, useContext */} from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import Swal from "sweetalert2";
 import axios from "axios";
-import Carry from "../Carry/Carry"
-import { Link, useHistory } from "react-router-dom";
-
-
-// import { CartContext } from "../Cart/CartContext";
-// import { postHistory } from "./History";
-// import { use } from "../../../../api/src/routes";
+import { Link, /* useHistory */ } from "react-router-dom";
+import CARRY_LOCALHOST from "../Globales";
 
 
 export default function Pay() {
@@ -16,64 +11,61 @@ export default function Pay() {
   const PATH = 'http://localhost:3001'
 
   
+  console.log(JSON.parse(localStorage.getItem(CARRY_LOCALHOST)))
 
   // const history = useHistory();
-
-
 //   const idUser = window.atob(localStorage.getItem('id'));
-
 //   const navigate = useNavigate();
 //   const username = window.atob(localStorage.getItem("username")); //julianpardeiro
-  let product = localStorage.getItem("cartProducts");
-  //   console.log("product: ", product);
-  
 
 
-    // descomentar
-//   let productJSON = JSON.parse(product);
-
-
-  // console.log("productJSON: ", productJSON);
-
-// descomentar
-
-//   let articulos = productJSON.map((e) => {
-//     return {
-//       name: e.name,
-//       description: e.category[0] + "-" + e.id,
-//       unit_amount: {
-//         currency_code: "USD",
-//         value: e.price + "", //aca
-//       },
-//       quantity: e.amount,
-//     };
-//   });
-  //console.log("puntos: ", points);
+  let product = (localStorage.getItem(CARRY_LOCALHOST));
 
   // descomentar
-//   let PrecioTotalArticulos =
-//     articulos[0].unit_amount.value * articulos[0].quantity;
+  let productJSON = JSON.parse(product);
 
-//   let multiplicacionEntreValueYQuantity = articulos.map((e) => {
-//     return e.unit_amount.value * e.quantity;
-//   });
+// descomentar
+  let articulos = productJSON.map((e) => {
+    return {
+      name: e.details.name,
+      description: e.details.name + "-" + e.details.id,
+      unit_amount: {
+        currency_code: "USD",
+        value: e.details.price + "", //aca
+      },
+      quantity: e.amount,
 
-//   if (articulos.length > 1) {
-//     PrecioTotalArticulos = multiplicacionEntreValueYQuantity.reduce(
-//       (prev, current) => {
-//         return prev + current;
-//       }
-//     );
-//   }
+    };
+  });
+
+  // descomentar
+  let PrecioTotalArticulos = articulos[0].unit_amount.value * articulos[0].quantity;
+
+  let multiplicacionEntreValueYQuantity = articulos.map((e) => {
+    return e.unit_amount.value * e.quantity;
+  });
+
+  if (articulos.length > 1) {
+    PrecioTotalArticulos = multiplicacionEntreValueYQuantity.reduce(
+      (prev, current) => {
+        return prev + current;
+      }
+    );
+  }
+  console.log(PrecioTotalArticulos)
+
   const createOrder = (data, actions) => {
     return actions.order.create({
         purchase_units: [
           {
+            reference_id: "PUHF",
+            description: "Sporting Goods",
+            custom_id: "CUST-HighFashions",
+            soft_descriptor: "HighFashions",
             amount: {
               currency_code: "USD",
               //descomentar
-                //   value: PrecioTotalArticulos.toFixed(2),
-                value:10
+                value: PrecioTotalArticulos.toFixed(2),
             },
           },
         ],
@@ -82,7 +74,6 @@ export default function Pay() {
         },
       })
       .then((orderId) => {
-        //console.log("createOrder-orderId: ", orderId);
         return orderId;
       });
   };
@@ -90,66 +81,41 @@ export default function Pay() {
   const onApprove = (data, actions) => {
     return actions.order.capture().then(async function (detalles) {
       // en detalles esta todo lo que pasa en nuestro pago en un objeto
-    //   const arregloSoloId = detalles.purchase_units[0].items.map((e) => {
-    //     let id = e.description.split("-")[1];payer
-    //     return id;
-    //   });
-    //   const productsArray = detalles.purchase_units[0].items.map((e) => {
-    //     return { name: e.name, cant: e.quantity, price: e.unit_amount.value };
-    //   });
-    //   await postHistory(detalles.id,idUser,productsArray)
-    //   await SendReview(username, productsArray, detalles.id);
-    //   await CrearComentarioReview(username, arregloSoloId, detalles.id);
+      // const arregloSoloId = detalles.purchase_units[0].items.map((e) => {
+      //   let id = e.description.split("-")[1];
+      //   return id;
+      // });
+      // const productsArray = detalles.purchase_units[0].items.map((e) => {
+      //   return { name: e.name, cant: e.quantity, price: e.unit_amount.value };
+      // });
+      // await postHistory(detalles.id,idUser,productsArray)
+      // await SendReview(username, productsArray, detalles.id);
+      // await CrearComentarioReview(username, arregloSoloId, detalles.id);
       Swal.fire({
         icon: "success",
         title: "Payment Successful!",
-        html:
-          `Payer: ${detalles.payer.name.given_name} ${detalles.payer.name.surname}` +
-          "</br>" +
-          "</br>" +
-          /// descomentar
-          // `Amount paid: ${detalles.purchase_units[0].amount.value} USD` +
-          "</br>" +
-          "</br>" +
-          `Transaction number: ${detalles.id}`,
-        // text: `Transaction number: ${detalles.id}`,
-        // text: `Amount paid: ${detalles.purchase_units[0].amount.value}`
-        // footer: '<a href="">Why do I have this issue?</a>'
       });
 
       //descomentar
-      // let arregloObjetosIdQuantity = detalles.purchase_units[0].items.map(
-      //   (e) => {
-      //     let id = e.description.split("-")[1];
-      //     return { id: id, size:e.size, stock: e.quantity };
-      //   }
-      // );
-      // console.log("arregloObjetosIdQuantity: ", arregloObjetosIdQuantity);
+      let arregloObjetosIdQuantity = articulos.map(
+        (e) => {
+          let id = e.description.split("-")[1];
+          return { id: id, size:e.size, stock: e.quantity };
+        }
+      );
 
-      let stockProducts = [ {
-      id:"07b1051d-663f-4023-bcc8-d13861dd4787",
-      stock:"10", 
-      size:"L" 
-    },
-    {
-      id:"4dd34920-1cea-4638-b6e6-eb67de312cb5",
-      stock:"10", 
-      size:"L" 
-    }
-  ]
+  let stockProducts = arregloObjetosIdQuantity;
 
-
+  localStorage.setItem(CARRY_LOCALHOST,JSON.stringify([]))
 
       await axios({
         method: "put",
         url: `${PATH}/stock/drop`,
         data: stockProducts,
-        // headers: { "X-Requested-With": "XMLHttpRequest" },
-        // withCredentials: true,
       })
         .then((e) => e.data)
         .catch((e) => console.log(e));
-      // history("/done");
+        // history("/");
     });
   };
 
@@ -163,9 +129,6 @@ export default function Pay() {
   //   status: "COMPLETED"
   //   update_time: "2022-06-29T17:22:20Z"
 
-
-
-  
 
   const onCancel = (data) => {
     Swal.fire({
@@ -188,7 +151,7 @@ export default function Pay() {
     <div className="">
       <span className="">
       <Link to = "/">
-      <button className="">Back to home</button>
+        <button className="">Back to home</button>
       </Link>
       </span>
       <div className="">

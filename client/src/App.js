@@ -54,8 +54,7 @@ function App() {
                {/* sprint 2 */}
                {/* <Route exact path="/profile">aca va el componente del perfil de usuario</Route> */}
                {/* <Route exact path="/login">aca va el componente de login/inicio de sesion</Route> */}
-               {/* <Route exact path="/signup">aca va el componente de signup/registro</Route> */}
-               {/* <Route exact path="/cart">aca va el componente del carrito de compras</Route> */}
+
             </Switch>
             <Footer />
          </div>
