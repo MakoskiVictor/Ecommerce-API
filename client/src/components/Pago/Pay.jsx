@@ -22,7 +22,6 @@ export default function Pay() {
   //   const navigate = useNavigate();
   //   const username = window.atob(localStorage.getItem("username")); //julianpardeiro
 
-
   let product = (localStorage.getItem(CARRY_LOCALHOST));
   let productJSON = JSON.parse(product);
 
@@ -52,7 +51,6 @@ export default function Pay() {
       }
     );
   }
-  // console.log(PrecioTotalArticulos)
 
   const createOrder = (data, actions) => {
     return actions.order.create({

@@ -127,16 +127,11 @@ const rootReducer = (state = initialState, action) => {
             ...state,
             carryProductsStocks: action.payload
          };
-<<<<<<< HEAD
-         
-
-=======
       case CHANGE_PRODUCTS_CARRY:
          return {
             ...state,
             carryProducts: action.payload
          };
->>>>>>> bc9fdbe2d5f84212dc5b71bf67c8cb40e2b241dd
       default:
          return state;
    }
