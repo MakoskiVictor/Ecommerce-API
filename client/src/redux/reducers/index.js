@@ -124,6 +124,7 @@ const rootReducer = (state = initialState, action) => {
             ...state,
             carryProductsStocks: action.payload
          };
+         
 
       default:
          return state;

@@ -14,7 +14,9 @@ router.get("/:id", async (req, res, next) => {
 });
 
 router.put("/drop", async (req, res, next) => {
+
   const { stockProducts } = req.body;
+  console.log(req.body, "soy stockProducts")
   const productsChanged = []
   try {
     for (let i = 0; i < stockProducts?.length; i++) {
