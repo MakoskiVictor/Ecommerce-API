@@ -14,7 +14,8 @@ import Contact from "./components/Contact/Contact";
 import Carry from "./components/Carry/Carry";
 // import GoogleLogin from "react-google-login";
 import Login from "./components/Login/Login";
-import payment from "./components/Pago/Pay"
+import payment from "./components/Pago/Pay";
+import ModifyItem from "./components/ModifyITem/ModifyItem";
 
 function App() {
    return (
