@@ -84,3 +84,23 @@
    transform: translateX(-50%);
    top: 140%;
 }
+
+
+.buttonlogin {
+    text-align: initial;
+    justify-content: space-between;
+    color: rgb(2, 2, 2);
+    text-decoration: none;
+    width: 100px;
+    margin-left: 80px;
+
+}
+.buttonregister {
+    text-align: initial;
+   justify-content: space-between;
+   color: rgb(2, 2, 2);
+   text-decoration: none;
+   width: 100px;
+   margin-left: 80px;
+}
+

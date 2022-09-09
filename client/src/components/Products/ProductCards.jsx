@@ -17,7 +17,7 @@ class ProductCards extends Component {
       this.props.paginated.productsView
     );
 
-    let fraseNoResultados = "No se encontraron resultados";
+    let fraseNoResultados = "No results found";
     return (
       <div className={styles.cards}>
         {productos.length !== 0 &&

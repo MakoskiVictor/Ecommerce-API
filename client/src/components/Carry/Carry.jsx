@@ -4,6 +4,9 @@ import {getStockbyIDTotal} from "../../redux/actions";
 import style from "./Carry.module.css";
 import CarryCard from "./CarryCard.jsx";
 import CARRY_LOCALHOST from "../Globales";
+import Swal from 'sweetalert2'
+import { Link } from "react-router-dom";
+import { withRouter } from 'react-router-dom'
 
 class Carry extends Component {
    
@@ -13,14 +16,36 @@ class Carry extends Component {
     Data=(Data==undefined || Data==null)?[]:Data
     this.state = { carry: Data};
   }
+
+   Number2Decimals(x) {
+    return Number.parseFloat(x).toFixed(2);
+  }
+
   
+  componentDidMount(){
+    let Data=JSON.parse(localStorage.getItem(CARRY_LOCALHOST))
+    this.props.getStockbyIDTotal(Data)
+  }
   
   DecreaseElementCarry(carryElements, index) {
     let array = Object.assign([], carryElements);
     let cantidad = array[index].amount - 1;
 
-    if (cantidad == 0) {
-      array.splice(index, 1)
+    if (cantidad <= 0) {
+      Swal.fire({
+        title: 'Do you want to remove the product?',
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: 'Yes',
+        denyButtonText: `No`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          array.splice(index, 1)
+          localStorage.setItem(CARRY_LOCALHOST,JSON.stringify(array));
+          this.setState({carry:array})
+          Swal.fire('The product was removed!', '', 'success')}
+      })
     }
     else {
       array[index].amount = cantidad;
@@ -33,8 +58,12 @@ class Carry extends Component {
   
     let cantidad = array[index].amount + 1;
     if (cantidad > array[index].state.stock) {
+      Swal.fire({
+        title: `There is no more stock for this product`,
+        icon: "warning",
+        button: "Ok",
+      });
        array[index].amount = array[index].state.stock;
-       console.log("No hay mas stock para aumentar")
     }
     else {
        array[index].amount = cantidad;
@@ -50,12 +79,21 @@ class Carry extends Component {
   
   onDelete(index){
     let Data=JSON.parse(localStorage.getItem(CARRY_LOCALHOST))
+    this.props.getStockbyIDTotal(Data)
     Data=this.DeleteElementCarry(Data,index)
     localStorage.setItem(CARRY_LOCALHOST,JSON.stringify(Data));
     this.setState({carry:Data})
+
+    Swal.fire({
+      position: 'bottom-start',
+      icon: 'success',
+      title: 'Product removed ',
+      showConfirmButton: false,
+      timer: 1000
+    });
   }
   onDecrease(index){
-    console.log("Entraaa")
+    //console.log(this.props.history.push("/"))
     let Data=JSON.parse(localStorage.getItem(CARRY_LOCALHOST))
     this.props.getStockbyIDTotal(Data)
     Data=this.DecreaseElementCarry(Data,index)
@@ -65,32 +103,122 @@ class Carry extends Component {
 
   onIncrease(index){
     let Data=JSON.parse(localStorage.getItem(CARRY_LOCALHOST))
+    this.props.getStockbyIDTotal(Data)
     Data=this.IncreaseElementCarry(Data,index)
     localStorage.setItem(CARRY_LOCALHOST,JSON.stringify(Data));
     this.setState({carry:Data})
   }
+
+  onContinueBuy(){
+    let {actualiceBuy}=this.VerificarStocks();
+    if(!actualiceBuy)
+    this.props.history.push("/payment")
+  }
+
+  VerificarStocks(){
+    let Stocks=this.props.carryProductsStocks;
+    let Data=JSON.parse(localStorage.getItem(CARRY_LOCALHOST))
+    let Actualizar=false;
+    let start=0; 
+    let Total=0;
+    let actualizoBuy=false;
+
+    //Metodo para iterar 2 arrays para encontrar el elemento del local Storage dentro del Stock y hacer verificaciones
+    for (let index = 0; index < Stocks.length; index++) {
+      const stock = Stocks[index];
+      for (let index2 = start; index2 < Data.length; index2++) {
+        const datalocal = Data[index2];
+        
+        /// Encontrar dentro Stock el mismo id del elemento del local storage
+        if(datalocal.id==stock.productId && datalocal.state.size==stock.productSize){
+           /// Verificar si el stock ha sido cambiado y modificar el local storage
+          if(stock.stock!==datalocal.state.stock){
+            Data[index2].state.stock=stock.stock;
+            datalocal.state.stock=stock.stock;
+            Actualizar=true;
+          }
+           /// Verificar si el stock es 0 y enviar mensaje al cliente
+          if(datalocal.state.stock==0){
+            Actualizar=true;
+            actualizoBuy=true;
+            Swal.fire({
+              title: `Sorry product stock:${datalocal.details.name} has been sold out`,
+              icon: "warning",
+              button: "Ok",
+            });
+            Data[index2].amount=datalocal.state.stock;
+            datalocal.amount=datalocal.state.stock;
+           }
+          else
+          /// Verificar si el stock es menor al monto del local storage por cambio (enviar mensaje al cliente)
+          if(datalocal.state.stock<datalocal.amount){
+           Actualizar=true;
+           actualizoBuy=true;
+           Swal.fire({
+            title: `The maximum stock of the product: ${datalocal.details.name}" is now ",${datalocal.state.stock}`,
+            icon: "warning",
+            button: "Ok",
+          });
+           Data[index2].amount=datalocal.state.stock;
+           datalocal.amount=datalocal.state.stock;
+          }
+          //Sumar el total de la compra
+          Total+=(datalocal.amount*datalocal.details.price);
+         
+          //Metodo para hacer la iteracion mas rapida 
+          let elementoStart=Data[start];
+          Data[start]=Data[index2];
+          Data[index2]=elementoStart;
+          break;
+        }
+      }
+      start++;
+    }
+    // Si hubo cambio en el Stock, actualiza los elementos del local Storage, asi como su stock nuevo, o cantidad de productos
+    // del mismo elemento
+    if(Actualizar){
+      localStorage.setItem(CARRY_LOCALHOST,JSON.stringify(Data));
+      this.setState({carry:Data})
+    }
+    //retorna el precio total
+    return {priceTotal:Total,actualiceBuy:actualizoBuy};
+  }
  
   render() {
    let carryProducts=this.state.carry;
-   console.log(this.props.carryProductsStocks)
-   let fraseNoResultados = "No hay productos añadidos al carrito";
+   let {priceTotal}=this.VerificarStocks()
+   let fraseNoResultados = "There are no products added to the shopping cart";
+    
+   console.log(JSON.parse(localStorage.getItem(CARRY_LOCALHOST)))
+
     return (
-      <div className={style.cards}>
+      <div >
         {carryProducts.length !== 0 ?
-          carryProducts.map((c,index) => (
+         <div className={style.containCarry}>
+          <div>
+          {carryProducts?.map((c,index) => (
             <CarryCard
               id={c.details.id}
               img={c.details.image}
               name={c.details.name}
               brand={c.details.brand}
               price={c.details.price}
-              state={c.state.size}
+              size={c.state.size}
               amount={c.amount}
               onDecrease={() => this.onDecrease(index)}
               onIncrease={() => this.onIncrease(index)}
               onDelete={() => this.onDelete(index)}
-            />
-          )):
+            /> 
+          ))}
+          </div>
+          <div className={style.PriceTotalGlobal}>
+          <div className={style.PriceTotal}>
+            <label>Total: ${this.Number2Decimals(priceTotal)}</label>
+            <button className={style.buttonPriceTotal} onClick={() => this.onContinueBuy()}>Continuar Compra</button>
+          </div>
+          </div>
+          </div>
+          :
           <div className="cards">
             <p>
               <b>{fraseNoResultados}</b>
@@ -101,6 +229,9 @@ class Carry extends Component {
     );
   }
 }
+
+const CarryWithRouter = withRouter(Carry);
+
 
 function mapStateToProps(state) {
   return {
@@ -116,4 +247,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Carry);
+export default connect(mapStateToProps, mapDispatchToProps)(CarryWithRouter);
