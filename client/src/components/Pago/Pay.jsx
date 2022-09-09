@@ -4,9 +4,13 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { Link, /* useHistory */ } from "react-router-dom";
 import CARRY_LOCALHOST from "../Globales";
+import {  VerificarCambioCarrito } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 
 export default function Pay() {
+  const dispatch = useDispatch();
+  const carryProducts = useSelector((state) => state.carryProducts);
 
   const PATH = 'http://localhost:3001'
 
@@ -107,6 +111,8 @@ export default function Pay() {
   let stockProducts = arregloObjetosIdQuantity;
 
   localStorage.setItem(CARRY_LOCALHOST,JSON.stringify([]))
+  
+  dispatch(VerificarCambioCarrito(carryProducts));
 
       await axios({
         method: "put",

@@ -1,4 +1,5 @@
 import axios from "axios";
+import CARRY_LOCALHOST from "../../components/Globales";
 
 export const SEARCH_NAME = "SEARCH_NAME";
 export const CHANGE_FILTER_GENDER = "CHANGE_FILTER_GENDER";
@@ -18,6 +19,7 @@ export const GET_STOCK_PRODUCT_BY_ID = "GET_STOCK_PRODUCT_BY_ID"
 export const DELETE_STOCK_ID = "DELETE_STOCK_ID"
 export const GET_STOCK_PRODUCT_BY_ID_TOTAL="GET_STOCK_PRODUCT_BY_ID_TOTAL"
 export const CHANGE_PRODUCTS_CARRY="CHANGE_PRODUCTS_CARRY"
+
 
 
 
@@ -268,7 +270,7 @@ export function getStockbyIDTotal(carry) {
             payload: Stocks,
          });
       } catch (error) {
-         console.log(error);
+        console.log(error);
       }
    };
 }
@@ -284,4 +286,22 @@ export function CreateNewProduct(payload) {
    };
 }
 
+export  function VerificarCambioCarrito(carryProducts) {
+   let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST))
+   var Numero=0
+   if(Data!==undefined && Data.length!==0)
+   {
+     var cantidad=0
+     for (let index = 0; index < Data.length; index++) {
+       const element = Data[index];
+       cantidad+=(Number.parseInt(element.amount));
+     }
+     Numero=cantidad
+   }
+   if (Numero !== carryProducts){
+     return (ChangeCarryProducts(Numero))}
+   else
+   return async function (dispatch){ 
+   }
+ }
 
