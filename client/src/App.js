@@ -25,8 +25,8 @@ import {AuthProvider} from "./context/authContext.jsx";
 
 function App() {
    return (
-      {/* <AuthProvider> */}
       <BrowserRouter>
+      {/* <AuthProvider> */}
          <div className="App"> 
             {/* nav bar */}
             <NavBar />
@@ -59,9 +59,9 @@ function App() {
 
             </Switch>
             <Footer />
+         { /* </AuthProvider> */ }
          </div>
       </BrowserRouter>
-      {/* </AuthProvider> */}
    );
 }
 
