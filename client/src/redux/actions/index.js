@@ -272,6 +272,18 @@ export function getStockbyIDTotal(carry) {
       }
    };
 }
+
+export function DeleteDrop(payload) {
+   console.log("entra")
+   return async function () {
+      const response = await axios.put(
+         "http://localhost:3001/stock/drop",
+         {stockProducts:payload}
+      );
+      return response;
+   };
+}
+
 /* CREAR PRODUCTO */
 
 export function CreateNewProduct(payload) {
