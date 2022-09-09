@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {getStockbyIDTotal} from "../../redux/actions";
+import {getStockbyIDTotal,ChangeCarryProducts} from "../../redux/actions";
 import style from "./Carry.module.css";
 import CarryCard from "./CarryCard.jsx";
 import CARRY_LOCALHOST from "../Globales";
@@ -115,6 +115,21 @@ class Carry extends Component {
     this.props.history.push("/payment")
   }
 
+  VerificarCambioCarrito(){
+    let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST))
+    var Numero = 0
+    if (Data !== undefined && Data.length !== 0) {
+       var cantidad = 0
+       for (let index = 0; index < Data.length; index++) {
+          const element = Data[index];
+          cantidad += (Number.parseInt(element.amount));
+       }
+       Numero = cantidad
+    }
+    if(Numero!==this.props.carryProducts)
+    this.props.ChangeCarryProducts(Numero);
+ }
+
   VerificarStocks(){
     let Stocks=this.props.carryProductsStocks;
     let Data=JSON.parse(localStorage.getItem(CARRY_LOCALHOST))
@@ -188,6 +203,7 @@ class Carry extends Component {
    let carryProducts=this.state.carry;
    let {priceTotal}=this.VerificarStocks()
    let fraseNoResultados = "There are no products added to the shopping cart";
+   this.VerificarCambioCarrito()
     
    console.log(JSON.parse(localStorage.getItem(CARRY_LOCALHOST)))
 
@@ -236,6 +252,7 @@ const CarryWithRouter = withRouter(Carry);
 function mapStateToProps(state) {
   return {
     carryProductsStocks: state.carryProductsStocks,
+    carryProducts:state.carryProducts,
   };
 }
 
@@ -243,6 +260,7 @@ function mapDispatchToProps(dispatch) {
   //pasandole al componente la posibilidad como props de hacer un dispatch de la function getcountries
   return {
     getStockbyIDTotal:(carry)=>dispatch(getStockbyIDTotal(carry)),
+    ChangeCarryProducts:(number)=>dispatch(ChangeCarryProducts(number)),
     //changePaginatedPage: (page) => dispatch(changePaginatedPage(page)),
   };
 }
