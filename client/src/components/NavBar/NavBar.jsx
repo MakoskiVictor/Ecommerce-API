@@ -6,12 +6,15 @@ import logo from "../image/logo.png"
 import { useState } from "react";
 // import ComponentLogin from "../ComponentLogin/ComponentLogin";
 import Login from "../Login/Login";
-/* import { GrCart } from "react-icons/gr"; */
+import { AiOutlineShoppingCart} from 'react-icons/ai';
+import { IconContext } from "react-icons";
+import { Badge } from '@mui/material';
+import CARRY_LOCALHOST from "../Globales";
+import { useDispatch, useSelector } from "react-redux";
 
+export default function NavBar(props) {
+    const carryProducts = useSelector((state) => state.carryProducts);
 
-
-
-export default function NavBar() {
     const [openModal, setOpenModal] = useState(false);
 
     function handleOpen() {
@@ -25,84 +28,89 @@ export default function NavBar() {
     return (
         <header>
             <div>
-        <nav className={Style.NavBarComplete}>
-            <div className={Style.left}>
-                <Link to={"/"}>
-                    {/* <img src={logo_wooly} alt="Not Found" width="85px" height="85px" className={Style.logo} /> */}
-                    <img src={logo} alt="Not Found" width="85px" height="85px" className={Style.logo} />
-                </Link>
-            </div>
-            <div className={Style.center}>
-                <div className={Style.container}>
-                    <ul className={Style.NavUl}>
-
-                    {/* <Link to={"/products"}>
-                        PRODUCTS
-                    </Link> */}
-                    <li>
-                        <Link to={"/products/Men"} className={Style.letra}>
-                            MEN
+                <nav className={Style.NavBarComplete}>
+                    <div className={Style.left}>
+                        <Link to={"/"}>
+                            {/* <img src={logo_wooly} alt="Not Found" width="85px" height="85px" className={Style.logo} /> */}
+                            <img src={logo} alt="Not Found" width="85px" height="85px" className={Style.logo} />
                         </Link>
-                        <Link to={"/products/Women"} className={Style.letra}>
-                            WOMEN
-                        </Link>
-                    </li>
-                    <li>
+                    </div>
+                    <div className={Style.center}>
+                        <div className={Style.container}>
+                            <ul className={Style.NavUl}>
+                                <li>
+                                    <Link to={"/products/Men"} className={Style.letra}>
+                                        MEN
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to={"/products/Women"} className={Style.letra}>
+                                        WOMEN
+                                    </Link>
+                                </li>
+                                <li>
 
-                    <Link to={"/about"} className={Style.letra}>
-                        ABOUT
-                    </Link>
+                                    <Link to={"/about"} className={Style.letra}>
+                                        ABOUT
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to={"/contact"} className={Style.letra}>
+                                        CONTACT
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to={"/carry"} className={Style.letra}>
 
-                    <Link to={"/contact"} className={Style.letra}>
-                        CONTACT
-                    </Link>
-
-                    <Link to={"/carry"} className={Style.letra}>
-                         CARRY
-                    </Link>
-                    {/*<Link to={"/about"} className={Style.letra}>
+                                    <Badge badgeContent={carryProducts} color="primary">
+                                        <IconContext.Provider
+                                            value={{ color: 'white', size: '40px' }}
+                                        >
+                                            <AiOutlineShoppingCart />
+                                        </IconContext.Provider>
+                                    </Badge>
+                                    </Link>
+                                </li>
+                                {/*<Link to={"/about"} className={Style.letra}>
                         LOGIN
                     </Link>
                     <Link to={"/register"} className={Style.letra}>
                         REGISTER
                     </Link>*/}
-                    <Link to={"/createProduct"} className={Style.letra}>
-                        CREATE_PRODUCT
-                    </Link>
+                                <li>
+                                    <Link to={"/createProduct"} className={Style.letra}>
+                                        CREATE_PRODUCT
+                                    </Link>
+                                </li>
+                                <button onClick={handleOpen} className={Style.buttonlogin}>Inicia sesión</button>
 
-                    
-                    </li>
-                    
-                    
-                        
-                  <button onClick={handleOpen} className={Style.buttonlogin}>Inicia sesión</button>
-                       
-                     
-                  <Link to='/register'><button className={Style.buttonregister}>Regístrate</button></Link>
-                
-                                         
-                          
-                </ul>
 
-                </div>
-            </div>
-            {/* <div className={Style.right}>
+                                <Link to='/register'><button className={Style.buttonregister}>Regístrate</button></Link>
+
+
+
+                            </ul>
+
+                        </div>
+                    </div>
+                    {/* <div className={Style.right}>
                 <Link to={"/create"}>
                     ADD CLOTHES
                 </Link>
             </div> */}
 
-        </nav>       
-        </div>
+                </nav>
+            </div >
             {openModal &&
                 <div className={Style.ModalAbiertoBackground}></div>
             }
-            {openModal &&
+            {
+                openModal &&
                 <div className={Style.ModalLogin}>
                     <Login close={handleClose} />
                 </div>
             }
-        </header>
+        </header >
 
     )
 };

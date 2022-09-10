@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {getStockbyIDTotal} from "../../redux/actions";
+import {getStockbyIDTotal,VerificarCambioCarrito} from "../../redux/actions";
 import style from "./Carry.module.css";
 import CarryCard from "./CarryCard.jsx";
 import CARRY_LOCALHOST from "../Globales";
@@ -188,6 +188,7 @@ class Carry extends Component {
    let carryProducts=this.state.carry;
    let {priceTotal}=this.VerificarStocks()
    let fraseNoResultados = "There are no products added to the shopping cart";
+   this.props.VerificarCambioCarrito(this.props.carryProducts)
     
    console.log(JSON.parse(localStorage.getItem(CARRY_LOCALHOST)))
 
@@ -236,6 +237,7 @@ const CarryWithRouter = withRouter(Carry);
 function mapStateToProps(state) {
   return {
     carryProductsStocks: state.carryProductsStocks,
+    carryProducts:state.carryProducts,
   };
 }
 
@@ -243,6 +245,7 @@ function mapDispatchToProps(dispatch) {
   //pasandole al componente la posibilidad como props de hacer un dispatch de la function getcountries
   return {
     getStockbyIDTotal:(carry)=>dispatch(getStockbyIDTotal(carry)),
+    VerificarCambioCarrito:(carryProducts)=>dispatch(VerificarCambioCarrito(carryProducts)),
     //changePaginatedPage: (page) => dispatch(changePaginatedPage(page)),
   };
 }
