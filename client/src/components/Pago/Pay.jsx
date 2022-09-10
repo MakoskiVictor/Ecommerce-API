@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import /*Link, useHistory */ "react-router-dom";
 import CARRY_LOCALHOST from "../Globales";
+import styles from "./Pay.module.css";
 
 import { VerificarCambioCarrito, DeleteDrop } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -155,12 +156,9 @@ export default function Pay() {
   return (
     <div className="">
       <div className="">
-        <h1 className="">CIOCLOTHES</h1>
+        <h1 className={styles.title}>CIOCLOTHES</h1>
       </div>
 
-      <a href="/">
-        <button className="">Back to home</button>
-      </a>
       <br />
       <br />
       <PayPalScriptProvider>
@@ -171,6 +169,9 @@ export default function Pay() {
           onError={onError}
         />
       </PayPalScriptProvider>
+      <a href="/">
+        <button className={styles.btnBack}>Back to home</button>
+      </a>
     </div>
   );
 }
