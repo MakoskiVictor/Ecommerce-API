@@ -2,30 +2,26 @@ import React from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { /*Link, useHistory */ } from "react-router-dom";
+import /*Link, useHistory */ "react-router-dom";
 import CARRY_LOCALHOST from "../Globales";
 
-import {  VerificarCambioCarrito,DeleteDrop} from "../../redux/actions";
+import { VerificarCambioCarrito, DeleteDrop } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-
 
 export default function Pay() {
   const dispatch = useDispatch();
   const carryProducts = useSelector((state) => state.carryProducts);
 
-  const PATH = 'http://localhost:3001'
+  const PATH = "http://localhost:3001";
 
-  const dispatch = useDispatch()
-  
-  console.log(JSON.parse(localStorage.getItem(CARRY_LOCALHOST)))
-  
+  console.log(JSON.parse(localStorage.getItem(CARRY_LOCALHOST)));
 
   // const history = useHistory();
   //   const idUser = window.atob(localStorage.getItem('id'));
   //   const navigate = useNavigate();
   //   const username = window.atob(localStorage.getItem("username")); //julianpardeiro
 
-  let product = (localStorage.getItem(CARRY_LOCALHOST));
+  let product = localStorage.getItem(CARRY_LOCALHOST);
   let productJSON = JSON.parse(product);
 
   let articulos = productJSON.map((e) => {
@@ -37,11 +33,11 @@ export default function Pay() {
         value: e.details.price + "", //aca
       },
       quantity: e.amount,
-
     };
   });
 
-  let PrecioTotalArticulos = articulos[0].unit_amount.value * articulos[0].quantity;
+  let PrecioTotalArticulos =
+    articulos[0].unit_amount.value * articulos[0].quantity;
 
   let multiplicacionEntreValueYQuantity = articulos.map((e) => {
     return e.unit_amount.value * e.quantity;
@@ -56,7 +52,8 @@ export default function Pay() {
   }
 
   const createOrder = (data, actions) => {
-    return actions.order.create({
+    return actions.order
+      .create({
         purchase_units: [
           {
             reference_id: "PUHF",
@@ -65,7 +62,7 @@ export default function Pay() {
             soft_descriptor: "HighFashions",
             amount: {
               currency_code: "USD",
-                value: PrecioTotalArticulos.toFixed(2),
+              value: PrecioTotalArticulos.toFixed(2),
             },
           },
         ],
@@ -77,7 +74,6 @@ export default function Pay() {
         return orderId;
       });
   };
-  
 
   const onApprove = (data, actions) => {
     return actions.order.capture().then(async function (detalles) {
@@ -98,23 +94,25 @@ export default function Pay() {
       });
 
       const arr = [];
-      for(let i = 0; i<productJSON.length;i++){
-        arr.push({id:productJSON[i].details.id,stock:productJSON[i].amount,size:productJSON[i].state.size})
+      for (let i = 0; i < productJSON.length; i++) {
+        arr.push({
+          id: productJSON[i].details.id,
+          stock: productJSON[i].amount,
+          size: productJSON[i].state.size,
+        });
       }
-      dispatch(DeleteDrop(arr))
-   
-      let arregloObjetosIdQuantity = articulos.map(
-        (e) => {
-          let id = e.description.split("-")[1];
-          return { id: id, size:e.size, stock: e.quantity };
-        }
-      );
+      dispatch(DeleteDrop(arr));
 
-  let stockProducts = arregloObjetosIdQuantity;
+      let arregloObjetosIdQuantity = articulos.map((e) => {
+        let id = e.description.split("-")[1];
+        return { id: id, size: e.size, stock: e.quantity };
+      });
 
-  localStorage.setItem(CARRY_LOCALHOST,JSON.stringify([]))
-  
-  dispatch(VerificarCambioCarrito(carryProducts));
+      let stockProducts = arregloObjetosIdQuantity;
+
+      localStorage.setItem(CARRY_LOCALHOST, JSON.stringify([]));
+
+      dispatch(VerificarCambioCarrito(carryProducts));
 
       await axios({
         method: "put",
@@ -123,7 +121,7 @@ export default function Pay() {
       })
         .then((e) => e.data)
         .catch((e) => console.log(e));
-        // history("/");
+      // history("/");
     });
   };
 
@@ -136,7 +134,6 @@ export default function Pay() {
   //   purchase_units: [{…}]
   //   status: "COMPLETED"
   //   update_time: "2022-06-29T17:22:20Z"
-
 
   const onCancel = (data) => {
     Swal.fire({
@@ -158,25 +155,22 @@ export default function Pay() {
   return (
     <div className="">
       <div className="">
-        <h1 className="">
-          CIOCLOTHES
-        </h1>
+        <h1 className="">CIOCLOTHES</h1>
       </div>
 
       <a href="/">
-          <button className="">Back to home</button>
+        <button className="">Back to home</button>
       </a>
       <br />
       <br />
-        <PayPalScriptProvider>
-            <PayPalButtons
-              createOrder={(data, actions) => createOrder(data, actions)}
-              onApprove={(data, actions) => onApprove(data, actions)}
-              onCancel={onCancel}
-              onError={onError}
-            />
-        </PayPalScriptProvider>
-
-      </div>
+      <PayPalScriptProvider>
+        <PayPalButtons
+          createOrder={(data, actions) => createOrder(data, actions)}
+          onApprove={(data, actions) => onApprove(data, actions)}
+          onCancel={onCancel}
+          onError={onError}
+        />
+      </PayPalScriptProvider>
+    </div>
   );
 }
