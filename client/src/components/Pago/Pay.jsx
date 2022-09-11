@@ -5,7 +5,7 @@ import axios from "axios";
 import { /*Link, useHistory */ } from "react-router-dom";
 import CARRY_LOCALHOST from "../Globales";
 
-import {  VerificarCambioCarrito,DeleteDrop} from "../../redux/actions";
+import { VerificarCambioCarrito, DeleteDrop } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 
@@ -15,10 +15,10 @@ export default function Pay() {
 
   const PATH = 'http://localhost:3001'
 
-  const dispatch = useDispatch()
-  
+  // const dispatch = useDispatch()
+
   console.log(JSON.parse(localStorage.getItem(CARRY_LOCALHOST)))
-  
+
 
   // const history = useHistory();
   //   const idUser = window.atob(localStorage.getItem('id'));
@@ -57,27 +57,27 @@ export default function Pay() {
 
   const createOrder = (data, actions) => {
     return actions.order.create({
-        purchase_units: [
-          {
-            reference_id: "PUHF",
-            description: "Sporting Goods",
-            custom_id: "CUST-HighFashions",
-            soft_descriptor: "HighFashions",
-            amount: {
-              currency_code: "USD",
-                value: PrecioTotalArticulos.toFixed(2),
-            },
+      purchase_units: [
+        {
+          reference_id: "PUHF",
+          description: "Sporting Goods",
+          custom_id: "CUST-HighFashions",
+          soft_descriptor: "HighFashions",
+          amount: {
+            currency_code: "USD",
+            value: PrecioTotalArticulos.toFixed(2),
           },
-        ],
-        application_context: {
-          shipping_preference: "NO_SHIPPING",
         },
-      })
+      ],
+      application_context: {
+        shipping_preference: "NO_SHIPPING",
+      },
+    })
       .then((orderId) => {
         return orderId;
       });
   };
-  
+
 
   const onApprove = (data, actions) => {
     return actions.order.capture().then(async function (detalles) {
@@ -98,23 +98,23 @@ export default function Pay() {
       });
 
       const arr = [];
-      for(let i = 0; i<productJSON.length;i++){
-        arr.push({id:productJSON[i].details.id,stock:productJSON[i].amount,size:productJSON[i].state.size})
+      for (let i = 0; i < productJSON.length; i++) {
+        arr.push({ id: productJSON[i].details.id, stock: productJSON[i].amount, size: productJSON[i].state.size })
       }
       dispatch(DeleteDrop(arr))
-   
+
       let arregloObjetosIdQuantity = articulos.map(
         (e) => {
           let id = e.description.split("-")[1];
-          return { id: id, size:e.size, stock: e.quantity };
+          return { id: id, size: e.size, stock: e.quantity };
         }
       );
 
-  let stockProducts = arregloObjetosIdQuantity;
+      let stockProducts = arregloObjetosIdQuantity;
 
-  localStorage.setItem(CARRY_LOCALHOST,JSON.stringify([]))
-  
-  dispatch(VerificarCambioCarrito(carryProducts));
+      localStorage.setItem(CARRY_LOCALHOST, JSON.stringify([]))
+
+      dispatch(VerificarCambioCarrito(carryProducts));
 
       await axios({
         method: "put",
@@ -123,7 +123,7 @@ export default function Pay() {
       })
         .then((e) => e.data)
         .catch((e) => console.log(e));
-        // history("/");
+      // history("/");
     });
   };
 
@@ -164,19 +164,19 @@ export default function Pay() {
       </div>
 
       <a href="/">
-          <button className="">Back to home</button>
+        <button className="">Back to home</button>
       </a>
       <br />
       <br />
-        <PayPalScriptProvider>
-            <PayPalButtons
-              createOrder={(data, actions) => createOrder(data, actions)}
-              onApprove={(data, actions) => onApprove(data, actions)}
-              onCancel={onCancel}
-              onError={onError}
-            />
-        </PayPalScriptProvider>
+      <PayPalScriptProvider>
+        <PayPalButtons
+          createOrder={(data, actions) => createOrder(data, actions)}
+          onApprove={(data, actions) => onApprove(data, actions)}
+          onCancel={onCancel}
+          onError={onError}
+        />
+      </PayPalScriptProvider>
 
-      </div>
+    </div>
   );
 }
