@@ -70,19 +70,19 @@ export default function Contact() {
           "ubztnK0ky6QEfP_4O"
         )
         .catch((error) => alert(error));
-        swal({
-          title: "Message sent succesfull",
-          icon: "success",
-          button: "Ok",
-          timer: 2000
-        });
+      swal({
+        title: "Message sent succesfull",
+        icon: "success",
+        button: "Ok",
+        timer: 2000,
+      });
       history.push("/");
     } else {
       swal({
         title: "All fields must be completed",
         icon: "error",
         button: "Ok",
-        timer: 3000
+        timer: 3000,
       });
     }
   };
@@ -95,44 +95,38 @@ export default function Contact() {
   }
   return (
     <div className={style.container}>
-      <h1 className="title-form">Contact Us</h1>
       <form className={style.form} onSubmit={sendEmail}>
-        <label>Your Name</label>
+        <h1 className={style.titleForm}>Contact Us</h1>
         <input
           type="text"
           name="user_name"
           value={input.user_name}
           onChange={(e) => handleChange(e)}
+          placeholder="Your name..."
         />
-        <hr />
 
-        <label>Your Email</label>
         <input
           type="email"
           name="user_email"
           value={input.user_email}
           onChange={(e) => handleChange(e)}
+          placeholder="Your Email..."
         />
-        <hr />
 
-        <label>Message</label>
         <textarea
           name="user_message"
-          id=""
           cols="30"
           rows="10"
           value={input.user_message}
           onChange={(e) => handleChange(e)}
           className={style.contactTextarea}
+          placeholder="Your message to us..."
         ></textarea>
-        <hr />
 
         {Object.keys(errors).length === 0 && comprobacionInput(input) ? (
           <button>Send</button>
         ) : (
-          <p className={style.todosCampos}>
-            You must fill all the fields
-          </p>
+          <p className={style.todosCampos}>You must fill all the fields</p>
         )}
       </form>
     </div>
