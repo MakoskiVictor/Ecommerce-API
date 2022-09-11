@@ -344,7 +344,7 @@ export function Logout() {
 export  function VerificarCambioCarrito(carryProducts) {
    let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST))
    var Numero=0
-   if(Data!==undefined && Data.length!==0)
+   if(Data!==undefined && Data!==null && Data.length!==0)
    {
      var cantidad=0
      for (let index = 0; index < Data.length; index++) {
