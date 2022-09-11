@@ -82,15 +82,8 @@ export default function NavBar(props) {
                                         CREATE_PRODUCT
                                     </Link>
                                 </li>
-                                <button onClick={handleOpen} className={Style.buttonlogin}>Inicia sesión</button>
-
-
-                                <Link to='/register'><button className={Style.buttonregister}>Regístrate</button></Link>
-
-
-
+                                <button onClick={handleOpen} className={Style.buttonlogin}>Login/Register</button>
                             </ul>
-
                         </div>
                     </div>
                     {/* <div className={Style.right}>

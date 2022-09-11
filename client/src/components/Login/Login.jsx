@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useEffect,useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import { googleLog, postLogin } from "../../Redux/Reducer/reducer";
 // import { Link, useNavigate } from "react-router-dom";
 import style from "./Login.module.css";
 import firebase from "../../firebase.js";
+import {getChecklogin} from "../../redux/actions";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
 
 
 
@@ -12,12 +15,12 @@ function Login(props) {
 
   // const navigate = useNavigate()
   // const token = localStorage.getItem("token")
-
-  const [user, setUser] = useState({ user_mail: "", password: "" })
+  const history = useHistory();
   const dispatch = useDispatch()
+  const [user, setUser] = useState({ email: "", password: "" })
+  const user_login = useSelector((state) => state.user_login);
 
-  const handleChange = (e) => {
-    e.prevent.default()
+  function handleChange (e) {
     setUser({
       ...user,
       [e.target.name]: e.target.value
@@ -25,25 +28,33 @@ function Login(props) {
   }
 
 
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
 
     let password = user.password
-    let user_mail = user.user_mail.toLowerCase();
+    let email = user.email.toLowerCase();
     let newLoggedUser = {
-      user_mail: user_mail, password: password
+      email: email, password: password
     }
-    // dispatch(postLogin(newLoggedUser));
+    dispatch(getChecklogin(newLoggedUser));
     //hay que buscar la manera de que re-renderice la informacion (logeado y con toquen no actualiza el header, con f5 se arregla)
     //posible solucion: renderizar navbar/header a lo ultimo en home
     // navigate('/home')
-    props.close(false)
     // toast.success("Logueado correctamente.", {position:"top-right"})
   }
 
   function handleClose() {
     props.close(false)
   }
+
+  function changePageCreateAccount(e){
+    e.preventDefault();
+    props.close(false)
+    history.push("/register")
+  }
+
+    if(user_login!==false)
+   props.close(false)
 
   // const googleLogin = async () => {
   //   //ejecutamos la auth de firebase y guardamos la respuesta
@@ -59,17 +70,14 @@ function Login(props) {
   //     })
   // }
 
-
-
-
   return (
     <div className={style.loginContainer}>
-      {console.log(firebase)}
       <div className={style.login}>
+        <button className={style.btnClose} onClick={(e) => handleClose(e)}>Close</button>
         <h1>Login</h1>
-        <input type="text" name="user_mail" onChange={(e) => handleChange(e)} placeholder="Email" />
+        <input type="text" name="email" onChange={(e) => handleChange(e)} placeholder="Email" />
         <input type="password" name="password" onChange={(e) => handleChange(e)} placeholder="Password" />
-        <button className={style.btnPrimary}>LOGIN</button>
+        <button className={style.btnPrimary} onClick={(e) => handleSubmit(e)}>LOGIN</button>
         <p>Or log using google:</p>
         <button className={style.btnGoogle}>
           <svg
@@ -101,7 +109,7 @@ function Login(props) {
       <hr />
       <div className={style.createAcc}>
         <p>New here:</p>
-        <button className={style.btnPrimary}>CREATE ACCOUNT</button>
+        <button className={style.btnPrimary} onClick={(e) => changePageCreateAccount(e)}>CREATE ACCOUNT</button>
       </div>
     </div>
   );

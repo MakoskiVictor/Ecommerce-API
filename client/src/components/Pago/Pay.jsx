@@ -14,8 +14,6 @@ export default function Pay() {
   const carryProducts = useSelector((state) => state.carryProducts);
 
   const PATH = 'http://localhost:3001'
-
-  const dispatch = useDispatch()
   
   console.log(JSON.parse(localStorage.getItem(CARRY_LOCALHOST)))
   
