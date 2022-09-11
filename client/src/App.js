@@ -15,14 +15,15 @@ import Carry from "./components/Carry/Carry";
 // import GoogleLogin from "react-google-login";
 import Login from "./components/Login/Login";
 import payment from "./components/Pago/Pay";
+// Login Google
+import LoginGoogle from "./components/Login/Login Google/LoginGoogle";
 /* import {AuthProvider} from "./context/authContext.jsx"; */
 import ModifyItem from "./components/ModifyITem/ModifyItem";
 
 function App() {
    return (
-      
       <BrowserRouter>
-         <div className="App"> 
+         <div className="App">
             {/* nav bar */}
             <NavBar />
             <Switch>
@@ -35,25 +36,24 @@ function App() {
                </Route>
                <Route path="/login" component={Login} />
                <Route path="/details/:id" component={Details}></Route>{" "}
-
                <Route exact path="/createProduct" component={Formulario} />{" "}
                {/*Se pone asi porque los componentes estan creadas como Funcion*/}
                <Route path="/about" component={About}></Route>
+               <Route path="/LoginGoogle" component={LoginGoogle}></Route>
                <Route path="/contact" component={Contact} />
                <Route exact path="/register" component={Register} />
-               <Route path="/carry"><Carry /> </Route>
+               <Route path="/carry">
+                  <Carry />{" "}
+               </Route>
                <Route exact path="/payment" component={payment} />
-
                <Route component={ErrorPage}></Route>
                {/* sprint 2 */}
                {/* <Route exact path="/profile">aca va el componente del perfil de usuario</Route> */}
                {/* <Route exact path="/login">aca va el componente de login/inicio de sesion</Route> */}
-
             </Switch>
             <Footer />
          </div>
       </BrowserRouter>
-         
    );
 }
 
