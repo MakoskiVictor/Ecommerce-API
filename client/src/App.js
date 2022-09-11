@@ -12,7 +12,8 @@ import About from "./components/About/About.jsx";
 import ComponentProducts from "./components/ComponentProducts/ComponentProducts.jsx";
 import Contact from "./components/Contact/Contact";
 import Carry from "./components/Carry/Carry";
-// import GoogleLogin from "react-google-login";
+// Login Google
+import LoginGoogle from "./components/Login/Login Google/LoginGoogle";
 import Login from "./components/Login/Login";
 import payment from "./components/Pago/Pay";
 import { AuthProvider } from "./context/authContext.jsx";

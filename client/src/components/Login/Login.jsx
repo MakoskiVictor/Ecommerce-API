@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, } from "react-router-dom";
 import style from "./Login.module.css";
 import { getChecklogin } from "../../redux/actions";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router";
+// import { Link } from "react-router-dom";
+// import { useHistory } from "react-router";
 /* import firebase from "../../firebase.js"; */
 
 
