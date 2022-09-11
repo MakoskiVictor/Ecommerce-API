@@ -326,6 +326,21 @@ export function getChecklogin(newLoggedUser) {
    };
 }
 
+export function Logout() {
+   return async function (dispatch) {
+      try {
+         return dispatch({
+            type: CHANGE_USER_LOGIN,
+            payload: false,
+         });
+      } catch (error) {
+         console.log(error);
+      }
+   };
+}
+
+
+
 export  function VerificarCambioCarrito(carryProducts) {
    let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST))
    var Numero=0

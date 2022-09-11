@@ -18,6 +18,8 @@ import payment from "./components/Pago/Pay";
 import {AuthProvider} from "./context/authContext.jsx";
 import ModifyItem from "./components/ModifyITem/ModifyItem";
 
+import NavUser from "./components/NavUser/NavUser.jsx";
+
 function App() {
    return (
       
@@ -44,6 +46,7 @@ function App() {
                <Route path="/carry"><Carry /> </Route>
                <Route exact path="/payment" component={payment} />
 
+               
                <Route component={ErrorPage}></Route>
                {/* sprint 2 */}
                {/* <Route exact path="/profile">aca va el componente del perfil de usuario</Route> */}

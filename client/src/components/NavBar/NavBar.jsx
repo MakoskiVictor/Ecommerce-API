@@ -1,19 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo_wooly from "../../assets/logo_wooly.png";
+//import logo_wooly from "../../assets/logo_wooly.png";
 import Style from "./NavBar.module.css"
 import logo from "../image/logo.png"
 import { useState } from "react";
-// import ComponentLogin from "../ComponentLogin/ComponentLogin";
 import Login from "../Login/Login";
-import { AiOutlineShoppingCart} from 'react-icons/ai';
+import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { IconContext } from "react-icons";
 import { Badge } from '@mui/material';
-import CARRY_LOCALHOST from "../Globales";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import NavUser from "../NavUser/NavUser";
+
 
 export default function NavBar(props) {
     const carryProducts = useSelector((state) => state.carryProducts);
+    const user_login = useSelector((state) => state.user_login);
 
     const [openModal, setOpenModal] = useState(false);
 
@@ -62,27 +63,28 @@ export default function NavBar(props) {
                                 <li>
                                     <Link to={"/carry"} className={Style.letra}>
 
-                                    <Badge badgeContent={carryProducts} color="primary">
-                                        <IconContext.Provider
-                                            value={{ color: 'white', size: '40px' }}
-                                        >
-                                            <AiOutlineShoppingCart />
-                                        </IconContext.Provider>
-                                    </Badge>
+                                        <Badge badgeContent={carryProducts} color="primary">
+                                            <IconContext.Provider
+                                                value={{ color: 'white', size: '40px' }}
+                                            >
+                                                <AiOutlineShoppingCart />
+                                            </IconContext.Provider>
+                                        </Badge>
                                     </Link>
                                 </li>
-                                {/*<Link to={"/about"} className={Style.letra}>
-                        LOGIN
-                    </Link>
-                    <Link to={"/register"} className={Style.letra}>
-                        REGISTER
-                    </Link>*/}
                                 <li>
                                     <Link to={"/createProduct"} className={Style.letra}>
                                         CREATE_PRODUCT
                                     </Link>
                                 </li>
-                                <button onClick={handleOpen} className={Style.buttonlogin}>Login/Register</button>
+                                <li>
+                                    <p className={Style.letra}>
+                                    {user_login === false ?
+                                        <button onClick={handleOpen} className={Style.buttonlogin}>Login/Register</button>
+                                        : <NavUser />
+                                    }
+                                    </p>
+                                </li>
                             </ul>
                         </div>
                     </div>
