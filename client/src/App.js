@@ -19,6 +19,8 @@ import payment from "./components/Pago/Pay";
 import { AuthProvider } from "./context/authContext.jsx";
 import ModifyItem from "./components/ModifyITem/ModifyItem";
 
+import NavUser from "./components/NavUser/NavUser.jsx";
+
 function App() {
    return (
       <div className="App">

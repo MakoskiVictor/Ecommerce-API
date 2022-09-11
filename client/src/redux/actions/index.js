@@ -316,6 +316,7 @@ export function getChecklogin(newLoggedUser) {
    };
 }
 
+<<<<<<< HEAD
 export function VerificarCambioCarrito(carryProducts) {
    let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST));
    var Numero = 0;
@@ -326,6 +327,34 @@ export function VerificarCambioCarrito(carryProducts) {
          cantidad += Number.parseInt(element.amount);
       }
       Numero = cantidad;
+=======
+export function Logout() {
+   return async function (dispatch) {
+      try {
+         return dispatch({
+            type: CHANGE_USER_LOGIN,
+            payload: false,
+         });
+      } catch (error) {
+         console.log(error);
+      }
+   };
+}
+
+
+
+export  function VerificarCambioCarrito(carryProducts) {
+   let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST))
+   var Numero=0
+   if(Data!==undefined && Data.length!==0)
+   {
+     var cantidad=0
+     for (let index = 0; index < Data.length; index++) {
+       const element = Data[index];
+       cantidad+=(Number.parseInt(element.amount));
+     }
+     Numero=cantidad
+>>>>>>> dde0f971be31a1dbb161247c5dacbaec8be5fc4d
    }
    if (Numero !== carryProducts) {
       return ChangeCarryProducts(Numero);
