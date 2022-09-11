@@ -5,7 +5,13 @@ import style from "./Details.module.css";
 import CARRY_LOCALHOST from "../Globales";
 import swal from "sweetalert2";
 
-import { deleteDetails, searchProductId, VerificarCambioCarrito, getStockbyID, deleteStockbyID } from "../../redux/actions";
+import {
+  deleteDetails,
+  searchProductId,
+  VerificarCambioCarrito,
+  getStockbyID,
+  deleteStockbyID,
+} from "../../redux/actions";
 
 export default function Details(props) {
   const dispatch = useDispatch();
@@ -14,7 +20,10 @@ export default function Details(props) {
   const carryProducts = useSelector((state) => state.carryProducts);
   const stock_by_ID = useSelector((state) => state.stock_by_ID);
 
-  const [stateSize, SetstateSize] = useState({ size: undefined, stock: undefined });
+  const [stateSize, SetstateSize] = useState({
+    size: undefined,
+    stock: undefined,
+  });
   const [stateQuanty, SetstateQuanty] = useState(1);
   //const [statecarryProducts, SetstatecarryProducts] = useState(undefined);
 
@@ -25,7 +34,7 @@ export default function Details(props) {
       dispatch(deleteDetails());
       dispatch(deleteStockbyID());
       SetstateSize(undefined);
-    }
+    };
   }, [dispatch]);
 
   function Number2Decimals(x) {
@@ -34,14 +43,17 @@ export default function Details(props) {
 
   function handleAddCarry() {
     let id = props.match.params.id;
-    let elemento = { state: stateSize, id: id, amount: stateQuanty, details: detail[0] }
-    let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST))
+    let elemento = {
+      state: stateSize,
+      id: id,
+      amount: stateQuanty,
+      details: detail[0],
+    };
+    let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST));
     if (Data === undefined || Data === null) {
       Data = [];
-      Data.push(elemento)
-    }
-    else
-      Data = AddOrModifyCarry(elemento, Data);
+      Data.push(elemento);
+    } else Data = AddOrModifyCarry(elemento, Data);
     localStorage.setItem(CARRY_LOCALHOST, JSON.stringify(Data));
 
     dispatch(VerificarCambioCarrito(carryProducts));
@@ -49,10 +61,10 @@ export default function Details(props) {
 
     return swal.fire({
       title: `Product Added ${elemento.details.name} to shopping cart!`,
-      position: 'bottom-start',
-      icon: 'success',
+      position: "bottom-start",
+      icon: "success",
       showConfirmButton: false,
-      timer: 400
+      timer: 400,
     });
   }
 
@@ -61,11 +73,14 @@ export default function Details(props) {
   }
   function changeSize(e, indice, stock) {
     //if(stock>0)
-    SetstateSize({ size: stock_by_ID[indice].productSize, stock: stock_by_ID[indice].stock })
+    SetstateSize({
+      size: stock_by_ID[indice].productSize,
+      stock: stock_by_ID[indice].stock,
+    });
   }
 
   if (stateSize == undefined)
-    SetstateSize({ size: undefined, stock: undefined })
+    SetstateSize({ size: undefined, stock: undefined });
 
   return (
     <div className={style.cardDetailMainContainer}>
@@ -78,50 +93,86 @@ export default function Details(props) {
               <div className={style.imageContainer}>
                 <img src={`https://${detail[0].image}`} alt="Not Found" />
               </div>
-              <div className={style.infoContainer}>
-                <p>Brand: {detail[0].brand} </p>
-                <p>Price: {`$${Number2Decimals(detail[0].price)}`} </p>
-                <p>Genre: {detail[0].gender} </p>
-                <p>Category: {detail[0].category.name}</p>
-              </div>
+
+              {/*----------------------------*/}
+              {/*TEXTO CHOOSE SIZE*/}
+
+              {/*MUESTREO DE SIZE (TALLAS)*/}
+              {stock_by_ID.length > 0 && stateSize !== undefined ? (
+                <div className={style.containerFormAddCarry}>
+                  {(stateSize === undefined ||
+                    stateSize.size === undefined) && (
+                    <label className={style.textChooseSize}>Choose Size</label>
+                  )}
+                  <p className={style.paragraphSizes}>
+                    Available sizes:{" "}
+                    {stock_by_ID.map((sizeStock, index) => {
+                      return (
+                        <label
+                          id={
+                            sizeStock.productSize === stateSize.size
+                              ? style.SizeSeleccionada
+                              : style.SizeNoSeleccionada
+                          }
+                          className={
+                            sizeStock.stock === 0
+                              ? style.SizeSoldOut
+                              : style.SizeOnSale
+                          }
+                          onClick={(e) => changeSize(e, index, sizeStock.stock)}
+                        >
+                          {sizeStock.productSize}{" "}
+                        </label>
+                      );
+                    })}
+                  </p>
+                  {/*----------------------------*/}
+
+                  {/*MUESTREO DE CANTIDAD PRECIO Y BOTON COMPRA*/}
+                  {stateSize.stock > 0 ? (
+                    <div>
+                      <p className={style.paragraphQuantity}>
+                        Quantity:
+                        {
+                          <input
+                            type="number"
+                            placeholder="Amount"
+                            min={1}
+                            max={stateSize.stock}
+                            value={stateQuanty}
+                            onChange={(e) => changeQuanty(e)}
+                          />
+                        }
+                        <span>(Stock:{stateSize.stock})</span>
+                      </p>
+                      <p className={style.ParagraphTotalPrice}>
+                        Total price:
+                        {`  $${Number2Decimals(detail[0].price * stateQuanty)}`}
+                      </p>
+                      <button
+                        className={style.btnAddCarry}
+                        onClick={() => handleAddCarry()}
+                      >
+                        Add Carry
+                      </button>
+                    </div>
+                  ) : stateSize.size === undefined ? (
+                    " "
+                  ) : (
+                    <p className={style.soldOut}>SOLD OUT</p>
+                  )}
+                  {/*---------------------------------*/}
+                </div>
+              ) : (
+                <div>Loading Stock</div>
+              )}
             </div>
-            {/*----------------------------*/}
-            {/*TEXTO CHOOSE SIZE*/}
-            {(stateSize == undefined || stateSize.size == undefined) && <label className={style.textChooseSize}>Choose Size</label>}
-
-
-            {/*MUESTREO DE SIZE (TALLAS)*/}
-            {stock_by_ID.length > 0 && stateSize !== undefined ?
-              <div className={style.containerFormAddCarry}>
-                <p>Available sizes: {stock_by_ID.map((sizeStock, index) => {
-                  return (
-                    <label id={sizeStock.productSize === stateSize.size ? style.SizeSeleccionada : style.SizeNoSeleccionada}
-                      className={sizeStock.stock == 0 ? style.SizeSoldOut : style.SizeOnSale}
-                      onClick={(e) => changeSize(e, index, sizeStock.stock)}>
-                      {sizeStock.productSize}  </label>)
-                })
-                }</p>
-                {/*----------------------------*/}
-
-
-                {/*MUESTREO DE CANTIDAD PRECIO Y BOTON COMPRA*/}
-                {stateSize.stock > 0 ?
-                  <div>
-                    <p>Quantity:
-                      {<input type="number" placeholder="Amount" min={1} max={stateSize.stock} value={stateQuanty} onChange={(e) => changeQuanty(e)} />}
-                      (Stock:{stateSize.stock})
-                    </p>
-                    <p>Total price:
-                      {`  $${Number2Decimals(detail[0].price * stateQuanty)}`}
-                    </p>
-                    <button className={style.btnAddCarry} onClick={() => handleAddCarry()}>Add Carry</button>
-                  </div>
-                  : (stateSize.size == undefined ? " " : "Sold out")
-                }
-                {/*---------------------------------*/}
-              </div>
-              : <div>Loading Stock</div>
-            }
+            <div className={style.infoContainer}>
+              <p>Brand: {detail[0].brand} </p>
+              <p>Price: {`$${Number2Decimals(detail[0].price)}`} </p>
+              <p>Genre: {detail[0].gender} </p>
+              <p>Category: {detail[0].category.name}</p>
+            </div>
           </div>
         ) : (
           <p>LOADING...</p>
@@ -138,13 +189,18 @@ export default function Details(props) {
 
 function AddOrModifyCarry(carryAdd, carryProducts) {
   let array = carryProducts;
-  let indice = (carryProducts.findIndex(carry => (carry.id === carryAdd.id && JSON.stringify(carry.state) === JSON.stringify(carryAdd.state))))
+  let indice = carryProducts.findIndex(
+    (carry) =>
+      carry.id === carryAdd.id &&
+      JSON.stringify(carry.state) === JSON.stringify(carryAdd.state)
+  );
   if (indice == -1) {
-    array.push(carryAdd)
-  }
-  else {
-    let cantidad = Number.parseInt(array[indice].amount) + Number.parseInt(carryAdd.amount);
-    cantidad = cantidad > carryAdd.state.stock ? carryAdd.state.stock : cantidad;
+    array.push(carryAdd);
+  } else {
+    let cantidad =
+      Number.parseInt(array[indice].amount) + Number.parseInt(carryAdd.amount);
+    cantidad =
+      cantidad > carryAdd.state.stock ? carryAdd.state.stock : cantidad;
     array[indice].amount = cantidad;
   }
   return array;

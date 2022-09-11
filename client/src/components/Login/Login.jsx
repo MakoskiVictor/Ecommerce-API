@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 // import { googleLog, postLogin } from "../../Redux/Reducer/reducer";
 // import { Link, useNavigate } from "react-router-dom";
 import style from "./Login.module.css";
-import firebase from "../../firebase.js";
 import {getChecklogin} from "../../redux/actions";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
+/* import firebase from "../../firebase.js"; */
 
 
 
@@ -72,6 +72,7 @@ function Login(props) {
 
   return (
     <div className={style.loginContainer}>
+      {/* console.log(firebase) */}
       <div className={style.login}>
         <button className={style.btnClose} onClick={(e) => handleClose(e)}>Close</button>
         <h1>Login</h1>
