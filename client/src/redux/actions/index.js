@@ -1,6 +1,6 @@
 import axios from "axios";
 import CARRY_LOCALHOST from "../../components/Globales";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 export const SEARCH_NAME = "SEARCH_NAME";
 export const CHANGE_FILTER_GENDER = "CHANGE_FILTER_GENDER";
@@ -16,13 +16,11 @@ export const SEARCH_PRODUCT_ID = "SEARCH_PRODUCT_ID";
 export const DELETE_DETAILS = "DELETE_DETAILS";
 export const CHANGE_FILTER_NAME = "CHANGE_FILTER_NAME";
 export const ADD_PRODUCT_CARRY = "ADD_PRODUCT_CARRY";
-export const GET_STOCK_PRODUCT_BY_ID = "GET_STOCK_PRODUCT_BY_ID"
-export const DELETE_STOCK_ID = "DELETE_STOCK_ID"
-export const GET_STOCK_PRODUCT_BY_ID_TOTAL="GET_STOCK_PRODUCT_BY_ID_TOTAL"
-export const CHANGE_PRODUCTS_CARRY="CHANGE_PRODUCTS_CARRY"
-export const CHANGE_USER_LOGIN="CHANGE_USER_LOGIN"
-
-
+export const GET_STOCK_PRODUCT_BY_ID = "GET_STOCK_PRODUCT_BY_ID";
+export const DELETE_STOCK_ID = "DELETE_STOCK_ID";
+export const GET_STOCK_PRODUCT_BY_ID_TOTAL = "GET_STOCK_PRODUCT_BY_ID_TOTAL";
+export const CHANGE_PRODUCTS_CARRY = "CHANGE_PRODUCTS_CARRY";
+export const CHANGE_USER_LOGIN = "CHANGE_USER_LOGIN";
 
 export function searchNameProduct(name) {
    return async function (dispatch) {
@@ -56,9 +54,7 @@ export function changeFilternameProductSearched(name) {
 export function searchProductId(id) {
    return async function (dispatch) {
       try {
-         var json = await axios.get(
-            `http://localhost:3001/product/${id}`
-         );
+         var json = await axios.get(`http://localhost:3001/product/${id}`);
          return dispatch({
             type: SEARCH_PRODUCT_ID,
             payload: json.data,
@@ -67,7 +63,7 @@ export function searchProductId(id) {
          console.log(error);
       }
    };
-};
+}
 
 export function deleteDetails() {
    return {
@@ -203,20 +199,24 @@ export function changePaginatedPage(newPage) {
    };
 }
 
-export function addProductCarry(Size, idProduct,quanty,detail) {
+export function addProductCarry(Size, idProduct, quanty, detail) {
    return async function (dispatch) {
       try {
          return dispatch({
             type: ADD_PRODUCT_CARRY,
-            payload: { size: Size, id: idProduct ,
-               amount:quanty,detail:detail},
+            payload: {
+               size: Size,
+               id: idProduct,
+               amount: quanty,
+               detail: detail,
+            },
          });
       } catch (error) {
          console.log(error);
       }
    };
 }
-export function ChangeCarryProducts(NumberNew){
+export function ChangeCarryProducts(NumberNew) {
    return async function (dispatch) {
       try {
          return dispatch({
@@ -232,9 +232,7 @@ export function ChangeCarryProducts(NumberNew){
 export function getStockbyID(id) {
    return async function (dispatch) {
       try {
-         var json = await axios.get(
-            `http://localhost:3001/stock/${id}`
-         );
+         var json = await axios.get(`http://localhost:3001/stock/${id}`);
          return dispatch({
             type: GET_STOCK_PRODUCT_BY_ID,
             payload: json.data,
@@ -248,41 +246,39 @@ export function getStockbyID(id) {
 export function getStockbyIDTotal(carry) {
    return async function (dispatch) {
       try {
-         let Stocks=[];
+         let Stocks = [];
          for (let index = 0; index < carry.length; index++) {
-            const element = carry[index]
+            const element = carry[index];
             let json = await axios.get(
                `http://localhost:3001/stock/${element.id}`
             );
-            let array=json.data;
-            let elementoIndice=-1;
+            let array = json.data;
+            let elementoIndice = -1;
             for (let index = 0; index < array.length; index++) {
                const element2 = array[index];
-               if(element2.productSize===element.state.size){
-                  elementoIndice=array[index];
+               if (element2.productSize === element.state.size) {
+                  elementoIndice = array[index];
                   break;
                }
             }
-            if(elementoIndice!==-1)
-            Stocks.push(elementoIndice)
+            if (elementoIndice !== -1) Stocks.push(elementoIndice);
          }
          return dispatch({
             type: GET_STOCK_PRODUCT_BY_ID_TOTAL,
             payload: Stocks,
          });
       } catch (error) {
-        console.log(error);
+         console.log(error);
       }
    };
 }
 
 export function DeleteDrop(payload) {
-   console.log("entra")
+   console.log("entra");
    return async function () {
-      const response = await axios.put(
-         "http://localhost:3001/stock/drop",
-         {stockProducts:payload}
-      );
+      const response = await axios.put("http://localhost:3001/stock/drop", {
+         stockProducts: payload,
+      });
       return response;
    };
 }
@@ -299,10 +295,6 @@ export function CreateNewProduct(payload) {
    };
 }
 
-
-
-
-
 export function getChecklogin(newLoggedUser) {
    return async function (dispatch) {
       try {
@@ -310,11 +302,9 @@ export function getChecklogin(newLoggedUser) {
             `http://localhost:3001/users/login/?email=${newLoggedUser.email}&password=${newLoggedUser.password}`
          );
 
-         var Dato=json.data 
-          if(Dato!==false)
-          Dato=Dato.id
-          else
-          failedLogin()
+         var Dato = json.data;
+         if (Dato !== false) Dato = Dato.id;
+         else failedLogin();
 
          return dispatch({
             type: CHANGE_USER_LOGIN,
@@ -339,32 +329,43 @@ export function Logout() {
    };
 }
 
+// login google
 
+export function LoginGoogleUser(user) {
+   return async function (dispatch) {
+      try {
+         return dispatch({
+            type: CHANGE_USER_LOGIN,
+            payload: user,
+         });
+      } catch (error) {
+         console.log(error);
+      }
+   };
+}
 
-export  function VerificarCambioCarrito(carryProducts) {
-   let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST))
-   var Numero=0
-   if(Data!==undefined && Data!==null && Data.length!==0)
-   {
-     var cantidad=0
-     for (let index = 0; index < Data.length; index++) {
-       const element = Data[index];
-       cantidad+=(Number.parseInt(element.amount));
-     }
-     Numero=cantidad
+export function VerificarCambioCarrito(carryProducts) {
+   let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST));
+   var Numero = 0;
+   if (Data !== undefined && Data !== null && Data.length !== 0) {
+      var cantidad = 0;
+      for (let index = 0; index < Data.length; index++) {
+         const element = Data[index];
+         cantidad += Number.parseInt(element.amount);
+      }
+      Numero = cantidad;
    }
-   if (Numero !== carryProducts){
-     return (ChangeCarryProducts(Numero))}
-   else
-   return async function (dispatch){ 
-   }
- }
+   if (Numero !== carryProducts) {
+      return ChangeCarryProducts(Numero);
+   } else return async function (dispatch) {};
+}
 
-function failedLogin(){
- Swal.fire({
-   position: 'center',
-   icon: 'error',
-   title: 'The email or password is not correct',
-   showConfirmButton: false,
-   timer: 1000
- });}
+function failedLogin() {
+   Swal.fire({
+      position: "center",
+      icon: "error",
+      title: "The email or password is not correct",
+      showConfirmButton: false,
+      timer: 1000,
+   });
+}
