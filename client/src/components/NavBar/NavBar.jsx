@@ -19,12 +19,15 @@ export default function NavBar(props) {
     const [openModal, setOpenModal] = useState(false);
 
     function handleOpen() {
+        console.log("Entra")
         setOpenModal(true)
     }
 
     function handleClose(value) {
-        setOpenModal(value)
+        console.log("Entra")
+        setOpenModal(false)
     }
+    console.log(openModal)
 
     return (
         <header>
@@ -72,14 +75,15 @@ export default function NavBar(props) {
                                         </Badge>
                                     </Link>
                                 </li>
+                                { user_login.id!==undefined && user_login.id !== false && user_login.isAdmin!==undefined && user_login.isAdmin==true &&
                                 <li>
                                     <Link to={"/createProduct"} className={Style.letra}>
                                         CREATE_PRODUCT
                                     </Link>
-                                </li>
+                                </li>}
                                 <li>
                                     <p className={Style.letra}>
-                                    {user_login === false ?
+                                    { user_login.id!==undefined && user_login.id === false ?
                                         <button onClick={handleOpen} className={Style.buttonlogin}>Login/Register</button>
                                         : <NavUser />
                                     }

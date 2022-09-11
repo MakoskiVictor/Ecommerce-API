@@ -191,13 +191,13 @@ function ObtenerInicialProductsCarry() {
 
 function ObtenerInicial_ID_Login() {
    let Data = JSON.parse(localStorage.getItem(USER_ID))
-   var Id_user = false
+   var Id_user = {id:false}
    if (Data !== undefined && Data!==null) {
      Id_user=Data
    }
    return Id_user
 }
 
-function Cambiar_ID_Login(id) {
-    localStorage.setItem(USER_ID,JSON.stringify(id));
+function Cambiar_ID_Login(Dato) {
+    localStorage.setItem(USER_ID,JSON.stringify(Dato));
 }
