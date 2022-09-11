@@ -53,7 +53,7 @@ function Login(props) {
     history.push("/register")
   }
 
-    if(user_login!==false)
+    if(user_login.id==undefined || user_login.id!==false)
    props.close(false)
 
   // const googleLogin = async () => {

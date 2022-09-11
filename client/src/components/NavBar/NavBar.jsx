@@ -89,17 +89,22 @@ export default function NavBar(props) {
                     <Link to={"/register"} className={Style.letra}>
                         REGISTER
                     </Link>*/}
+              { user_login.id!==undefined && user_login.id !== false && user_login.isAdmin!==undefined && user_login.isAdmin==true &&
             <li className={Style.liFormat}>
               <Link to={"/createProduct"} className={Style.letra}>
                 CREATE_PRODUCT
               </Link>
             </li>
+            }
           </ul>
+           { user_login.id!==undefined && user_login.id === false ?
           <button onClick={handleOpen} className={Style.buttonlogin}>
             Login/Register
-          </button>
+          </button>   : <NavUser />
+          }
         </div>
         {/* <div className={Style.right}>
+        
                 <Link to={"/create"}>
                     ADD CLOTHES
                 </Link>

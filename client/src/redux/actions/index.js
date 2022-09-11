@@ -274,7 +274,6 @@ export function getStockbyIDTotal(carry) {
 }
 
 export function DeleteDrop(payload) {
-   console.log("entra");
    return async function () {
       const response = await axios.put("http://localhost:3001/stock/drop", {
          stockProducts: payload,
@@ -302,9 +301,11 @@ export function getChecklogin(newLoggedUser) {
             `http://localhost:3001/users/login/?email=${newLoggedUser.email}&password=${newLoggedUser.password}`
          );
 
-         var Dato = json.data;
-         if (Dato !== false) Dato = Dato.id;
-         else failedLogin();
+         var Dato=json.data 
+          if(Dato===false){
+          Dato={id:false}
+            failedLogin()
+            }
 
          return dispatch({
             type: CHANGE_USER_LOGIN,
@@ -316,12 +317,14 @@ export function getChecklogin(newLoggedUser) {
    };
 }
 
+
+
 export function Logout() {
    return async function (dispatch) {
       try {
          return dispatch({
             type: CHANGE_USER_LOGIN,
-            payload: false,
+            payload: {id:false},
          });
       } catch (error) {
          console.log(error);
