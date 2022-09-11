@@ -6,6 +6,15 @@ module.exports = (sequelize) => {
   sequelize.define(
     "user",
     {
+
+      ///Actualizacion Angelo
+      id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    ///
       email: {
         type: DataTypes.STRING,
         allowNull: false,
