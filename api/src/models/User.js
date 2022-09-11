@@ -9,10 +9,9 @@ module.exports = (sequelize) => {
 
       ///Actualizacion Angelo
       id: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
     },
     ///
       email: {

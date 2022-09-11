@@ -4,17 +4,17 @@ import logo_wooly from "../../assets/logo_wooly.png";
 import Style from "./NavBar.module.css";
 import logo from "../image/logo.png";
 import { useState } from "react";
-// import ComponentLogin from "../ComponentLogin/ComponentLogin";
 import Login from "../Login/Login";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { IconContext } from "react-icons";
-import { Badge } from "@mui/material";
-import CARRY_LOCALHOST from "../Globales";
-import { useDispatch, useSelector } from "react-redux";
+import { Badge } from '@mui/material';
+import { useSelector } from "react-redux";
+import NavUser from "../NavUser/NavUser";
+
 
 export default function NavBar(props) {
-  const carryProducts = useSelector((state) => state.carryProducts);
-
+    const carryProducts = useSelector((state) => state.carryProducts);
+    const user_login = useSelector((state) => state.user_login);
   const [openModal, setOpenModal] = useState(false);
 
   function handleOpen() {
