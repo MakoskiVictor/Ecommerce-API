@@ -6,7 +6,7 @@ const { Op } = require("sequelize");
 const router = Router();
 
 router.get("/login", async (req, res, next) => {
-   console.log("Entra ")
+   console.log("Entra ");
    const { email, password } = req.query;
    try {
       const userValidate = await User.findAll({
@@ -67,6 +67,60 @@ router.get("/", async (req, res, next) => {
       res.send(users);
    } catch (err) {
       next(err);
+   }
+});
+
+
+router.post("/Google", async (req, res, next) => {
+   const { email, password, name, lastName, image, address } = req.body;
+   console.log("entro validacion Google");
+   let isAdmin = false;
+   let isBaned = false;
+   try {
+      var userValidate = await User.findAll({
+         where: { email: email },
+      });
+      console.log("user validate", userValidate);
+      if (
+         email === "enzoholgadodev@gmail.com" ||
+         email === "makoski.ed@gmail.com" ||
+         email === "sebaslkjh@gmail.com" ||
+         email === "ingdcuevas@gmail.com" ||
+         email === "mattvalenti11@gmail.com" ||
+         email === "rider_shock@outlook.es" ||
+         email === "marina-mansilla@hotmail.com" ||
+         email === "eze-leiva@hotmail.com"
+      ) {
+         isAdmin = true;
+      }
+      if (Object.entries(userValidate).length === 0) {
+         const user = await User.findOrCreate({
+            where: {
+               email: email,
+               name: name,
+               lastName: lastName,
+               password: password,
+               image: image,
+               address: address,
+               isAdmin: isAdmin,
+               isBaned: isBaned,
+            },
+         });
+         userValidate = User.findAll({
+            where: { email: email },
+         });
+      }
+      res.send({
+         name: userValidate[0].dataValues.name,
+         lastName: userValidate[0].dataValues.lastName,
+         image: userValidate[0].dataValues.image,
+         address: userValidate[0].dataValues.address,
+         isAdmin: userValidate[0].dataValues.isAdmin,
+         id: userValidate[0].dataValues.id,
+      });
+   } catch (err) {
+      console.log("entro error");
+          next(err);
    }
 });
 
