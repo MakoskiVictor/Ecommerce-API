@@ -27,7 +27,7 @@ class Carry extends Component {
 
   DecreaseElementCarry(carryElements, index) {
     let array = Object.assign([], carryElements);
-    let cantidad = array[index].amount - 1;
+    let cantidad = (Number.parseInt(array[index].amount)) - 1;
 
     if (cantidad <= 0) {
       Swal.fire({
@@ -54,7 +54,7 @@ class Carry extends Component {
   IncreaseElementCarry(carryElements, index) {
     let array = Object.assign([], carryElements);
 
-    let cantidad = array[index].amount + 1;
+    let cantidad = (Number.parseInt(array[index].amount)) + 1;
     if (cantidad > array[index].state.stock) {
       Swal.fire({
         title: `There is no more stock for this product`,
@@ -124,7 +124,7 @@ class Carry extends Component {
       const stock = Stocks[index];
       for (let index2 = start; index2 < Data.length; index2++) {
         const datalocal = Data[index2];
-
+        let monto=(Number.parseInt(datalocal.amount))
         /// Encontrar dentro Stock el mismo id del elemento del local storage
         if (
           datalocal.id == stock.productId &&
@@ -149,7 +149,7 @@ class Carry extends Component {
             datalocal.amount = datalocal.state.stock;
           }
           /// Verificar si el stock es menor al monto del local storage por cambio (enviar mensaje al cliente)
-          else if (datalocal.state.stock < datalocal.amount) {
+          else if (datalocal.state.stock < monto) {
             Actualizar = true;
             actualizoBuy = true;
             Swal.fire({
@@ -161,7 +161,7 @@ class Carry extends Component {
             datalocal.amount = datalocal.state.stock;
           }
           //Sumar el total de la compra
-          Total += datalocal.amount * datalocal.details.price;
+          Total += (Number.parseInt(datalocal.amount)) * parseFloat(datalocal.details.price);
 
           //Metodo para hacer la iteracion mas rapida
           let elementoStart = Data[start];
