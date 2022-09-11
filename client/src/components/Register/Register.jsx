@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import swal from "sweetalert";
 import { image, address } from "../../assets/constantes";
 import styles from "./Register.module.css";
-/* import { useAuth } from "../../context/authContext.jsx"; */
+import { useAuth } from "../../context/authContext.jsx";
 
 export default function Register() {
   //ESTADOS
@@ -18,7 +18,7 @@ export default function Register() {
 
   const history = useHistory();
   //EXTRAIGO EL SINGUP DEL OBJETO
-  /* const { singup } = useAuth(); */
+  const { singup } = useAuth();
 
   //VALIDACIONES
 
@@ -120,18 +120,30 @@ export default function Register() {
     //SI LAS VALIDACIONES ESTAN OK
 
     try {
-      /* singup(email, password) */
-      await register(name, lastName, password, email).then((response) => {
-        swal({
-          title: "User created successfully!",
-          icon: "success",
-          button: "Ok",
-        }).then(() => {
-          history.push("/");
+      await singup(email, password)
+      .then  (
+        await register(name, lastName, password, email))
+      .then((response) => {
+          swal({
+            title: "User created successfully!",
+            icon: "success",
+            button: "Ok",
+          }).then(() => {
+            history.push("/");
+          });
         });
-      });
+
+      
     } catch (error) {
-      console.log(error);
+      if(error.code === "auth/email-already-in-use") {
+        return swal({
+          title: "Email alredy in use!",
+          icon: "error",
+          button: "Ok",
+        });
+      }
+      console.log(error)
+      console.log("error.message", error.code)
     }
   };
 

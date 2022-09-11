@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Switch, BrowserRouter } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { Home } from "./components/Home/Home";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
 import Details from "./components/Details/Details.jsx";
@@ -15,15 +15,13 @@ import Carry from "./components/Carry/Carry";
 // import GoogleLogin from "react-google-login";
 import Login from "./components/Login/Login";
 import payment from "./components/Pago/Pay";
-// Login Google
-import LoginGoogle from "./components/Login/Login Google/LoginGoogle";
-/* import {AuthProvider} from "./context/authContext.jsx"; */
+import { AuthProvider } from "./context/authContext.jsx";
 import ModifyItem from "./components/ModifyITem/ModifyItem";
 
 function App() {
    return (
-      <BrowserRouter>
-         <div className="App">
+      <div className="App">
+         <AuthProvider>
             {/* nav bar */}
             <NavBar />
             <Switch>
@@ -51,9 +49,9 @@ function App() {
                {/* <Route exact path="/profile">aca va el componente del perfil de usuario</Route> */}
                {/* <Route exact path="/login">aca va el componente de login/inicio de sesion</Route> */}
             </Switch>
-            <Footer />
-         </div>
-      </BrowserRouter>
+         </AuthProvider>
+         <Footer />
+      </div>
    );
 }
 

@@ -6,7 +6,8 @@ const { Op } = require("sequelize");
 const router = Router();
 
 router.get("/login", async (req, res, next) => {
-   const { email, password } = req.body;
+   console.log("Entra ")
+   const { email, password } = req.query;
    try {
       const userValidate = await User.findAll({
          where: { email: email, password: password },
@@ -20,6 +21,7 @@ router.get("/login", async (req, res, next) => {
             image: userValidate[0].dataValues.image,
             address: userValidate[0].dataValues.address,
             isAdmin: userValidate[0].dataValues.isAdmin,
+            id: userValidate[0].dataValues.id,
          });
       }
    } catch (err) {

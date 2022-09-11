@@ -1,5 +1,6 @@
 import axios from "axios";
 import CARRY_LOCALHOST from "../../components/Globales";
+import Swal from "sweetalert2";
 
 export const SEARCH_NAME = "SEARCH_NAME";
 export const CHANGE_FILTER_GENDER = "CHANGE_FILTER_GENDER";
@@ -19,6 +20,7 @@ export const GET_STOCK_PRODUCT_BY_ID = "GET_STOCK_PRODUCT_BY_ID";
 export const DELETE_STOCK_ID = "DELETE_STOCK_ID";
 export const GET_STOCK_PRODUCT_BY_ID_TOTAL = "GET_STOCK_PRODUCT_BY_ID_TOTAL";
 export const CHANGE_PRODUCTS_CARRY = "CHANGE_PRODUCTS_CARRY";
+export const CHANGE_USER_LOGIN = "CHANGE_USER_LOGIN";
 
 export function searchNameProduct(name) {
    return async function (dispatch) {
@@ -293,6 +295,27 @@ export function CreateNewProduct(payload) {
    };
 }
 
+export function getChecklogin(newLoggedUser) {
+   return async function (dispatch) {
+      try {
+         var json = await axios.get(
+            `http://localhost:3001/users/login/?email=${newLoggedUser.email}&password=${newLoggedUser.password}`
+         );
+
+         var Dato = json.data;
+         if (Dato !== false) Dato = Dato.id;
+         else failedLogin();
+
+         return dispatch({
+            type: CHANGE_USER_LOGIN,
+            payload: Dato,
+         });
+      } catch (error) {
+         console.log(error);
+      }
+   };
+}
+
 export function VerificarCambioCarrito(carryProducts) {
    let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST));
    var Numero = 0;
@@ -309,31 +332,12 @@ export function VerificarCambioCarrito(carryProducts) {
    } else return async function (dispatch) {};
 }
 
-// export function postLogin(user) {
-//    return async (dispatch) => {
-//       try {
-//          // generamos el token conectando con el back
-//          const token = await axios.post("http://localhost:3001/users", user);
-//          // lo pasamos a json y lo guardamos en la consola en application local storage
-//          if (token.data === "invalid") {
-//             Swal.fire(
-//                "Email o contraseña incorrectos",
-//                "Recuerda activar tu cuenta si es la primera vez que inicias sesion",
-//                "warning"
-//             );
-//          } else if (token.data) {
-//             localStorage.setItem("token", JSON.stringify(token.data));
-//          }
-//          //desencryptamos el token
-//          const data = jwtDecode(token.data);
-//          // alojamos el id del usuario y los datos relevantes en el estado
-//          return dispatch(setCurrentUser(data));
-//       } catch (e) {
-//          Swal.fire(
-//             "Email o contraseña incorrectos",
-//             "Recuerda activar tu cuenta si es la primera vez que inicias sesión",
-//             "warning"
-//          );
-//       }
-//    };
-// }
+function failedLogin() {
+   Swal.fire({
+      position: "center",
+      icon: "error",
+      title: "The email or password is not correct",
+      showConfirmButton: false,
+      timer: 1000,
+   });
+}

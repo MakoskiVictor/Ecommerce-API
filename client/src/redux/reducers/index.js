@@ -18,9 +18,10 @@ import {
    DELETE_STOCK_ID,
    GET_STOCK_PRODUCT_BY_ID_TOTAL,
    CHANGE_PRODUCTS_CARRY,
+   CHANGE_USER_LOGIN,
 } from "../actions";
 
-import CARRY_LOCALHOST from "../../components/Globales";
+import { CARRY_LOCALHOST, USER_ID } from "../../components/Globales";
 
 const PAGE_START = 1;
 
@@ -41,6 +42,7 @@ const initialState = {
    stock_by_ID: [],
    carryProductsStocks: [],
    carryProducts: ObtenerInicialProductsCarry(),
+   user_login: ObtenerInicial_ID_Login(),
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -170,11 +172,17 @@ const rootReducer = (state = initialState, action) => {
             carryProductsStocks: action.payload,
          };
       case CHANGE_PRODUCTS_CARRY:
-         console.log(action.payload);
          return {
             ...state,
             carryProducts: action.payload,
          };
+      case CHANGE_USER_LOGIN:
+         Cambiar_ID_Login(action.payload);
+         return {
+            ...state,
+            user_login: action.payload,
+         };
+
       default:
          return state;
    }
@@ -217,31 +225,6 @@ function AddOrModifyCarry(carryAdd, carryProducts) {
    return array;
 }
 
-function DisminuirCantidad(carryProducts, index) {
-   let array = Object.assign([], carryProducts);
-
-   let cantidad = array[index].amount - 1;
-   if (cantidad == 0) {
-      array.splice(index, 1);
-   } else {
-      array[index].amount = cantidad;
-   }
-   return array;
-}
-
-function AumentarCantidad(carryProducts, index) {
-   let array = Object.assign([], carryProducts);
-
-   let cantidad = array[index].amount + 1;
-   if (cantidad > array[index].size.stock) {
-      array[index].amount = array[index].size.stock;
-      console.log("No hay mas stock para aumentar");
-   } else {
-      array[index].amount = cantidad;
-   }
-   return array;
-}
-
 function ObtenerInicialProductsCarry() {
    let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST));
    var Numero = 0;
@@ -254,4 +237,17 @@ function ObtenerInicialProductsCarry() {
       Numero = cantidad;
    }
    return Numero;
+}
+
+function ObtenerInicial_ID_Login() {
+   let Data = JSON.parse(localStorage.getItem(USER_ID));
+   var Id_user = false;
+   if (Data !== undefined && Data !== null) {
+      Id_user = Data;
+   }
+   return Id_user;
+}
+
+function Cambiar_ID_Login(id) {
+   localStorage.setItem(USER_ID, JSON.stringify(id));
 }
