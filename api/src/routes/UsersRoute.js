@@ -70,6 +70,38 @@ router.get("/", async (req, res, next) => {
    }
 });
 
+router.get("/:id", async (req, res, next) => {
+   const { id } = req.params;
+   let allUsers;
+   try {
+      if (id) {
+         allUsers = await User.findOne({
+            where: {
+               id: id
+            },
+         });
+         
+      let user = allUsers.map((item) => {
+            return {
+               id: item.id,
+               email: item.email,
+               name: item.name,
+               lastName: item.lastName,
+               image: item.image,
+               address: item.address,
+               isAdmin: item.isAdmin,
+               isBaned: item.isBaned,
+            };
+      });
+      res.send(user);
+   } else
+   res.send(false);
+      
+   } catch (err) {
+      next(err);
+   }
+});
+
 router.post("/", async (req, res, next) => {
    const { email, password, name, lastName, image, address } = req.body;
    let isAdmin = false;
