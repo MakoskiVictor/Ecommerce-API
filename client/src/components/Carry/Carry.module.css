@@ -1,11 +1,23 @@
 .mainContainer {
   padding: 35px;
+  min-height: 65vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .containCarry {
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+
+.paragraph {
+  padding: 20px;
+  border-radius: 15px;
+  background-color: #343a40;
+  color: white;
+  font-size: 2rem;
 }
 
 .PriceTotal {
