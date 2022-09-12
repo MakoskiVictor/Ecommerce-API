@@ -1,4 +1,4 @@
-import "./App.css";
+/* import "./App.css"; */
 import { Route, Switch } from "react-router-dom";
 import { Home } from "./components/Home/Home";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
@@ -23,41 +23,43 @@ import NavUser from "./components/NavUser/NavUser.jsx";
 // login Google
 import LoginGoogle from "./components/Login/Login Google/LoginGoogle";
 
+import styles from "./App.module.css";
+
 function App() {
-   return (
-      <div className="App">
-         <AuthProvider>
-            {/* nav bar */}
-            <NavBar />
-            <Switch>
-               <Route exact path="/">
-                  <Home />{" "}
-               </Route>
-               <Route exact path="/products/:gender">
-                  <ComponentProducts />{" "}
-                  {/*Se pone asi porque los componentes estan creadas como Clase*/}
-               </Route>
-               <Route path="/login" component={Login} />
-               <Route path="/details/:id" component={Details}></Route>{" "}
-               <Route exact path="/createProduct" component={Formulario} />{" "}
-               {/*Se pone asi porque los componentes estan creadas como Funcion*/}
-               <Route path="/about" component={About}></Route>
-               <Route path="/contact" component={Contact} />
-               <Route exact path="/LoginGoogle" component={LoginGoogle} />
-               <Route exact path="/register" component={Register} />
-               <Route path="/carry">
-                  <Carry />{" "}
-               </Route>
-               <Route exact path="/payment" component={payment} />
-               <Route component={ErrorPage}></Route>
-               {/* sprint 2 */}
-               {/* <Route exact path="/profile">aca va el componente del perfil de usuario</Route> */}
-               {/* <Route exact path="/login">aca va el componente de login/inicio de sesion</Route> */}
-            </Switch>
-         </AuthProvider>
-         <Footer />
-      </div>
-   );
+  return (
+    <div className={styles.App}>
+      <AuthProvider>
+        {/* nav bar */}
+        <NavBar />
+        <Switch>
+          <Route exact path="/">
+            <Home />{" "}
+          </Route>
+          <Route exact path="/products/:gender">
+            <ComponentProducts />{" "}
+            {/*Se pone asi porque los componentes estan creadas como Clase*/}
+          </Route>
+          <Route path="/login" component={Login} />
+          <Route path="/details/:id" component={Details}></Route>{" "}
+          <Route exact path="/createProduct" component={Formulario} />{" "}
+          {/*Se pone asi porque los componentes estan creadas como Funcion*/}
+          <Route path="/about" component={About}></Route>
+          <Route path="/contact" component={Contact} />
+          <Route exact path="/LoginGoogle" component={LoginGoogle} />
+          <Route exact path="/register" component={Register} />
+          <Route path="/carry">
+            <Carry />{" "}
+          </Route>
+          <Route exact path="/payment" component={payment} />
+          <Route component={ErrorPage}></Route>
+          {/* sprint 2 */}
+          {/* <Route exact path="/profile">aca va el componente del perfil de usuario</Route> */}
+          {/* <Route exact path="/login">aca va el componente de login/inicio de sesion</Route> */}
+        </Switch>
+      </AuthProvider>
+      <Footer />
+    </div>
+  );
 }
 
 //  const respuestaGoogle = (respuesta) =>{
