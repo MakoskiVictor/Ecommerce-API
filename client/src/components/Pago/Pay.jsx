@@ -2,7 +2,7 @@ import React from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import Swal from "sweetalert2";
 import axios from "axios";
-import /*Link, useHistory */ "react-router-dom";
+import {Link, useHistory }from "react-router-dom";
 import CARRY_LOCALHOST from "../Globales";
 import styles from "./Pay.module.css";
 
@@ -17,7 +17,7 @@ export default function Pay() {
 
   console.log(JSON.parse(localStorage.getItem(CARRY_LOCALHOST)));
 
-  // const history = useHistory();
+  const history = useHistory();
   //   const idUser = window.atob(localStorage.getItem('id'));
   //   const navigate = useNavigate();
   //   const username = window.atob(localStorage.getItem("username")); //julianpardeiro
@@ -36,7 +36,7 @@ export default function Pay() {
       quantity: e.amount,
     };
   });
-
+  console.log(articulos)
   let PrecioTotalArticulos =
     articulos[0].unit_amount.value * articulos[0].quantity;
 
@@ -89,6 +89,7 @@ export default function Pay() {
       // await postHistory(detalles.id,idUser,productsArray)
       // await SendReview(username, productsArray, detalles.id);
       // await CrearComentarioReview(username, arregloSoloId, detalles.id);
+      
       Swal.fire({
         icon: "success",
         title: "Payment Successful!",
@@ -111,7 +112,7 @@ export default function Pay() {
 
       let stockProducts = arregloObjetosIdQuantity;
 
-      localStorage.setItem(CARRY_LOCALHOST, JSON.stringify([]));
+      
 
       dispatch(VerificarCambioCarrito(carryProducts));
 
@@ -120,9 +121,9 @@ export default function Pay() {
         url: `${PATH}/stock/drop`,
         data: stockProducts,
       })
-        .then((e) => e.data)
+        .then((e)=>e.data,localStorage.setItem(CARRY_LOCALHOST, JSON.stringify([])))
         .catch((e) => console.log(e));
-      // history("/");
+      history.push("/");
     });
   };
 
@@ -142,6 +143,7 @@ export default function Pay() {
       title: "Payment Cancelled",
       text: "Your payment has been cancelled and will not be charged",
     });
+    history.push("/");
   };
 
   const onError = (error) => {
@@ -151,6 +153,7 @@ export default function Pay() {
       text: "There has been an error in your payment and will not be charged",
     });
     console.log("Error: ", error);
+    history.push("/");
   };
 
   return (
