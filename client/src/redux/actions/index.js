@@ -256,6 +256,7 @@ export function getStockbyIDTotal(carry) {
             let elementoIndice = -1;
             for (let index = 0; index < array.length; index++) {
                const element2 = array[index];
+               console.log(element2.productSize , "  ",element.state.size)
                if (element2.productSize === element.state.size) {
                   elementoIndice = array[index];
                   break;
@@ -348,6 +349,7 @@ export function LoginGoogleUser(user) {
 }
 
 export function VerificarCambioCarrito(carryProducts) {
+   console.log("Entra")
    let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST));
    var Numero = 0;
    if (Data !== undefined && Data !== null && Data.length !== 0) {
@@ -358,6 +360,7 @@ export function VerificarCambioCarrito(carryProducts) {
       }
       Numero = cantidad;
    }
+   console.log(Numero,"  ",carryProducts)
    if (Numero !== carryProducts) {
       return ChangeCarryProducts(Numero);
    } else return async function (dispatch) {};
