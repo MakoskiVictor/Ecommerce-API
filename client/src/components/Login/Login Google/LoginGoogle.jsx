@@ -68,13 +68,10 @@ function LoginGoogle() {
          console.log("error firebase ",error)
       }
       history.push("/");
-
-
-      
    }
 
    if (user) {
-      console.log("registro")
+      console.log(user)
       register(user.providerData[0])
    }
 

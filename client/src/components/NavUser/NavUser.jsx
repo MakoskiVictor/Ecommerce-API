@@ -19,6 +19,9 @@ function NavUser() {
     }
   };
 
+  
+
+
   // login email
   const dispatch = useDispatch()
 
@@ -39,7 +42,7 @@ function NavUser() {
         </button>
         <div class={Style.dropdown_content}>
           <a href="#" onClick={handleLogout}>Logout</a>
-
+          <a href="/profile">Profile</a>
           {/*<a href="#">Link 2</a>
           <a href="#">Link 3</a>*/}
         </div>

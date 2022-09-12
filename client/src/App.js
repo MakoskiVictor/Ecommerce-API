@@ -16,6 +16,7 @@ import Carry from "./components/Carry/Carry";
 import Login from "./components/Login/Login";
 import payment from "./components/Pago/Pay";
 import { AuthProvider } from "./context/authContext.jsx";
+import Profile from "./components/Profile/Profile";
 import ModifyItem from "./components/ModifyITem/ModifyItem";
 
 import NavUser from "./components/NavUser/NavUser.jsx";
@@ -39,6 +40,7 @@ function App() {
             <ComponentProducts />{" "}
             {/*Se pone asi porque los componentes estan creadas como Clase*/}
           </Route>
+          <Route path="/profile" component={Profile} />
           <Route path="/login" component={Login} />
           <Route path="/details/:id" component={Details}></Route>{" "}
           <Route exact path="/createProduct" component={Formulario} />{" "}
