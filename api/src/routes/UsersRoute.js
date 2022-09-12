@@ -81,6 +81,7 @@ router.post("/Google", async (req, res, next) => {
       var userValidate = await User.findAll({
          where: { email: email },
       });
+
       console.log("user validate", userValidate);
       if (
          email === "enzoholgadodev@gmail.com" ||
@@ -106,6 +107,14 @@ router.post("/Google", async (req, res, next) => {
                isAdmin: isAdmin,
                isBaned: isBaned,
             },
+         });
+         await transporter.sendMail({
+            from: '"Ecommerce Clothes👻" <dominicode.xyz@gmail.com>', // sender address
+            to: email, // list of receivers
+            subject: "Register successfully for google!", // Subject line
+            // text: "Hello world?", // plain text body
+            html: `
+            <b> Hello ${name} you Register for Google in Eccomerce Clothes, wellcome Fashion and Style for life<b>`, // html body
          });
          userValidate = User.findAll({
             where: { email: email },
