@@ -80,6 +80,7 @@ class Carry extends Component {
     Data = this.DeleteElementCarry(Data, index);
     localStorage.setItem(CARRY_LOCALHOST, JSON.stringify(Data));
     this.setState({ carry: Data });
+this.props.getStockbyIDTotal(Data);
 
     Swal.fire({
       position: "bottom-start",
@@ -120,16 +121,22 @@ class Carry extends Component {
     let actualizoBuy = false;
 
     //Metodo para iterar 2 arrays para encontrar el elemento del local Storage dentro del Stock y hacer verificaciones
+    console.log(Stocks,"  ",Data)
+    
     for (let index = 0; index < Stocks.length; index++) {
       const stock = Stocks[index];
       for (let index2 = start; index2 < Data.length; index2++) {
+        console.log("entra 1")
         const datalocal = Data[index2];
         let monto=(Number.parseInt(datalocal.amount))
         /// Encontrar dentro Stock el mismo id del elemento del local storage
+        console.log(datalocal.id,"  ",stock.productId,"  ",
+        datalocal.state.size,"  ",stock.productSize)
         if (
           datalocal.id == stock.productId &&
           datalocal.state.size == stock.productSize
         ) {
+          console.log("entra 2")
           /// Verificar si el stock ha sido cambiado y modificar el local storage
           if (stock.stock !== datalocal.state.stock) {
             Data[index2].state.stock = stock.stock;
@@ -174,7 +181,7 @@ class Carry extends Component {
     }
     // Si hubo cambio en el Stock, actualiza los elementos del local Storage, asi como su stock nuevo, o cantidad de productos
     // del mismo elemento
-    if (Actualizar) {
+    if (Actualizar) { 
       localStorage.setItem(CARRY_LOCALHOST, JSON.stringify(Data));
       this.setState({ carry: Data });
     }
