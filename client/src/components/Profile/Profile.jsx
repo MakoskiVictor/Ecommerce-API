@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import style from "./Carry.module.css";
+import style from "./Profile.module.css";
 import ProfileCard from "./ProfileCard.jsx";
 
 class Profile extends Component {
@@ -15,7 +15,6 @@ class Profile extends Component {
                                 email={user_login.email}
                                 name={user_login.name}
                                 lastName={user_login.lastName}
-                                password={user_login.password}
                                 image={user_login.image}
                                 address={user_login.address}
                                 isAdmin={user_login.isAdmin}
