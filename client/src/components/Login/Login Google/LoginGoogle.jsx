@@ -62,9 +62,15 @@ function LoginGoogle() {
    const history = useHistory();
 
    const handlegoogleLogin = async () => {
-      await googleLogin();
+      try{
+      await googleLogin();}
+      catch(error){
+         console.log("error firebase ",error)
+      }
       history.push("/");
 
+
+      
    }
 
    if (user) {
