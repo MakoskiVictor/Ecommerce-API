@@ -4,6 +4,7 @@ import style from "./Formulario.module.css";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { CreateNewProduct } from "../../redux/actions";
+import swal from "sweetalert";
 
 // instalar sweetalert y usarla, crear nuevos inputs: talle, y stock
 
@@ -74,6 +75,16 @@ function validate(input) {
   } else if (input.brand.endsWith(" ")) {
     errores.brand = "Dont input blank space";
   }
+
+  /*      SOTCK           */
+  else if (input.stock === 0) {
+    errores.stock = "Stock is not 0";
+  }
+
+  else if (input.stock < 0) {
+    errores.stock = "Stock is not less than 0";
+  }
+
   /*   GENDER     */
   // else if (input.gender === "Men" && input.categoryId === 8799 ||
   //     input.gender === "Men" && input.categoryId === 3630 ||
@@ -99,6 +110,9 @@ function Formulario() {
     brand: "",
     gender: "",
     categoryId: undefined,
+    description: "is very good quality clothing, made by the brand in the USA with the best quality materials. We have different sizes and colors of this product so you can choose the one you like best",
+    stock: 0,
+    size: "",
   };
   const [input, SetInput] = useState(initialState);
 
@@ -142,7 +156,11 @@ function Formulario() {
       input.categoryId
     ) {
       dispatch(CreateNewProduct(input));
-      alert("Product Created");
+      swal({
+        title: "Product created successfully!",
+        icon: "success",
+        button: "Ok",
+      });
       SetInput(initialState);
       history.push("/");
     } else alert(" missing data for the creation of a new product");
@@ -164,10 +182,50 @@ function Formulario() {
     }
   }
 
+  // AUMENTAR STOCK
+
+  function handleAumentar(e) {
+    e.preventDefault();
+    SetInput({
+      ...input,
+      stock: input.stock += 1
+    });
+    SetErrors(
+      validate({
+        ...input,
+        stock: input.stock
+      }));
+  }
+
+  // DISMINUIR STOCK
+
+  function handleDecrementar(e) {
+    e.preventDefault();
+    SetInput({
+      ...input,
+      stock: input.stock -= 1
+    });
+    SetErrors(
+      validate({
+        ...input,
+        stock: input.stock
+      }))
+  }
+
+  //  TALLE 
+
+  function handleSelectSize(e) {
+    SetInput({
+      ...input,
+      size: e.target.value,
+    });
+  }
+
   return (
     <div className={style.containerMain}>
       <form className={style.form} onSubmit={(e) => handleSubmit(e)}>
         <h2 className={style.titulo}>Product creation</h2>
+        {console.log(input)}
         <div>
           <p>Name:</p>
           {error.name && ( // si hay un error hara un <p> nuevo con el error
@@ -278,6 +336,37 @@ function Formulario() {
               </select>
             </div>
           )}
+
+          {/* STOCK */}
+
+          <p className={style.stockTitle}>Create Stock:</p>
+          <div className={style.stockContainerPrincipal}>
+            <p className={style.stockNumberContain}>stock Product:  <span className={style.stockNumber}>{input.stock}</span></p>
+            {error.stock && ( // si hay un error hara un <p> nuevo con el error
+              <p className={style.error}>{error.stock}</p>
+            )}
+            <section>
+              <button className={style.buttonStock} onClick={(e) => handleAumentar(e)}>+</button>
+              <button className={style.buttonStock} onClick={(e) => handleDecrementar(e)} >-</button>
+            </section>
+          </div>
+
+          {/* TALLE */}
+          <div className={style.select}>
+            {input.size.length === 0 && ( // si hay un error hara un <p> nuevo con el error
+              <p className={style.error}>{"choose a Size"}</p>
+            )}
+            <p>Select Size:</p>
+            <select className={style.select} onChange={(e) => handleSelectSize(e)}>
+              <option selected disabled>
+                Select size
+              </option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+            </select>
+          </div>
+
 
           {/* BUTTON */}
           {Object.keys(error).length === 0 && comprobacionInput(input) ? (
