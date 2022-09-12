@@ -2,6 +2,8 @@ const { Router } = require("express");
 const { User } = require("../db");
 const axios = require("axios");
 const { Op } = require("sequelize");
+// emails
+const transporter = require("../../config/mailer");
 
 const router = Router();
 
@@ -70,7 +72,6 @@ router.get("/", async (req, res, next) => {
    }
 });
 
-
 router.post("/Google", async (req, res, next) => {
    const { email, password, name, lastName, image, address } = req.body;
    console.log("entro validacion Google");
@@ -120,7 +121,7 @@ router.post("/Google", async (req, res, next) => {
       });
    } catch (err) {
       console.log("entro error");
-          next(err);
+      next(err);
    }
 });
 
@@ -131,11 +132,11 @@ router.get("/:id", async (req, res, next) => {
       if (id) {
          allUsers = await User.findOne({
             where: {
-               id: id
+               id: id,
             },
          });
-         
-      let user = allUsers.map((item) => {
+
+         let user = allUsers.map((item) => {
             return {
                id: item.id,
                email: item.email,
@@ -146,11 +147,9 @@ router.get("/:id", async (req, res, next) => {
                isAdmin: item.isAdmin,
                isBaned: item.isBaned,
             };
-      });
-      res.send(user);
-   } else
-   res.send(false);
-      
+         });
+         res.send(user);
+      } else res.send(false);
    } catch (err) {
       next(err);
    }
@@ -164,6 +163,16 @@ router.post("/", async (req, res, next) => {
       const userValidate = await User.findAll({
          where: { email: email },
       });
+      // send mail registro
+      await transporter.sendMail({
+         from: '"Ecommerce Clothes👻" <dominicode.xyz@gmail.com>', // sender address
+         to: email, // list of receivers
+         subject: "Register successfully!", // Subject line
+         // text: "Hello world?", // plain text body
+         html: `
+         <b> Hello ${name} you register in Eccomerce Clothes, wellcome Fashion and Style for life<b>`, // html body
+      });
+
       if (
          email === "enzoholgadodev@gmail.com" ||
          email === "makoski.ed@gmail.com" ||
