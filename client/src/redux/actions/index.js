@@ -21,8 +21,9 @@ export const DELETE_STOCK_ID = "DELETE_STOCK_ID";
 export const GET_STOCK_PRODUCT_BY_ID_TOTAL = "GET_STOCK_PRODUCT_BY_ID_TOTAL";
 export const CHANGE_PRODUCTS_CARRY = "CHANGE_PRODUCTS_CARRY";
 export const CHANGE_USER_LOGIN = "CHANGE_USER_LOGIN";
-export const CREATE_COMMENT = "CREATE_COMMENT";
+export const CREATE_COMMENT = "CREATE_COMMENT";;
 export const GET_COMMENTS = "GET_COMMENTS";
+export const GET_ALL_USERS = "GET_ALL_USERS";;
 export const GET_ORDERS = "GET_ORDERS";
 
 export function searchNameProduct(name) {
@@ -373,6 +374,7 @@ function failedLogin() {
   });
 }
 
+
 // Comments
 export function createComment(payload) {
   console.log("este es el payload papi", payload);
@@ -430,3 +432,17 @@ export function getOrders() {
     });
   };
 }
+
+ //USERS ADMIN
+
+ export function getAllUsers() {
+    return function (dispatch) {
+       axios.get("http://localhost:3001/users")
+       .then((res) => {
+          dispatch({
+             type: GET_ALL_USERS,
+             payload: res.data,
+          })
+       })
+    }
+ };

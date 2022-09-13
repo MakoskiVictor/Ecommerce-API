@@ -4,7 +4,7 @@ import {
    CHANGE_FILTER_BRAND, GET_CATEGORYS, CHANGE_FILTER_MAX, CHANGE_FILTER_MIN, CHANGE_FILTER_PRICE,
    CHANGE_PAGINATED_PRODUCTS, CHANGE_PAGINATED_PAGE, SEARCH_PRODUCT_ID, DELETE_DETAILS, CHANGE_FILTER_NAME,
    ADD_PRODUCT_CARRY, GET_STOCK_PRODUCT_BY_ID, DELETE_STOCK_ID, GET_STOCK_PRODUCT_BY_ID_TOTAL, CHANGE_PRODUCTS_CARRY
-   , CHANGE_USER_LOGIN,GET_ORDERS,
+   , CHANGE_USER_LOGIN,GET_ORDERS, GET_ALL_USERS
 } from "../actions";
 
 import {CARRY_LOCALHOST,USER_ID} from "../../components/Globales";
@@ -24,6 +24,7 @@ const initialState = {
    carryProductsStocks: [],
    carryProducts: ObtenerInicialProductsCarry(),
    user_login: ObtenerInicial_ID_Login(),
+   allUsers: [],   
    orders:[]
 };
 
@@ -148,6 +149,11 @@ const rootReducer = (state = initialState, action) => {
               orders: action.payload,
             };
           }
+      case GET_ALL_USERS:
+         return {
+            ...state,
+            allUsers: action.payload
+         };
 
       default:
          return state;
