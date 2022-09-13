@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import style from "./Details.module.css";
 import CARRY_LOCALHOST from "../Globales";
 import swal from "sweetalert2";
-import Comments from "../Comments/Comments";
+// import Comments from "../Comments/Comments";
+import FeedBack from "../Orders/Order"
 
 import {
   deleteDetails,
@@ -206,6 +207,7 @@ export default function Details(props) {
           <button className={style.btnDetails}>Go Back</button>
         </Link>
         {/* <Comments userName={user.name} productId={props.match.params.id}></Comments> */}
+        {/* <FeedBack productId={detail.productId} product={detail.product} />   */}
       </div>
     </div>
   );
