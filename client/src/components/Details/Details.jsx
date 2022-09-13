@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import style from "./Details.module.css";
 import CARRY_LOCALHOST from "../Globales";
 import swal from "sweetalert2";
+import Comments from "../Comments/Comments";
 
 import {
   deleteDetails,
@@ -19,6 +20,7 @@ export default function Details(props) {
   const genderPrevius = useSelector((state) => state.filters.filterGender);
   const carryProducts = useSelector((state) => state.carryProducts);
   const stock_by_ID = useSelector((state) => state.stock_by_ID);
+  const user = useSelector(state=>state.user_login)
 
   const [stateSize, SetstateSize] = useState({
     size: undefined,
@@ -182,6 +184,7 @@ export default function Details(props) {
         <Link to={`/products/${genderPrevius}`}>
           <button className={style.btnDetails}>Go Back</button>
         </Link>
+        {/* <Comments userName={user.name} productId={props.match.params.id}></Comments> */}
       </div>
     </div>
   );

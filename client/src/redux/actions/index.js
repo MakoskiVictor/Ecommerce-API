@@ -21,6 +21,8 @@ export const DELETE_STOCK_ID = "DELETE_STOCK_ID";
 export const GET_STOCK_PRODUCT_BY_ID_TOTAL = "GET_STOCK_PRODUCT_BY_ID_TOTAL";
 export const CHANGE_PRODUCTS_CARRY = "CHANGE_PRODUCTS_CARRY";
 export const CHANGE_USER_LOGIN = "CHANGE_USER_LOGIN";
+export const CREATE_COMMENT = "CREATE_COMMENT"
+export const GET_COMMENTS = "GET_COMMENTS"
 
 export function searchNameProduct(name) {
    return async function (dispatch) {
@@ -375,3 +377,53 @@ function failedLogin() {
       timer: 1000,
    });
 }
+
+
+// Comments
+export function createComment(payload) {
+   console.log("este es el payload papi",payload);
+   return function (dispatch) {
+     axios
+       .post("http://localhost:3001/comment", payload)
+       .then((res) => {
+         dispatch({
+           type: CREATE_COMMENT,
+           payload: res.data,
+         });
+       })
+       .catch((error) => console.log(error));
+   };
+ }
+
+ export function updateReview(payload) {
+   //console.log("esto es el payload de revie",payload)
+   
+   return function (dispatch) {
+     axios.put(`http://localhost:3001/comment`, payload)
+     .then(res => {
+       console.log('todo tranqui')
+       dispatch({
+         type: 'UPDATE_REVIEW',
+         payload: res.data
+       })
+     })
+     .catch(error => console.log(error)) 
+   }
+ }
+
+ export function getAllComments() {
+   return function (dispatch) {
+      axios
+       .get("http://localhost:3001/comments")
+       .then((res) => {
+         dispatch({
+           type: GET_COMMENTS,
+           payload: res.data,
+         });
+       })
+       .catch((error) => 
+       console.log(error)
+       
+       );
+   };
+ }
