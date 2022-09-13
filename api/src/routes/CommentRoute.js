@@ -20,14 +20,14 @@ router.post('/', async (req, res) => {
     try {
         const { productId, comment, rating, name } = req.body
         // console.log(productId, comment, rating, name);
-        console.log("as")
+        // console.log("as")
         let newComment = await Comment.create({
             comment,
             rating,
             name,
             productId
         })
-        console.log("asasa")
+        // console.log("asasa")
 
 
         let productComments = await Product.findByPk(
