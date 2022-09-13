@@ -20,6 +20,7 @@ import Profile from "./components/Profile/Profile";
 import ModifyItem from "./components/ModifyITem/ModifyItem";
 
 import NavUser from "./components/NavUser/NavUser.jsx";
+import orders from "./components/Orders/Order";
 
 // login Google
 import LoginGoogle from "./components/Login/Login Google/LoginGoogle";
@@ -52,7 +53,9 @@ function App() {
           <Route path="/carry">
             <Carry />{" "}
           </Route>
+          
           <Route exact path="/payment" component={payment} />
+          <Route exact path="/orders" component={orders} />
           <Route component={ErrorPage}></Route>
           {/* sprint 2 */}
           {/* <Route exact path="/profile">aca va el componente del perfil de usuario</Route> */}
