@@ -25,6 +25,12 @@ export default function NavBar(props) {
     setOpenModal(value);
   }
 
+  let Cantidad=0
+  for (let index = 0; index < carryProducts.length; index++) {
+    var carry = carryProducts[index];
+    Cantidad=Cantidad+carry.amount
+  }
+
   return (
     <header>
       <nav className={Style.NavBarComplete}>
@@ -76,7 +82,7 @@ export default function NavBar(props) {
                 </li> */}
             <li>
               <Link to={"/carry"} className={Style.btnCarry}>
-                <Badge badgeContent={carryProducts} color="primary">
+                <Badge badgeContent={Cantidad} color="primary">
                   <IconContext.Provider value={{ size: "40px" }}>
                     <AiOutlineShoppingCart />
                   </IconContext.Provider>

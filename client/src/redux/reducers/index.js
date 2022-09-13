@@ -3,11 +3,12 @@ import {
    SEARCH_NAME, CHANGE_FILTER_GENDER, CHANGE_FILTER_CATEGORY,
    CHANGE_FILTER_BRAND, GET_CATEGORYS, CHANGE_FILTER_MAX, CHANGE_FILTER_MIN, CHANGE_FILTER_PRICE,
    CHANGE_PAGINATED_PRODUCTS, CHANGE_PAGINATED_PAGE, SEARCH_PRODUCT_ID, DELETE_DETAILS, CHANGE_FILTER_NAME,
-   ADD_PRODUCT_CARRY, GET_STOCK_PRODUCT_BY_ID, DELETE_STOCK_ID, GET_STOCK_PRODUCT_BY_ID_TOTAL, CHANGE_PRODUCTS_CARRY
-   , CHANGE_USER_LOGIN, GET_ALL_USERS
+   GET_STOCK_PRODUCT_BY_ID, DELETE_STOCK_ID, GET_STOCK_PRODUCT_BY_ID_TOTAL
+   , CHANGE_USER_LOGIN, GET_ALL_USERS,CHANGE_PRODUCTS_CARRY
 } from "../actions";
 
-import {CARRY_LOCALHOST,USER_ID} from "../../components/Globales";
+import { CARRY_LOCALHOST, USER_ID } from "../../components/Globales";
+import swal from "sweetalert2";
 
 const PAGE_START = 1;
 
@@ -24,7 +25,7 @@ const initialState = {
    carryProductsStocks: [],
    carryProducts: ObtenerInicialProductsCarry(),
    user_login: ObtenerInicial_ID_Login(),
-   allUsers: [],   
+   allUsers: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -114,11 +115,11 @@ const rootReducer = (state = initialState, action) => {
             filters: { ...state.filters, nameProductSearched: action.payload, filterBrand: [] },
             paginated: { ...state.paginated, page: PAGE_START }
          };
-      case ADD_PRODUCT_CARRY:
-         let ArrayCarry = AddOrModifyCarry(action.payload, state.carryProducts)
+      case CHANGE_PRODUCTS_CARRY:
+         localStorage.setItem(CARRY_LOCALHOST, JSON.stringify(action.payload))
          return {
             ...state,
-            carryProducts: ArrayCarry,
+            carryProducts: action.payload,
          };
       case GET_STOCK_PRODUCT_BY_ID:
          return {
@@ -131,7 +132,7 @@ const rootReducer = (state = initialState, action) => {
             carryProductsStocks: action.payload
          };
       case CHANGE_PRODUCTS_CARRY:
-         console.log("Cambio aca ",action.payload)
+         console.log("Cambio aca ", action.payload)
          return {
             ...state,
             carryProducts: action.payload
@@ -168,43 +169,24 @@ function AgregarDesagregarArray(elementos, action) {
    return element;
 }
 
-function AddOrModifyCarry(carryAdd, carryProducts) {
-   let array = carryProducts;
-   let indice = (carryProducts.findIndex(carry => (carry.id === carryAdd.id && JSON.stringify(carry.size) === JSON.stringify(carryAdd.size))))
-   if (indice == -1) {
-      array.push({ id: carryAdd.id, size: carryAdd.size, amount: carryAdd.amount, details: carryAdd.detail })
-   }
-   else {
-      let cantidad = array[indice].amount + carryAdd.amount;
-      cantidad = cantidad > carryAdd.size.stock ? carryAdd.size.stock : cantidad;
-      array[indice].amount = cantidad;
-   }
-   return array;
-}
-
 function ObtenerInicialProductsCarry() {
    let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST))
-   var Numero = 0
-   if (Data !== undefined && Data!==null && Data.length !== 0) {
-      var cantidad = 0
-      for (let index = 0; index < Data.length; index++) {
-         const element = Data[index];
-         cantidad += (Number.parseInt(element.amount));
-      }
-      Numero = cantidad
+   var Array = []
+   if (Data !== undefined && Data !== null && Data.length !== 0) {
+      Array=Data;
    }
-   return Numero
+   return Array
 }
 
 function ObtenerInicial_ID_Login() {
    let Data = JSON.parse(localStorage.getItem(USER_ID))
-   var Id_user = {id:false}
-   if (Data !== undefined && Data!==null) {
-     Id_user=Data
+   var Id_user = { id: false }
+   if (Data !== undefined && Data !== null) {
+      Id_user = Data
    }
    return Id_user
 }
 
 function Cambiar_ID_Login(Dato) {
-    localStorage.setItem(USER_ID,JSON.stringify(Dato));
+   localStorage.setItem(USER_ID, JSON.stringify(Dato));
 }

@@ -9,7 +9,7 @@ import Comments from "../Comments/Comments";
 import {
   deleteDetails,
   searchProductId,
-  VerificarCambioCarrito,
+  ChangeCarryProducts,
   getStockbyID,
   deleteStockbyID,
 } from "../../redux/actions";
@@ -20,7 +20,6 @@ export default function Details(props) {
   const genderPrevius = useSelector((state) => state.filters.filterGender);
   const carryProducts = useSelector((state) => state.carryProducts);
   const stock_by_ID = useSelector((state) => state.stock_by_ID);
-  const user = useSelector(state=>state.user_login)
 
   const [stateSize, SetstateSize] = useState({
     size: undefined,
@@ -43,6 +42,40 @@ export default function Details(props) {
     return Number.parseFloat(x).toFixed(2);
   }
 
+  function AddOrModifyCarry(carryAdd, carryProducts) {
+    let array = Object.assign([],carryProducts);
+    let alertNo=false
+    let indice = (carryProducts.findIndex(carry => (carry.id === carryAdd.id && JSON.stringify(carry.state.size) === JSON.stringify(carryAdd.state.size))))
+    if (indice == -1) {
+       array.push(carryAdd)
+    }
+    else {
+       let cantidad = array[indice].amount + carryAdd.amount;
+       if(cantidad>carryAdd.state.stock){
+          alertNo=true;
+          cantidad=carryAdd.state.stock;
+          swal.fire({
+             title: `the maximum number of stock of this product(${carryAdd.details.name}) has been addedProduct Added`,
+             position: "bottom-start",
+             icon: "info",
+             showConfirmButton: false,
+             timer: 1000,
+           });
+       }
+       array[indice].amount = cantidad;
+    }
+    if(!alertNo){
+          swal.fire({
+          title: `Product Added ${carryAdd.details.name} to shopping cart!`,
+          position: "bottom-start",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 400,
+        });
+    }
+    return array;
+ }
+
   function handleAddCarry() {
     let id = props.match.params.id;
     let elemento = {
@@ -51,27 +84,13 @@ export default function Details(props) {
       amount: stateQuanty,
       details: detail[0],
     };
-    let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST));
-    if (Data === undefined || Data === null) {
-      Data = [];
-      Data.push(elemento);
-    } else Data = AddOrModifyCarry(elemento, Data);
-    localStorage.setItem(CARRY_LOCALHOST, JSON.stringify(Data));
-
-    dispatch(VerificarCambioCarrito(carryProducts));
+    let NewCarry=AddOrModifyCarry(elemento,carryProducts)
+    dispatch(ChangeCarryProducts(NewCarry));
     SetstateQuanty(1);
-
-    return swal.fire({
-      title: `Product Added ${elemento.details.name} to shopping cart!`,
-      position: "bottom-start",
-      icon: "success",
-      showConfirmButton: false,
-      timer: 400,
-    });
   }
 
   function changeQuanty(e) {
-    SetstateQuanty(e.target.value);
+    SetstateQuanty(e.target.valueAsNumber);
   }
   function changeSize(e, indice, stock) {
     //if(stock>0)
@@ -83,6 +102,8 @@ export default function Details(props) {
 
   if (stateSize == undefined)
     SetstateSize({ size: undefined, stock: undefined });
+
+    console.log(carryProducts)
 
   return (
     <div className={style.cardDetailMainContainer}>
@@ -190,21 +211,3 @@ export default function Details(props) {
   );
 }
 
-function AddOrModifyCarry(carryAdd, carryProducts) {
-  let array = carryProducts;
-  let indice = carryProducts.findIndex(
-    (carry) =>
-      carry.id === carryAdd.id &&
-      JSON.stringify(carry.state) === JSON.stringify(carryAdd.state)
-  );
-  if (indice == -1) {
-    array.push(carryAdd);
-  } else {
-    let cantidad =
-      Number.parseInt(array[indice].amount) + Number.parseInt(carryAdd.amount);
-    cantidad =
-      cantidad > carryAdd.state.stock ? carryAdd.state.stock : cantidad;
-    array[indice].amount = cantidad;
-  }
-  return array;
-}

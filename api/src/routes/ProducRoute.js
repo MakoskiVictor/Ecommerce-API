@@ -39,32 +39,6 @@ router.post("/", async (req, res, next) => {
    }
 });
 
-///RUTA EN DESARROLLO
-router.post("/Add_Stock_Size", async (req, res, next) => {
-  const { idProduct, size, stock} = req.body;
-  try {
-     const product = await Product.findOne({
-        where: {
-           id:idProduct
-        },
-        include: {
-          model: Stock,
-        }
-     });
-//// ACA
-     if(product!==undefined && product.length!==0){
-           Stock.create({
-           productSize: size,
-           stock:  stock,
-           productId: idProduct,
-        });
-     }
-     res.status(202).send(product);
-  } catch (err) {
-     next(err);
-  }
-});
-
 router.get("/", async (req, res, next) => {
   const { name, category } = req.query;
   let ProductosTotales = await Product.findAll();
