@@ -9,6 +9,8 @@ const UsersRoute = require("./UsersRoute")
 const PurchasedRoute = require("./PurchasedRoute")
 const StockRoute = require("./StockRoute")
 const CommentRoute = require("./CommentRoute")
+const orderRouter = require('./orderRouter');
+
 
 const router = Router();
 
@@ -18,7 +20,10 @@ router.use("/product", ProductDetailsRoute)
 router.use('/users', UsersRoute)
 router.use('/purchased', PurchasedRoute)
 router.use('/stock', StockRoute)
+
 router.use("/comment",CommentRoute)
+router.use('/orders', orderRouter);
+
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);

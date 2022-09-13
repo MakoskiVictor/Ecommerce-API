@@ -21,6 +21,7 @@ import ModifyItem from "./components/ModifyITem/ModifyItem";
 import UsersAdmin from "./components/UsersAdmin/UsersAdmin";
 
 import NavUser from "./components/NavUser/NavUser.jsx";
+import orders from "./components/Orders/Order";
 
 // login Google
 import LoginGoogle from "./components/Login/Login Google/LoginGoogle";
@@ -53,7 +54,9 @@ function App() {
           <Route path="/carry">
             <Carry />{" "}
           </Route>
+          
           <Route exact path="/payment" component={payment} />
+          <Route exact path="/orders" component={orders} />
           <Route path="/usersAdmin" component={UsersAdmin} />  
           <Route component={ErrorPage}></Route>
           {/* sprint 2 */}
