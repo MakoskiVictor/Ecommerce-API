@@ -211,7 +211,8 @@ export function ChangeCarryProducts(CarryNew) {
       } catch (error) {
          console.log(error);
       }
-   };
+   }
+}
 
 export function getStockbyID(id) {
   return async function (dispatch) {
