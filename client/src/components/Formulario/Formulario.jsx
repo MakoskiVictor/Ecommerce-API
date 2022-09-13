@@ -5,6 +5,9 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { CreateNewProduct } from "../../redux/actions";
 import swal from "sweetalert";
+import {
+  getCategorys,
+} from "../../redux/actions";
 
 // instalar sweetalert y usarla, crear nuevos inputs: talle, y stock
 
@@ -100,6 +103,7 @@ function validate(input) {
 
 function Formulario() {
   const dispatch = useDispatch();
+  const categorys = useSelector((state) => state.categorys);
   const [error, SetErrors] = useState({});
   const history = useHistory();
   const initialState = {
@@ -113,6 +117,7 @@ function Formulario() {
     description: "is very good quality clothing, made by the brand in the USA with the best quality materials. We have different sizes and colors of this product so you can choose the one you like best",
     stock: 0,
     size: "",
+    categorysGender:[],
   };
   const [input, SetInput] = useState(initialState);
 
@@ -130,9 +135,14 @@ function Formulario() {
   }
 
   function handleSelect(e) {
+    dispatch(getCategorys());
+    let CategorysG = categorys.filter(element => element.gender === e.target.value);
+
     SetInput({
       ...input,
+      categorysGender: CategorysG,
       gender: e.target.value,
+      categoryId:"Disable",
     });
   }
 
@@ -140,7 +150,7 @@ function Formulario() {
     let number = e.target.value;
     SetInput({
       ...input,
-      categoryId: parseInt(e.target.value),
+      categoryId: e.target.value,
     });
   }
 
@@ -221,6 +231,18 @@ function Formulario() {
     });
   }
 
+  useEffect(() => {
+    dispatch(getCategorys());
+    let CategorysG = categorys.filter(element => element.gender === input.gender);
+    
+    SetInput({
+      ...input,
+      categorysGender: CategorysG,
+    });
+  }, [dispatch]);
+ 
+
+  console.log(input.categorysGender)
   return (
     <div className={style.containerMain}>
       <form className={style.form} onSubmit={(e) => handleSubmit(e)}>
@@ -300,12 +322,12 @@ function Formulario() {
         <div>
           <p>Select Category:</p>
 
-          {input.gender === "Men" ? (
+         
             <div className={style.select}>
               {input.categoryId === null && ( // si hay un error hara un <p> nuevo con el error
                 <p className={style.error}>{"choose a category"}</p>
               )}
-              <select
+              {/*<select
                 className={style.select}
                 onChange={(e) => handleSelectCategory(e)}
               >
@@ -317,25 +339,18 @@ function Formulario() {
                 <option value="3602">Shirts</option>
                 <option value="5668">Hoodies & Sweatshirts</option>
                 <option value="14274">Sweatpants</option>
+          </select>*/}
+             
+             <select value={input.categoryId}className={style.select} onChange={(e) => handleSelectCategory(e)}>
+             <option selected disabled value={"Disable"} > Select Category</option>
+                  {input.categorysGender.map((elemento) => {
+                    return (
+                      <option key={elemento.id} value={elemento.id}>{elemento.name}</option>)
+                  })
+                  }              
+              <option className={style.optionCreate} key={"Create"} value={"Create"} >Create Category</option>
               </select>
             </div>
-          ) : (
-            <div className={style.select}>
-              <select
-                className={style.select}
-                onChange={(e) => handleSelectCategory(e)}
-              >
-                <option selected disabled>
-                  Select Category
-                </option>
-                <option value="8799">Dress</option>
-                <option value="3630">Jeans</option>
-                <option value="9263">Shorts</option>
-                <option value="4169">Tops</option>
-                <option value="2641">Coats & jackets</option>
-              </select>
-            </div>
-          )}
 
           {/* STOCK */}
 

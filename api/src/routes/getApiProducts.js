@@ -7,7 +7,6 @@ module.exports = async () => {
    const size = ["S", "M", "L"];
    const stock = [0, 5, 10, 20, 30, 40, 50];
    let products = [];
-   let Categorias = [];
    const apiKey = "aadbf6840amsh715656a50c8d934p186539jsn3bdb94e79b6c";
    for (let index = 0; index < IDs.length; index++) {
       let api = (
@@ -19,16 +18,16 @@ module.exports = async () => {
       var createCategory = await Category.findOrCreate({
          where: {
             name: api.categoryName,
-            id: IDs[index],
             gender: categoryGenero,
          },
       });
-      Categorias.push(createCategory);
+      let NewIdCategory=createCategory[0].dataValues.id
+      console.log(NewIdCategory)
 
       const tempArr = api.products.map((item) => {
          let tempObj = {
             ...item,
-            categoryId: IDs[index],
+            categoryId:NewIdCategory,
          };
          return tempObj;
       });
