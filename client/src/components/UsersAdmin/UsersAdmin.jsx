@@ -25,6 +25,7 @@ export default function UsersAdmin () {
             return(
                 <CardUsersAdmin
                     key={users.id}
+                    email={users.email}
                     image={users.image}
                     name={users.name}
                     lastName={users.lastName}

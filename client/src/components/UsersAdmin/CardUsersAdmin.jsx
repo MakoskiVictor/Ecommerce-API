@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function CardUsersAdmin ({image, name, lastName, id, email, address, isAdmin, isBaned}) {
-
+    /* console.log("SOY EMAIL CARDS", email) */
 
     return (
         <div key={id}>
