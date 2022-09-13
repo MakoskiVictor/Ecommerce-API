@@ -6,7 +6,7 @@ import {Link, useHistory }from "react-router-dom";
 import CARRY_LOCALHOST from "../Globales";
 import styles from "./Pay.module.css";
 
-import { VerificarCambioCarrito, DeleteDrop } from "../../redux/actions";
+import { DeleteDrop ,ChangeCarryProducts} from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Pay() {
@@ -112,16 +112,12 @@ export default function Pay() {
 
       let stockProducts = arregloObjetosIdQuantity;
 
-      
-
-      dispatch(VerificarCambioCarrito(carryProducts));
-
       await axios({
         method: "put",
         url: `${PATH}/stock/drop`,
         data: stockProducts,
       })
-        .then((e)=>e.data,localStorage.setItem(CARRY_LOCALHOST, JSON.stringify([])))
+        .then((e)=>e.data,dispatch(ChangeCarryProducts([])))
         .catch((e) => console.log(e));
       history.push("/");
     });

@@ -19,11 +19,11 @@ export const ADD_PRODUCT_CARRY = "ADD_PRODUCT_CARRY";
 export const GET_STOCK_PRODUCT_BY_ID = "GET_STOCK_PRODUCT_BY_ID";
 export const DELETE_STOCK_ID = "DELETE_STOCK_ID";
 export const GET_STOCK_PRODUCT_BY_ID_TOTAL = "GET_STOCK_PRODUCT_BY_ID_TOTAL";
-export const CHANGE_PRODUCTS_CARRY = "CHANGE_PRODUCTS_CARRY";
 export const CHANGE_USER_LOGIN = "CHANGE_USER_LOGIN";
 export const CREATE_COMMENT = "CREATE_COMMENT";;
 export const GET_COMMENTS = "GET_COMMENTS";
-export const GET_ALL_USERS = "GET_ALL_USERS";;
+export const GET_ALL_USERS = "GET_ALL_USERS";
+export const CHANGE_PRODUCTS_CARRY = "CHANGE_PRODUCTS_CARRY";
 export const GET_ORDERS = "GET_ORDERS";
 
 export function searchNameProduct(name) {
@@ -201,35 +201,17 @@ export function changePaginatedPage(newPage) {
   };
 }
 
-export function addProductCarry(Size, idProduct, quanty, detail) {
-  return async function (dispatch) {
-    try {
-      return dispatch({
-        type: ADD_PRODUCT_CARRY,
-        payload: {
-          size: Size,
-          id: idProduct,
-          amount: quanty,
-          detail: detail,
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
-export function ChangeCarryProducts(NumberNew) {
-  return async function (dispatch) {
-    try {
-      return dispatch({
-        type: CHANGE_PRODUCTS_CARRY,
-        payload: NumberNew,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
+export function ChangeCarryProducts(CarryNew) {
+   return async function (dispatch) {
+      try {
+         return dispatch({
+            type: CHANGE_PRODUCTS_CARRY,
+            payload: CarryNew,
+         });
+      } catch (error) {
+         console.log(error);
+      }
+   };
 
 export function getStockbyID(id) {
   return async function (dispatch) {
@@ -344,24 +326,6 @@ export function LoginGoogleUser(user) {
       console.log(error);
     }
   };
-}
-
-export function VerificarCambioCarrito(carryProducts) {
-  console.log("Entra");
-  let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST));
-  var Numero = 0;
-  if (Data !== undefined && Data !== null && Data.length !== 0) {
-    var cantidad = 0;
-    for (let index = 0; index < Data.length; index++) {
-      const element = Data[index];
-      cantidad += Number.parseInt(element.amount);
-    }
-    Numero = cantidad;
-  }
-  console.log(Numero, "  ", carryProducts);
-  if (Numero !== carryProducts) {
-    return ChangeCarryProducts(Numero);
-  } else return async function (dispatch) {};
 }
 
 function failedLogin() {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getStockbyIDTotal, VerificarCambioCarrito } from "../../redux/actions";
+import { getStockbyIDTotal, VerificarCambioCarrito ,ChangeCarryProducts} from "../../redux/actions";
 import style from "./Carry.module.css";
 import CarryCard from "./CarryCard.jsx";
 import CARRY_LOCALHOST from "../Globales";
@@ -9,19 +9,13 @@ import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 
 class Carry extends Component {
-  constructor(props) {
-    super(props);
-    let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST));
-    Data = Data == undefined || Data == null ? [] : Data;
-    this.state = { carry: Data };
-  }
 
   Number2Decimals(x) {
     return Number.parseFloat(x).toFixed(2);
   }
 
   componentDidMount() {
-    let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST));
+    let Data=this.props.carryProducts;
     this.props.getStockbyIDTotal(Data);
   }
 
@@ -40,13 +34,13 @@ class Carry extends Component {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
           array.splice(index, 1);
-          localStorage.setItem(CARRY_LOCALHOST, JSON.stringify(array));
-          this.setState({ carry: array });
+          this.props.ChangeCarryProducts(array)
           Swal.fire("The product was removed!", "", "success");
         }
       });
     } else {
       array[index].amount = cantidad;
+      this.props.ChangeCarryProducts(array)
     }
     return array;
   }
@@ -75,12 +69,11 @@ class Carry extends Component {
   }
 
   onDelete(index) {
-    let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST));
+    let Data=this.props.carryProducts;
     this.props.getStockbyIDTotal(Data);
     Data = this.DeleteElementCarry(Data, index);
-    localStorage.setItem(CARRY_LOCALHOST, JSON.stringify(Data));
-    this.setState({ carry: Data });
-this.props.getStockbyIDTotal(Data);
+    this.props.ChangeCarryProducts(Data)
+    this.props.getStockbyIDTotal(Data);
 
     Swal.fire({
       position: "bottom-start",
@@ -91,20 +84,16 @@ this.props.getStockbyIDTotal(Data);
     });
   }
   onDecrease(index) {
-    //console.log(this.props.history.push("/"))
-    let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST));
+    let Data=this.props.carryProducts;
     this.props.getStockbyIDTotal(Data);
     Data = this.DecreaseElementCarry(Data, index);
-    localStorage.setItem(CARRY_LOCALHOST, JSON.stringify(Data));
-    this.setState({ carry: Data });
   }
 
   onIncrease(index) {
-    let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST));
+    let Data=this.props.carryProducts;
     this.props.getStockbyIDTotal(Data);
     Data = this.IncreaseElementCarry(Data, index);
-    localStorage.setItem(CARRY_LOCALHOST, JSON.stringify(Data));
-    this.setState({ carry: Data });
+    this.props.ChangeCarryProducts(Data)
   }
 
   onContinueBuy() {
@@ -114,12 +103,12 @@ this.props.getStockbyIDTotal(Data);
 
   VerificarStocks() {
     let Stocks = this.props.carryProductsStocks;
-    let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST));
+    let Data=this.props.carryProducts;
     let Actualizar = false;
     let start = 0;
     let Total = 0;
     let actualizoBuy = false;
-
+  
     //Metodo para iterar 2 arrays para encontrar el elemento del local Storage dentro del Stock y hacer verificaciones
     console.log(Stocks,"  ",Data)
     
@@ -182,7 +171,7 @@ this.props.getStockbyIDTotal(Data);
     // Si hubo cambio en el Stock, actualiza los elementos del local Storage, asi como su stock nuevo, o cantidad de productos
     // del mismo elemento
     if (Actualizar) { 
-      localStorage.setItem(CARRY_LOCALHOST, JSON.stringify(Data));
+      this.props.ChangeCarryProducts(Data)
       this.setState({ carry: Data });
     }
     //retorna el precio total
@@ -190,12 +179,12 @@ this.props.getStockbyIDTotal(Data);
   }
 
   render() {
-    let carryProducts = this.state.carry;
+    let carryProducts = this.props.carryProducts;
     let { priceTotal } = this.VerificarStocks();
     let fraseNoResultados = "There are no products added to the shopping cart";
-    this.props.VerificarCambioCarrito(this.props.carryProducts);
-
-    console.log(JSON.parse(localStorage.getItem(CARRY_LOCALHOST)));
+    console.log(this.props.carryProducts);
+   
+    console.log(this.props.carryProducts);
 
     return (
       <div className={style.mainContainer}>
@@ -253,9 +242,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   //pasandole al componente la posibilidad como props de hacer un dispatch de la function getcountries
   return {
-    getStockbyIDTotal: (carry) => dispatch(getStockbyIDTotal(carry)),
-    VerificarCambioCarrito: (carryProducts) =>
-      dispatch(VerificarCambioCarrito(carryProducts)),
+      getStockbyIDTotal: (carry) => dispatch(getStockbyIDTotal(carry)),
+      ChangeCarryProducts: (carrynew) => dispatch(ChangeCarryProducts(carrynew)),
     //changePaginatedPage: (page) => dispatch(changePaginatedPage(page)),
   };
 }
