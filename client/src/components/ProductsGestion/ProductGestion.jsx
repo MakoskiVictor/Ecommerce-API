@@ -12,13 +12,13 @@ class ProductCards extends Component {
     this.state = { productsStocks: [] };
    }
 
-  componentDidMount(){
-    console.log(this.props.paginated.productsViewPage)
-    let Promesa=this.getStocks()
-    Promesa().then(e=>console.log(e))
-  } 
+  //componentDidMount(){
+    //console.log(this.props.paginated.productsViewPage)
+    //let Promesa=this.getStocks()
+    //Promesa().then(e=>console.log(e))
+  //} 
 
-  getStocks(){
+  /*getStocks(){
     return async function (productos) {
       try {
         let productos2=Object.assign([], productos);
@@ -33,20 +33,20 @@ class ProductCards extends Component {
         console.log("Cargando o los productos no son los indicados");
       }
    }
-}
+}*/
  
  
   render() {
     let productos = this.props.paginated.productsViewPage
-    let Promesa=this.getStocks()
-    Promesa(productos).then(e=>(JSON.stringify(this.state.productsStocks)!==JSON.stringify(e)?this.setState({productsStocks:e }):console.log("Actualizado Stock")))
-    console.log(this.state.productsStocks)
+    //let Promesa=this.getStocks()
+    //Promesa(productos).then(e=>(JSON.stringify(this.state.productsStocks)!==JSON.stringify(e)?this.setState({productsStocks:e }):console.log("Actualizado Stock")))
+    //console.log(this.state.productsStocks)
 
     let fraseNoResultados = "No results found";
     return (
       <div className={this.props.styleCards.cards}>
-        {this.state.productsStocks.length !== 0 &&
-          this.state.productsStocks.map((c) => (
+        {productos.length !== 0 ?
+          productos.map((c) => (
             <ProductGestionCard
               key={c.id}
               id={c.id}
@@ -55,17 +55,16 @@ class ProductCards extends Component {
               brand={c.brand}
               price={c.price}
               gender={c.gender}
-              SizeStocks={c.Stocks}
+              SizeStocks={c.stocks}
               styleCard={this.props.styleCard}
             />
-          ))}
-        {this.state.productsStocks.length === 0 && (
+          )):
           <div className="cards">
             <p>
               <b>{fraseNoResultados}</b>
             </p>
           </div>
-        )}
+        }
       </div>
     );
   }

@@ -9,7 +9,7 @@ class Paginated extends Component {
 
   Actualizar() {
    let NumeracionMaximaPaginas=this.props.NumMaxPag==undefined?SizeEnumeracionPaginado:this.props.NumMaxPag;
-   let NumeracionMaximoTarjetas=this.props.NumMaxPag==undefined?SizeEnumeracionCards_byPage:this.props.NumMaxPag;
+   let NumeracionMaximoTarjetas=this.props.NumMaxtarg==undefined?SizeEnumeracionCards_byPage:this.props.NumMaxtarg;
 
     let IndiceFinal =
       Math.floor(this.props.paginated.productsView.length / NumeracionMaximoTarjetas) +
@@ -45,7 +45,8 @@ class Paginated extends Component {
   }
 
   obtenerCountriesPagina(productos) {
-    let NumeracionMaximoTarjetas=this.props.NumMaxPag==undefined?SizeEnumeracionCards_byPage:this.props.NumMaxPag;
+    let NumeracionMaximoTarjetas=this.props.NumMaxtarg==undefined?SizeEnumeracionCards_byPage:this.props.NumMaxtarg;
+    console.log(NumeracionMaximoTarjetas) 
     if (productos !== undefined) {
       let Inicio = (this.props.paginated.page - 1) * NumeracionMaximoTarjetas;
       return productos.slice(Inicio, Inicio + NumeracionMaximoTarjetas);

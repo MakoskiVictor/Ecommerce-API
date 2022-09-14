@@ -14,9 +14,9 @@ export const ComponentProducts = () => {
             <Filter styleFilter={styleFilter}/>
             </div>
             <div className={s.containerProductsGlobal2}>
-            <Paginated stylePaginated={stylePaginated}/>
+            <Paginated stylePaginated={stylePaginated} NumMaxtarg={15}/>
             <ProductCards styleCards={styleCards} styleCard={styleCard} />
-            <Paginated stylePaginated={stylePaginated} />
+            <Paginated stylePaginated={stylePaginated} NumMaxtarg={15} />
             </div>
         </div>
     )

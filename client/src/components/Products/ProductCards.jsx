@@ -7,6 +7,7 @@ class ProductCards extends Component {
   
   render() {
     let productos = this.props.paginated.productsViewPage
+    console.log(productos)
 
     let fraseNoResultados = "No results found";
     return (

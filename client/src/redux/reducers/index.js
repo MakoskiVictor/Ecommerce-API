@@ -3,7 +3,7 @@ import {
    CHANGE_FILTER_BRAND, GET_CATEGORYS, CHANGE_FILTER_MAX, CHANGE_FILTER_MIN, CHANGE_FILTER_PRICE,
    CHANGE_PAGINATED_PRODUCTS, CHANGE_PAGINATED_PAGE, SEARCH_PRODUCT_ID, DELETE_DETAILS, CHANGE_FILTER_NAME,
     GET_STOCK_PRODUCT_BY_ID, DELETE_STOCK_ID, GET_STOCK_PRODUCT_BY_ID_TOTAL, CHANGE_PRODUCTS_CARRY
-   , CHANGE_USER_LOGIN,GET_ORDERS, GET_ALL_USERS,CHANGE_PRODUCTS_BY_PAGE, DELETE_USERS
+   , CHANGE_USER_LOGIN,GET_ORDERS, GET_ALL_USERS,CHANGE_PRODUCTS_BY_PAGE,CHANGE_FILTER_URL, DELETE_USERS
    
 } from "../actions";
 
@@ -17,7 +17,7 @@ const initialState = {
    categorys: [],
    filters: {
       nameProductSearched: "", filterGender: "Men", filterBrand: [],
-      filterCategory: 0, min: 0, max: 500, filterForPrice: false
+      filterCategory: 0, min: 0, max: 500, filterForPrice: false,filterUrl:undefined
    },
    paginated: { page: PAGE_START, productsView: [] ,productsViewPage: []},
    stock_by_ID: [],
@@ -57,6 +57,12 @@ const rootReducer = (state = initialState, action) => {
             ...state,
             categorys: action.payload
          };
+         case CHANGE_FILTER_URL:
+            return {
+               ...state,
+               filters: { ...state.filters, filterGender: "Men", filterBrand: [], filterCategory: 0,filterUrl:action.payload },
+               paginated: { ...state.paginated, page: PAGE_START }
+            };
       case CHANGE_FILTER_GENDER:
          return {
             ...state,
