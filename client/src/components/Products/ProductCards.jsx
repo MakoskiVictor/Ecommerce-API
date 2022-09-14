@@ -1,25 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import ProductCard from "./ProductCard.jsx";
-import styles from "./ProductCards.module.css";
+
 
 class ProductCards extends Component {
-  obtenerCountriesPagina(productos) {
-    if (productos !== undefined) {
-      let Inicio = (this.props.paginated.page - 1) * 10;
-      return productos.slice(Inicio, Inicio + 10);
-    }
-    return [];
-  }
-
+  
   render() {
-    let productos = this.obtenerCountriesPagina(
-      this.props.paginated.productsView
-    );
+    let productos = this.props.paginated.productsViewPage
 
     let fraseNoResultados = "No results found";
     return (
-      <div className={styles.cards}>
+      <div className={this.props.styleCards.cards}>
         {productos.length !== 0 &&
           productos.map((c) => (
             <ProductCard
@@ -29,6 +20,7 @@ class ProductCards extends Component {
               name={c.name}
               brand={c.brand}
               price={c.price}
+              styleCard={this.props.styleCard}
             />
           ))}
         {productos.length === 0 && (

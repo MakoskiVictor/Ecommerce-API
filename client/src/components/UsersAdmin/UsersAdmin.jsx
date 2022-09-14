@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllUsers } from "../../redux/actions";
+import { deleteUsers, getAllUsers } from "../../redux/actions";
 import CardUsersAdmin from "./CardUsersAdmin";
 
 
@@ -13,6 +13,7 @@ export default function UsersAdmin () {
 
     useEffect(()=>{
         dispatch(getAllUsers())
+        dispatch(deleteUsers())
     }, [dispatch])
 
 
