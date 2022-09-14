@@ -27,6 +27,7 @@ export const CHANGE_PRODUCTS_CARRY = "CHANGE_PRODUCTS_CARRY";
 export const GET_ORDERS = "GET_ORDERS";
 export const CHANGE_PRODUCTS_BY_PAGE="CHANGE_PRODUCTS_BY_PAGE";
 export const CHANGE_FILTER_URL="CHANGE_FILTER_URL"
+export const DELETE_USERS = "DELETE_USERS";
 
 export function searchNameProduct(name) {
   return async function (dispatch) {
@@ -441,3 +442,10 @@ export function getOrders() {
        })
     }
  };
+
+ export function deleteUsers() {
+   return {
+     type: DELETE_USERS,
+     payload: []
+   }
+};
