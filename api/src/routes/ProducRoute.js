@@ -6,45 +6,55 @@ const getApiProducts = require("./getApiProducts");
 
 const router = Router();
 
+router.delete("/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const exProduct = await Product.destroy({ where: { id: id } });
+    res.send(`${exProduct} product has been deleted`);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.post("/", async (req, res, next) => {
-   const { name, price, image, brand, gender, categoryId, stock, description } =
-      req.body;
-   // let id = 0;
-   // let l = UUID(id).uuid()
-   // console.log(l)
-   let id = uuidv4();
-   try {
-      const product = await Product.findOrCreate({
-         where: {
-            id,
-            name,
-            price,
-            image,
-            brand,
-            gender,
-            categoryId,
-            description,
-         },
+  const { name, price, image, brand, gender, categoryId, stock, description } =
+    req.body;
+  // let id = 0;
+  // let l = UUID(id).uuid()
+  // console.log(l)
+  let id = uuidv4();
+  try {
+    const product = await Product.findOrCreate({
+      where: {
+        id,
+        name,
+        price,
+        image,
+        brand,
+        gender,
+        categoryId,
+        description,
+      },
+    });
+    stock.forEach((item) => {
+      Stock.create({
+        productSize: item.size,
+        stock: item.stock,
+        productId: id,
       });
-      stock.forEach((item) => {
-         Stock.create({
-            productSize: item.size,
-            stock: item.stock,
-            productId: id,
-         });
-      });
-      res.status(202).send("product created successfully");
-   } catch (err) {
-      next(err);
-   }
+    });
+    res.status(202).send("product created successfully");
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.get("/", async (req, res, next) => {
   const { name, category } = req.query;
   let ProductosTotales = await Product.findAll();
   if (ProductosTotales.length === 0) {
-    await getApiProducts()
-    ProductosTotales = await Product.findAll()
+    await getApiProducts();
+    ProductosTotales = await Product.findAll();
   }
   try {
     if (name) {

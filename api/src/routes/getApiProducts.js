@@ -7,7 +7,7 @@ module.exports = async () => {
    const size = ["S", "M", "L"];
    const stock = [0, 5, 10, 20, 30, 40, 50];
    let products = [];
-   const apiKey = "aadbf6840amsh715656a50c8d934p186539jsn3bdb94e79b6c";
+   const apiKey = "2a3cd4f900msh07821a39625ea73p1e7beejsne773ee3fac08";
    for (let index = 0; index < IDs.length; index++) {
       let api = (
          await axios.get(
@@ -22,7 +22,6 @@ module.exports = async () => {
          },
       });
       let NewIdCategory=createCategory[0].dataValues.id
-      console.log(NewIdCategory)
 
       const tempArr = api.products.map((item) => {
          let tempObj = {
