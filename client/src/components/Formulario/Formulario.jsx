@@ -80,13 +80,13 @@ function validate(input) {
   }
 
   /*      SOTCK           */
-  else if (input.stock === 0) {
-    errores.stock = "Stock is not 0";
-  }
+  // else if (input.stock === 0) {
+  //   errores.stock = "Stock is not 0";
+  // }
 
-  else if (input.stock < 0) {
-    errores.stock = "Stock is not less than 0";
-  }
+  // else if (input.stock < 0) {
+  //   errores.stock = "Stock is not less than 0";
+  // }
 
   /*   GENDER     */
   // else if (input.gender === "Men" && input.categoryId === 8799 ||
@@ -187,7 +187,9 @@ function Formulario() {
   //comprobacion de INPUT
 
   function comprobacionInput(input) {
+    console.log("entrar input comprobacion")
     if (
+
       input.name &&
       input.price &&
       input.image &&
@@ -282,7 +284,8 @@ function Formulario() {
 
   console.log(input.categorysGender)
   return (
-    <div className={style.containerMain}>
+    < div className={style.containerMain} >
+      {console.log(error)}
       <form className={style.form} onSubmit={(e) => handleSubmit(e)}>
         <h2 className={style.titulo}>Product creation</h2>
         {console.log(input)}
@@ -457,7 +460,7 @@ function Formulario() {
           {/* <button className={style.submit} type='submit' onClick={(e) => handleSubmit(e)}>Create New Product</button> */}
         </div>
       </form>
-    </div>
+    </div >
   );
 }
 
