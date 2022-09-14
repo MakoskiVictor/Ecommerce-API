@@ -10,6 +10,7 @@ import NavBar from "./components/NavBar/NavBar.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import About from "./components/About/About.jsx";
 import ComponentProducts from "./components/ComponentProducts/ComponentProducts.jsx";
+import ComponentProductsGestion from "./components/ComponentProductsGestion/ComponentProductsGestion";
 import Contact from "./components/Contact/Contact";
 import Carry from "./components/Carry/Carry";
 // import GoogleLogin from "react-google-login";
@@ -37,6 +38,10 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Home />{" "}
+          </Route>
+          <Route exact path="/gestionProducts">
+            <ComponentProductsGestion />{" "}
+            {/*Se pone asi porque los componentes estan creadas como Clase*/}
           </Route>
           <Route exact path="/products/:gender">
             <ComponentProducts />{" "}
