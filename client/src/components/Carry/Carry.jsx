@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getStockbyIDTotal, VerificarCambioCarrito ,ChangeCarryProducts} from "../../redux/actions";
+import { getStockbyIDTotalFilterCarry, VerificarCambioCarrito ,ChangeCarryProducts} from "../../redux/actions";
 import style from "./Carry.module.css";
 import CarryCard from "./CarryCard.jsx";
 import CARRY_LOCALHOST from "../Globales";
@@ -16,7 +16,7 @@ class Carry extends Component {
 
   componentDidMount() {
     let Data=this.props.carryProducts;
-    this.props.getStockbyIDTotal(Data);
+    this.props.getStockbyIDTotalFilterCarry(Data);
   }
 
   DecreaseElementCarry(carryElements, index) {
@@ -70,10 +70,10 @@ class Carry extends Component {
 
   onDelete(index) {
     let Data=this.props.carryProducts;
-    this.props.getStockbyIDTotal(Data);
+    this.props.getStockbyIDTotalFilterCarry(Data);
     Data = this.DeleteElementCarry(Data, index);
     this.props.ChangeCarryProducts(Data)
-    this.props.getStockbyIDTotal(Data);
+    this.props.getStockbyIDTotalFilterCarry(Data);
 
     Swal.fire({
       position: "bottom-start",
@@ -85,13 +85,13 @@ class Carry extends Component {
   }
   onDecrease(index) {
     let Data=this.props.carryProducts;
-    this.props.getStockbyIDTotal(Data);
+    this.props.getStockbyIDTotalFilterCarry(Data);
     Data = this.DecreaseElementCarry(Data, index);
   }
 
   onIncrease(index) {
     let Data=this.props.carryProducts;
-    this.props.getStockbyIDTotal(Data);
+    this.props.getStockbyIDTotalFilterCarry(Data);
     Data = this.IncreaseElementCarry(Data, index);
     this.props.ChangeCarryProducts(Data)
   }
@@ -242,7 +242,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   //pasandole al componente la posibilidad como props de hacer un dispatch de la function getcountries
   return {
-      getStockbyIDTotal: (carry) => dispatch(getStockbyIDTotal(carry)),
+      getStockbyIDTotalFilterCarry: (carry) => dispatch(getStockbyIDTotalFilterCarry(carry)),
       ChangeCarryProducts: (carrynew) => dispatch(ChangeCarryProducts(carrynew)),
     //changePaginatedPage: (page) => dispatch(changePaginatedPage(page)),
   };

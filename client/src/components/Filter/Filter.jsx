@@ -6,7 +6,6 @@ import {
   changeFilternameProductSearched,
 } from '../../redux/actions'
 import { withRouter } from "react-router";
-import style from "./Filter.module.css"
 
 export class Filter extends Component {
 
@@ -32,9 +31,10 @@ export class Filter extends Component {
   }
 
   filtradoProductos(products, paginated, categorys, filterBrand, filterCategory, filterForPrice, min, max, gender) {
-
-    let productosNuevos = products.filter(element => element.gender === gender);
-    let IDsGender = categorys.filter(element => gender === element.gender);
+  
+    let productosNuevos = products.filter(element => element.gender === (gender==undefined?this.props.filters.filterGender:gender));
+   
+    let IDsGender = categorys.filter(element => element.gender === (gender==undefined?this.props.filters.filterGender:gender));
     let Brands = [];
     let ID_Category = (filterCategory === 0) ? (IDsGender.length > 0 ? (`${IDsGender[0].id}`) : 0) : filterCategory;
     productosNuevos = productosNuevos.filter(element => `${element.categoryId}` === ID_Category);
@@ -54,19 +54,22 @@ export class Filter extends Component {
   }
 
   render() {
+    console.log(this.props)
+    var getGenderbyMatch=this.props.match.params.gender
     const { nameProductSearched, filterBrand, filterGender, filterCategory, filterForPrice, min, max } = this.props.filters;
     const { categorys, products, paginated } = this.props;
     let values = this.filtradoProductos(products, paginated, categorys, filterBrand,
-      filterCategory, filterForPrice, min, max, this.props.match.params.gender)
-    if (filterGender !== this.props.match.params.gender)
-      this.props.changeFilterGender(this.props.match.params.gender)
+      filterCategory, filterForPrice, min, max, getGenderbyMatch)
+    console.log(values)
+    if (getGenderbyMatch!==undefined && filterGender !== getGenderbyMatch)
+      this.props.changeFilterGender(getGenderbyMatch)
 
     return (
       <div>
-        <nav className={style.NavFilter}>
+        <nav className={this.props.styleFilter.NavFilter}>
           <ul >
-            <li className={style.ItemFilter}>
-              <label className={style.NameFilter} >Search Product Name: </label>
+            <li className={this.props.styleFilter.ItemFilter}>
+              <label className={this.props.styleFilter.NameFilter} >Search Product Name: </label>
               <input
                 type="text"
                 id="nombreProducto"
@@ -75,9 +78,18 @@ export class Filter extends Component {
                 onChange={(e) => this.handleChange(e)}
               />
             </li>
+            { getGenderbyMatch==undefined &&
+            <li className={this.props.styleFilter.ItemFilter}>
+              <p><label className={this.props.styleFilter.NameFilter}  >Gender: </label>
+                <select value={filterGender} onChange={(e) => this.props.changeFilterGender(e.target.value)}>
+                <option key={"Men"} value={"Men"}>Men</option>
+                <option key={"Women"} value={"Women"}>Women</option>
+                </select></p>
+            </li>
+            }
 
-            <li className={style.ItemFilter}>
-              <p><label className={style.NameFilter}  >Category: </label>
+            <li className={this.props.styleFilter.ItemFilter}>
+              <p><label className={this.props.styleFilter.NameFilter}  >Category: </label>
                 <select value={filterCategory} onChange={(e) => this.props.changeFilterCategory(e.target.value)}>
                   {values.IDsGender.map((elemento) => {
                     return (
@@ -87,8 +99,8 @@ export class Filter extends Component {
                 </select></p>
             </li>
 
-            <li className={style.ItemFilter}>
-              <label className={style.NameFilter} > BrandName</label>
+            <li className={this.props.styleFilter.ItemFilter}>
+              <label className={this.props.styleFilter.NameFilter} > BrandName</label>
               {
                 values.Brands.map((elemento) => {
                   return (
@@ -101,10 +113,10 @@ export class Filter extends Component {
               }
             </li>
 
-            <li className={style.ItemFilter}>
+            <li className={this.props.styleFilter.ItemFilter}>
               <input type="checkbox" id={"ActivateFilterPrice"} name={"ActivateFilterPrice"} value={"ActivateFilterPrice"} checked={filterForPrice}
                 onChange={(e) => this.props.changeFilterPrice(e.target.checked)} />
-              <label className={style.NameFilter} for={"ActivateFilterPrice"}> {"Filter for Price"}</label>
+              <label className={this.props.styleFilter.NameFilter} for={"ActivateFilterPrice"}> {"Filter for Price"}</label>
               <input type="number" min="0" step="50" placeholder="Precio Minimo" value={min} onChange={(e) => this.props.changeFilterMin(e)} />
               <label >{" a "}</label>
               <input type="number" min="0" step="50" placeholder="Precio Maximo" value={max} onChange={(e) => this.props.changeFilterMax(e)} />
