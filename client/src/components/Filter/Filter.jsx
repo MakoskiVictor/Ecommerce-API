@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import {
   searchNameProduct, changeFilterGender, changeFilterCategory, changeFilterBrand,
   getCategorys, changeFilterMin, changeFilterMax, changeFilterPrice, changePaginatedProducts,
-  changeFilternameProductSearched,
+  changeFilternameProductSearched,changeFilterURL
 } from '../../redux/actions'
 import { withRouter } from "react-router";
 
@@ -54,15 +54,14 @@ export class Filter extends Component {
   }
 
   render() {
-    console.log(this.props)
     var getGenderbyMatch=this.props.match.params.gender
-    const { nameProductSearched, filterBrand, filterGender, filterCategory, filterForPrice, min, max } = this.props.filters;
+    const { nameProductSearched, filterBrand, filterGender, filterCategory, filterForPrice, min, max,filterUrl } = this.props.filters;
     const { categorys, products, paginated } = this.props;
+    if(this.props.match.url!=filterUrl)
+    this.props.changeFilterURL(this.props.match.url)
+
     let values = this.filtradoProductos(products, paginated, categorys, filterBrand,
       filterCategory, filterForPrice, min, max, getGenderbyMatch)
-    console.log(values)
-    if (getGenderbyMatch!==undefined && filterGender !== getGenderbyMatch)
-      this.props.changeFilterGender(getGenderbyMatch)
 
     return (
       <div>
@@ -155,6 +154,7 @@ function mapDispatchToProps(dispatch) {
     changeFilterPrice: (e) => dispatch(changeFilterPrice(e)),
     changePaginatedProducts: (e) => dispatch(changePaginatedProducts(e)),
     changeFilternameProductSearched: (nameSearch) => dispatch(changeFilternameProductSearched(nameSearch)),
+    changeFilterURL:(url)=>dispatch(changeFilterURL(url))
   }
 }
 

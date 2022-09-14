@@ -1,7 +1,37 @@
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 function ProductCard({ img, name, brand, price, id,styleCard,gender,SizeStocks}) {
+  
+  async function FunctionDelete(){
+  Swal.fire({
+    title: "Do you want to remove this product from the database?",
+    showDenyButton: true,
+    showCancelButton: false,
+    confirmButtonText: "Yes",
+    denyButtonText: `No`,
+  }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+      const foo = async () => {
+        await axios.delete(`http://localhost:3001/product/${id}`)
+          .then((e)=>Swal.fire({
+            title: e.data,
+            icon: "info",
+            bconfirmButtonText: "Yes",
+          })).then((result) => { if (result.isConfirmed)  window.location.reload()})
+          .catch((e) => Swal.fire({
+            title: e,
+            icon: "error",
+            button: "Ok",
+          }));
+      }
+      foo();
+    }
+  });
+}
 
   return (
     <div className={styleCard.productContainer}>
@@ -25,7 +55,7 @@ function ProductCard({ img, name, brand, price, id,styleCard,gender,SizeStocks})
           <button>Modify</button>
         </Link>
       </div>
-      <button>Delete</button>
+      <button onClick={()=>FunctionDelete()}>Delete</button>
     </div>
   );
 }
