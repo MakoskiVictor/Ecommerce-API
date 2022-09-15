@@ -10,7 +10,8 @@ module.exports = (sequelize) => {
         autoIncrement: true,
       },
       userId: {
-        type: DataTypes.TEXT,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         allowNull: false,
       },
       price: {
