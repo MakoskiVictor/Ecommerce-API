@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { DataTypes } = require("sequelize/types");
 const { Order } = require("../db");
 const { User } = require("../db");
 const orderRouter = Router();
@@ -18,21 +19,20 @@ orderRouter.get("/", async (req, res, next) => {
 });
 
 orderRouter.post("/", async (req, res) => {
-  const { stocks,price, userId, idpurchase,creationdate } = req.body;
+  const { price, userId, idpurchase,creationdate,stateOrder} = req.body;
   try {
-    console.log( stocks,price, userId, idpurchase,creationdate);
+    console.log( price, userId, idpurchase,creationdate);
 
     let newOrder = await Order.create({
-      stocks,
       price,
       userId,
-      idpurchase,
-      creationdate
+      creationdate: new Date(),
+      stateOrder:stateOrder
     });
     console.log("compro");
     let cliente = await User.findByPk(userId);
 
-    // console.log(cliente);
+    console.log(cliente);
 
     await cliente.addOrder(newOrder);
     console.log("agrego");
@@ -43,3 +43,29 @@ orderRouter.post("/", async (req, res) => {
 });
 
 module.exports = orderRouter;
+
+/* id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
+      stocks: {
+        type: DataTypes.JSON, //ARRAY(DataTypes.JSON)
+        allowNull: false,
+      },
+      price: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+      },
+      idpurchase: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      creationdate: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+      stateOrder:{
+        type: DataTypes.ENUM('Creada', 'Cancelada', 'Despachada')
+      }
+    }*/
