@@ -6,7 +6,7 @@ import {Link, useHistory }from "react-router-dom";
 import CARRY_LOCALHOST from "../Globales";
 import styles from "./Pay.module.css";
 import {History} from "./History"
-import { DeleteDrop ,ChangeCarryProducts} from "../../redux/actions";
+import { DeleteDrop ,ChangeCarryProducts,createOrder} from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Pay() {
@@ -62,7 +62,7 @@ export default function Pay() {
   }, [])
 
   
-  const createOrder = (data, actions) => {
+  const createOrderPaypal = (data, actions) => {
     console.log(actions,"soy actions")
     return actions.order
       .create({
@@ -93,36 +93,36 @@ export default function Pay() {
     console.log(actions, "soy actions onApprove")
     return actions.order.capture().then(async function (detalles) {
       // en detalles esta todo lo que pasa en nuestro pago en un objeto
+      // console.log(detalles.stocks)
       console.log(detalles, "soy detalles")
 
       // const productsArray = articulos.map((e) => {
       //   return { stock: e.stocks, userId: e.userId, price: e.price, idpurchase:e.idpurchase, creationdate:e.creationdate};
       // });
+      // await History(detalles.stocks,detalles.purchase_units[0].amount.value,user.id,detalles.id, detalles.create_time)
+      // console.log("history",detalles.purchase_units[0].amount.value,user.id,detalles.id, detalles.create_time)
+      const sendOrderPP = {
+        price: arrPrecio.toFixed(2),
+        stocks: productJSON.map((e) => {
+          return {
+            amount: e.amount,
+            value: e.price,
+            productId: e.productId,
+             moreinfo: {
+               product: e.product,
+               destination: e.destination,
+               departureHour: e.departureHour,
+               arrivalHour: e.arrivalHour
+             }
+          }
+        }),
+        userId: user.id,
+        idpurchase: detalles.id,
+        creationdate: detalles.create_time,
+      };
 
-      await History(/*detalles.stocks,*/detalles.purchase_units[0].amount.value,user.id,detalles.id, detalles.create_time)
-      console.log(detalles.purchase_units[0].amount.value,user.id,detalles.id, detalles.create_time)
-
-      // const sendOrderPP = {
-      //   price: arrPrecio.toFixed(2),
-      //   stocks: productJSON.map((e) => {
-      //     return {
-      //       amount: e.amount,
-      //       value: e.price,
-      //       productId: e.productId,
-      //       // moreinfo: {
-      //       //   origin: e.origin,
-      //       //   destination: e.destination,
-      //       //   departureHour: e.departureHour,
-      //       //   arrivalHour: e.arrivalHour
-      //       // }
-      //     }
-      //   }),
-      //   // userId: user.length ? user.id : null,
-      //   // idpurchase: detalles.id,
-      //   // creationdate: detalles.create_time,
-      // };
-
-      // dispatch(createOrder(sendOrderPP));
+      dispatch(createOrder(sendOrderPP));
+      console.log(createOrder("hola soy sendOrder",sendOrderPP))
       
       Swal.fire({
         icon: "success",
@@ -130,7 +130,6 @@ export default function Pay() {
       });
       
       let arregloObjetosIdQuantity = productJSON.map((e) => {
-        // let id = e.description.split("-")[1];
         return {size: e.size, stock: e.quantity };
       });
       const arr = [];
@@ -154,7 +153,7 @@ export default function Pay() {
         .then((e)=>e.data,dispatch(ChangeCarryProducts([])))
         .catch((e) => console.log(e));
         setTimeout(() => {
-          history.push("/orders");
+          history.replace("/orders");
         }, 2000);
   }).catch(error =>
     console.log(error)
@@ -200,7 +199,7 @@ export default function Pay() {
       <br />
       <PayPalScriptProvider>
         <PayPalButtons
-          createOrder={(data, actions) => createOrder(data, actions)}
+          createOrder={(data, actions) => createOrderPaypal(data, actions)}
           onApprove={(data, actions) => onApprove(data, actions)}
           onCancel={onCancel}
           onError={onError}

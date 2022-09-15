@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllComments,LoginGoogleUser, getAllUsers } from '../../redux/actions/index'
+import { getAllComments,getAllUsers,LoginGoogleUser, /*getAllUsers*/ } from '../../redux/actions/index'
 import css from "./Order.module.css"
 
 import Box from '@mui/material/Box';
@@ -10,17 +10,18 @@ import CARRY_LOCALHOST from '../Globales';
 
 export default function FeedBack({ productId, products }) {
     const dispatch = useDispatch()
-    // const user = useSelector(state => state.user_login)
+    const user = useSelector(state=>state.user_login)
+
     const allComments = useSelector(state => state.comments)
     const [ comments, updateComments ] = useState([allComments])
+    // console.log(comments,"soy comments")
 
     const productComments = comments.filter(e => productId === e.productId)
   
     const getData = async () => {
       updateComments(allComments);
     }
-    
-    console.log(JSON.parse(localStorage.getItem(CARRY_LOCALHOST)))
+
 
   
     useEffect(() => {
@@ -36,8 +37,7 @@ export default function FeedBack({ productId, products }) {
     const totalRating = (sumaRating/(productComments.length))
 
     useEffect(() => {
-        // dispatch(getAllUsers())
-        dispatch(LoginGoogleUser())
+        dispatch(getAllUsers())
         dispatch(getAllComments())
         
     }, [dispatch])
@@ -72,8 +72,8 @@ export default function FeedBack({ productId, products }) {
                         emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
                       />
                     </Box>
-                    <h5 className={css.text}>User: {e.name}</h5>
-                    <h5 className={css.text}>Comment: "{e.comment}"</h5>
+                    <h5 className={css.text}>User: {e.user.name}</h5>
+                    <h5 className={css.text}>Comment: "{e.comments}"</h5>
                   </div>
                 )
             }) 

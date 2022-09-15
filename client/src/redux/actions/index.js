@@ -28,6 +28,7 @@ export const GET_ORDERS = "GET_ORDERS";
 export const CHANGE_PRODUCTS_BY_PAGE="CHANGE_PRODUCTS_BY_PAGE";
 export const CHANGE_FILTER_URL="CHANGE_FILTER_URL"
 export const DELETE_USERS = "DELETE_USERS";
+export const CREATE_ORDER = "CREATE_ORDER"
 
 export function searchNameProduct(name) {
   return async function (dispatch) {
@@ -128,6 +129,7 @@ export function changeFilterGender(gender) {
 export function changeFilterCategory(value) {
   return async function (dispatch) {
     try {
+      console.log(value)
       return dispatch({
         type: CHANGE_FILTER_CATEGORY,
         payload: value,
@@ -405,8 +407,9 @@ export function updateReview(payload) {
 
 export function getAllComments() {
   return function (dispatch) {
+    console.log("gjogfjog")
     axios
-      .get("http://localhost:3001/comments")
+      .get("http://localhost:3001/comment")
       .then((res) => {
         dispatch({
           type: GET_COMMENTS,
@@ -427,6 +430,21 @@ export function getOrders() {
     });
   };
 }
+
+export function createOrder(payload) {
+  return function (dispatch) {
+    axios
+      .post("http://localhost:3001/orders", payload)
+      .then((res) => {
+        dispatch({
+          type: CREATE_ORDER,
+          payload: res,
+        });
+      })
+      .catch((error) => console.log(error));
+  };
+}
+
 
  //USERS ADMIN
 
