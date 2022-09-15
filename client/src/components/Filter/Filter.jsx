@@ -36,7 +36,12 @@ export class Filter extends Component {
    
     let IDsGender = categorys.filter(element => element.gender === (gender==undefined?this.props.filters.filterGender:gender));
     let Brands = [];
-    let ID_Category = (filterCategory === 0) ? (IDsGender.length > 0 ? (`${IDsGender[0].id}`) : 0) : filterCategory;
+    const DetectarID = IDsGender.find(element => element.name == filterCategory);
+    if(IDsGender.length > 0 && filterCategory==0){
+      this.props.changeFilterCategory(IDsGender[0].name);
+    }
+
+    let ID_Category = (DetectarID === undefined) ? (IDsGender.length > 0 ? (`${IDsGender[0].id}`) : 0) : DetectarID.id;
     productosNuevos = productosNuevos.filter(element => `${element.categoryId}` === ID_Category);
     Brands = this.obtenerMarcas(Brands, productosNuevos);
 
@@ -92,7 +97,7 @@ export class Filter extends Component {
                 <select value={filterCategory} onChange={(e) => this.props.changeFilterCategory(e.target.value)}>
                   {values.IDsGender.map((elemento) => {
                     return (
-                      <option key={elemento.id} value={elemento.id}>{elemento.name}</option>)
+                      <option key={elemento.id} value={elemento.name}>{elemento.name}</option>)
                   })
                   }
                 </select></p>
