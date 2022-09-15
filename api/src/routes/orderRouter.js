@@ -19,15 +19,15 @@ orderRouter.get("/", async (req, res, next) => {
 });
 
 orderRouter.post("/", async (req, res) => {
-  const { price, userId, idpurchase,creationdate,stateOrder} = req.body;
+  const { price, userId, idpurchase, creationdate, stateOrder } = req.body;
   try {
-    console.log( price, userId, idpurchase,creationdate);
+    console.log(price, userId, idpurchase, creationdate);
 
     let newOrder = await Order.create({
       price,
       userId,
       creationdate: new Date(),
-      stateOrder:stateOrder
+      stateOrder: stateOrder,
     });
     console.log("compro");
     let cliente = await User.findByPk(userId);
@@ -42,7 +42,30 @@ orderRouter.post("/", async (req, res) => {
   }
 });
 
-// orderRouter.put('/', async ())
+orderRouter.put("/:id", async (req, res, next) => {
+  const { type } = req.query;
+  const { id } = req.params;
+  const { idpurchase, stateOrder } = req.body;
+  try {
+    const order = await Order.findOne({ where: { id: id } });
+    switch (type) {
+      case "idpurchase":
+        order.idpurchase = idpurchase;
+        await order.save();
+        res.send(`The purchased id has been changed`);
+        break;
+      case "stateOrder":
+        order.stateOrder = stateOrder;
+        await order.save();
+        res.send(`The state has been changed`);
+        break;
+      default:
+        break;
+    }
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = orderRouter;
 
