@@ -209,7 +209,7 @@ function ObtenerInicialProductsCarry() {
 function ObtenerInicial_ID_Login() {
    let Data = JSON.parse(localStorage.getItem(USER_ID))
    var Id_user = { id: false }
-   if (Data !== undefined && Data !== null) {
+   if (Data !== undefined && Data !== null && Data.id!=undefined) {
       Id_user = Data
    }
    return Id_user
