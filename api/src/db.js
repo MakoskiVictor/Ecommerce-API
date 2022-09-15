@@ -57,6 +57,8 @@ Product.belongsToMany(Purchased, {
 
 Comment.belongsTo(Product, { foreignKey: "productId" });
 Product.hasMany(Comment, { foreignKey: "productId" });
+Comment.belongsTo(User)
+User.hasMany(Comment)
 
 Product.hasMany(Stock);
 Stock.belongsTo(Product);

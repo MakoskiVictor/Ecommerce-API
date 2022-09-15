@@ -18,11 +18,12 @@ orderRouter.get("/", async (req, res, next) => {
 });
 
 orderRouter.post("/", async (req, res) => {
-  const { price, userId, idpurchase,creationdate } = req.body;
+  const { stocks,price, userId, idpurchase,creationdate } = req.body;
   try {
-    console.log( price, userId, idpurchase,creationdate);
+    console.log( stocks,price, userId, idpurchase,creationdate);
 
     let newOrder = await Order.create({
+      stocks,
       price,
       userId,
       idpurchase,
@@ -31,7 +32,7 @@ orderRouter.post("/", async (req, res) => {
     console.log("compro");
     let cliente = await User.findByPk(userId);
 
-    console.log(cliente);
+    // console.log(cliente);
 
     await cliente.addOrder(newOrder);
     console.log("agrego");

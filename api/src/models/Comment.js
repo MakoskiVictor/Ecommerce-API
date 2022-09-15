@@ -10,21 +10,22 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      productId: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+      // productId: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      // },
       comment: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       rating: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      userId: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
       },
       moreInfo: {
         type: DataTypes.ARRAY(DataTypes.JSON),
