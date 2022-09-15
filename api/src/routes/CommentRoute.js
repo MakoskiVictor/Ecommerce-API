@@ -4,10 +4,10 @@ const { Product } = require("../db");
 // const { Order } = require("../db");
 const router = Router();
 
-router.get("/", async (req, res) => {
+router.get("/:id", async (req, res, next) => {
+  const { id } = req.params;
   try {
-    const allComments = await Comment.findAll();
-
+    const allComments = await Comment.findAll({ where: { productId: id } });
     allComments.length
       ? res.status(200).json(allComments)
       : res.status(404).send("no hay comentarios");
@@ -16,54 +16,43 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
-    try {
-        const { productId, comment, rating, name } = req.body
-        // console.log(productId, comment, rating, name);
-        // console.log("as")
-        let newComment = await Comment.create({
-            comment,
-            rating,
-            name,
-            productId
-        })
-        // console.log("asasa")
-
-
-        let productComments = await Product.findByPk(
-             productId
-        )
-
-        await productComments.addComment(newComment)
-        console.log(newComment, "newComment")
-        console.log(productComments,"productComments")
-        res.status(200).send(newComment)
-
-    } catch (error) {
-        res.status(404).send('No se pudo cargar el comentario')
-    }
+router.post("/", async (req, res, next) => {
+  try {
+    const { productId, comment, rating, userId } = req.body;
+    let newComment = await Comment.create({
+      comment,
+      rating,
+      userId,
+      productId
+    });
+    let productComments = await Product.findByPk(productId);
+    await productComments.addComment(newComment);
+    res.status(200).send(newComment);
+  } catch (error) {
+    next(error);
+  }
 });
 
 // router.put('/', async (req, res) => {
 //     try {
 //         const { orderID, allStocks } = req.body
 //         console.log(orderID, allStocks)
-        
+
 //         if(orderID) {
 //             console.log('aca')
 //             let reviewID = await Order.update(
 //             {
 //                 stocks: allStocks,
-//             }, 
-//             { 
-//                 where: { id: orderID }, 
+//             },
+//             {
+//                 where: { id: orderID },
 //             }
 //         )
 //             console.log("entroo",reviewID)
 //         }else{
 //             return res.status(400).json({error: "manda un id fracasado"})
 //         }
-        
+
 //          res.status(200).json({message: "todo bien"})
 
 //     } catch (error) {
