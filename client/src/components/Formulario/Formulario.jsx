@@ -116,8 +116,7 @@ function Formulario() {
     categoryId: undefined,
     NewCategory: "",
     description: "is very good quality clothing, made by the brand in the USA with the best quality materials. We have different sizes and colors of this product so you can choose the one you like best",
-    stock: 0,
-    size: "",
+    nameCategory: "",
     categorysGender: [],
   };
   const [input, SetInput] = useState(initialState);
@@ -144,7 +143,7 @@ function Formulario() {
       ...input,
       categorysGender: CategorysG,
       gender: e.target.value,
-      categoryId: "Disable",
+      nameCategory: "Disable",
     });
   }
 
@@ -152,12 +151,12 @@ function Formulario() {
     if (input.categoryId === "Create") {
       SetInput({
         ...input,
-        categoryId: "",
+        categoryId: undefined,
       })
     } else {
       SetInput({
         ...input,
-        categoryId: e.target.value,
+        nameCategory: e.target.value,
         NewCategory: e.target.value,
       });
     }
@@ -166,15 +165,23 @@ function Formulario() {
   function handleSubmit(e) {
     e.preventDefault();
     if (
-      input.id &&
+      input.description &&
       input.name &&
       input.price &&
       input.image &&
       input.brand &&
       input.gender &&
-      input.categoryId
+      input.nameCategory
     ) {
-      dispatch(CreateNewProduct(input));
+      dispatch(CreateNewProduct({
+        name: input.name,
+        price: input.price,
+        image: input.image,
+        brand: input.brand,
+        gender: input.gender,
+        nameCategory: input.nameCategory,
+        description: input.description,
+      }));
       swal({
         title: "Product created successfully!",
         icon: "success",
@@ -189,13 +196,12 @@ function Formulario() {
   function comprobacionInput(input) {
     console.log("entrar input comprobacion")
     if (
-
       input.name &&
       input.price &&
       input.image &&
       input.brand &&
       input.gender &&
-      input.categoryId
+      input.nameCategory
     ) {
       return true;
     } else {
@@ -382,11 +388,11 @@ function Formulario() {
                 <option value="14274">Sweatpants</option>
           </select>*/}
 
-            <select value={input.categoryId} className={style.select} onChange={(e) => handleSelectCategory(e)}>
+            <select value={input.nameCategory} className={style.select} onChange={(e) => handleSelectCategory(e)}>
               <option selected disabled value={"Disable"} > Select Category</option>
               {input.categorysGender.map((elemento) => {
                 return (
-                  <option key={elemento.id} value={elemento.id}>{elemento.name}</option>)
+                  <option key={elemento.id} value={elemento.name}>{elemento.name}</option>)
               })
               }
               <option className={style.optionCreate} key={"Create"} value={"Create"} >Create Category</option>
@@ -396,16 +402,16 @@ function Formulario() {
           {/* CREAR NUEVA CATEGORY */}
 
           {input.NewCategory === "Create" && ( // si hay un error hara un <p> nuevo con el error
-            <div>
+            <div className={style.containerCrate}>
               <input
                 type="text"
                 value={input.categoryId}
                 name="categoryId"
-                className={style.field}
+                className={style.fieldCreate}
                 placeholder="New Category"
                 onChange={(e) => handleChangeCate(e)}
               />
-              <button onClick={(e) => CreateNewCategory(e)}>Create category</button>
+              <button className={style.buttonCreateCategory} onClick={(e) => CreateNewCategory(e)}>Create category</button>
             </div>
           )}
 
