@@ -129,6 +129,7 @@ export function changeFilterGender(gender) {
 export function changeFilterCategory(value) {
   return async function (dispatch) {
     try {
+      console.log(value)
       return dispatch({
         type: CHANGE_FILTER_CATEGORY,
         payload: value,

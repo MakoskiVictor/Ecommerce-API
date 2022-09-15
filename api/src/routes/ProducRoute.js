@@ -7,7 +7,7 @@ const getApiProducts = require("./getApiProducts");
 const router = Router();
 
 router.delete("/:id", async (req, res, next) => {
-  console.log("Entra")
+  console.log("Entra");
   const { id } = req.params;
   try {
     const exProduct = await Product.destroy({ where: { id: id } });
@@ -27,11 +27,11 @@ router.post("/", async (req, res, next) => {
   try {
     var createCategory = await Category.findOrCreate({
       where: {
-         name: nameCategory,
-         gender: gender,
+        name: nameCategory,
+        gender: gender,
       },
-   });
-   let NewIdCategory=createCategory[0].dataValues.id;
+    });
+    let NewIdCategory = createCategory[0].dataValues.id;
 
     const product = await Product.findOrCreate({
       where: {
@@ -41,7 +41,7 @@ router.post("/", async (req, res, next) => {
         image,
         brand,
         gender,
-        categoryId:NewIdCategory,
+        categoryId: NewIdCategory,
         description,
       },
     });
@@ -56,15 +56,15 @@ router.get("/", async (req, res, next) => {
   let ProductosTotales = await Product.findAll({
     include: {
       model: Stock,
-    }
-  })
+    },
+  });
   if (ProductosTotales.length === 0) {
     await getApiProducts();
     ProductosTotales = await Product.findAll({
       include: {
         model: Stock,
-      }
-    })
+      },
+    });
   }
   try {
     if (name) {
@@ -76,7 +76,7 @@ router.get("/", async (req, res, next) => {
         },
         include: {
           model: Stock,
-        }
+        },
       });
       res.send(filteredProducts);
     } else if (category) {
@@ -86,11 +86,62 @@ router.get("/", async (req, res, next) => {
         },
         include: {
           model: Stock,
-        }
+        },
       });
       res.send(filteredProducts);
     } else {
       res.send(ProductosTotales);
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put("/:id", async (req, res, next) => {
+  const { type } = req.query;
+  const { id } = req.params;
+  const { name, price, image, brand, gender, nameCategory, description } =
+    req.body;
+  const product = await Product.findOne({ where: { id: id } });
+  try {
+    switch (type) {
+      case "name":
+        product.name = name;
+        await product.save();
+        res.send(`name changed successfully`);
+        break;
+      case "price":
+        product.price = price;
+        await product.save();
+        res.send(`price changed successfully`);
+        break;
+      case "image":
+        product.image = image;
+        await product.save();
+        res.send(`image changed successfully`);
+        break;
+      case "brand":
+        product.brand = brand;
+        await product.save();
+        res.send(`brand changed successfully`);
+        break;
+      case "gender":
+        product.gender = gender;
+        await product.save();
+        res.send(`gender changed successfully`);
+        break;
+      case "nameCategory":
+        product.nameCategory = nameCategory;
+        await product.save();
+        res.send(`nameCategory changed successfully`);
+        break;
+      case "description":
+        product.description = description;
+        await product.save();
+        res.send(`description changed successfully`);
+        break;
+      default:
+        break;
     }
   } catch (err) {
     next(err);

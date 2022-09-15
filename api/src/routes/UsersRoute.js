@@ -2,18 +2,24 @@ const { Router } = require("express");
 const { User } = require("../db");
 const axios = require("axios");
 const { Op } = require("sequelize");
+const bcryptjs=require('bcrypt');
 // emails
 const transporter = require("../../config/mailer");
 
 const router = Router();
 
 router.get("/login", async (req, res, next) => {
-   console.log("Entra ");
    const { email, password } = req.query;
    try {
-      const userValidate = await User.findAll({
-         where: { email: email, password: password },
+      let userValidate = await User.findAll({
+         where: { email: email },
       });
+      
+      if(Object.entries(userValidate).length!==0){
+         if(!bcryptjs.compareSync(password, userValidate[0].password))
+          userValidate=[];
+      }
+
       if (Object.entries(userValidate).length === 0) {
          res.send(false);
       } else {
@@ -95,13 +101,16 @@ router.post("/Google", async (req, res, next) => {
       ) {
          isAdmin = true;
       }
+
+     let passwordHash=await bcryptjs.hash(password,8);
+
       if (Object.entries(userValidate).length === 0) {
          const user = await User.findOrCreate({
             where: {
                email: email,
                name: name,
                lastName: lastName,
-               password: password,
+               password: passwordHash,
                image: image,
                address: address,
                isAdmin: isAdmin,
@@ -194,13 +203,16 @@ router.post("/", async (req, res, next) => {
       ) {
          isAdmin = true;
       }
+
+      let passwordHash=await bcryptjs.hash(password,8);
+
       if (Object.entries(userValidate).length === 0) {
          const user = await User.findOrCreate({
             where: {
                email: email,
                name: name,
                lastName: lastName,
-               password: password,
+               password: passwordHash,
                image: image,
                address: address,
                isAdmin: isAdmin,
