@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import Swal from "sweetalert2";
 import axios from "axios";
 import {Link, useHistory }from "react-router-dom";
 import CARRY_LOCALHOST from "../Globales";
 import styles from "./Pay.module.css";
-
+import {History} from "./History"
 import { DeleteDrop ,ChangeCarryProducts} from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -18,41 +18,52 @@ export default function Pay() {
   console.log(JSON.parse(localStorage.getItem(CARRY_LOCALHOST)));
 
   const history = useHistory();
-  //   const idUser = window.atob(localStorage.getItem('id'));
-  //   const navigate = useNavigate();
-  //   const username = window.atob(localStorage.getItem("username")); //julianpardeiro
 
+  const user = useSelector(state=>state.user_login)
+
+  let [arrProduc,setArrProduc] = useState([])
+  let [arrPrecio,setArrPrecio] = useState(0)
   let product = localStorage.getItem(CARRY_LOCALHOST);
+
   let productJSON = JSON.parse(product);
 
-  let articulos = productJSON.map((e) => {
-    return {
-      name: e.details.name,
-      description: e.details.name + "-" + e.details.id,
-      unit_amount: {
-        currency_code: "USD",
-        value: e.details.price + "", //aca
-      },
-      quantity: e.amount,
-    };
-  });
-  console.log(articulos)
-  let PrecioTotalArticulos =
-    articulos[0].unit_amount.value * articulos[0].quantity;
+  useEffect(()=>{
 
-  let multiplicacionEntreValueYQuantity = articulos.map((e) => {
-    return e.unit_amount.value * e.quantity;
-  });
+    let product = localStorage.getItem(CARRY_LOCALHOST);
+    let productJSON = JSON.parse(product);
 
-  if (articulos.length > 1) {
-    PrecioTotalArticulos = multiplicacionEntreValueYQuantity.reduce(
-      (prev, current) => {
-        return prev + current;
-      }
-    );
-  }
+    let articulos = productJSON.map((e) => {
+      return {
+        name: e.details.name,
+        description: e.details.name + "-" + e.details.id,
+        unit_amount: {
+          currency_code: "USD",
+          value: e.details.price + "", //aca
+        },
+        quantity: e.amount,
+      };
+    });
+    setArrProduc(articulos)
+    console.log(articulos, "jajaja")
+    let PrecioTotalArticulos = articulos[0].unit_amount.value * articulos[0].quantity;
+  
+    let multiplicacionEntreValueYQuantity = articulos.map((e) => {
+      return e.unit_amount.value * e.quantity;
+    });
+  
+    if (articulos.length > 1) {
+      PrecioTotalArticulos = multiplicacionEntreValueYQuantity.reduce(
+        (prev, current) => {
+          return prev + current;
+        }
+      );
+    }
+    setArrPrecio(PrecioTotalArticulos)
+  }, [])
 
+  
   const createOrder = (data, actions) => {
+    console.log(actions,"soy actions")
     return actions.order
       .create({
         purchase_units: [
@@ -63,7 +74,7 @@ export default function Pay() {
             soft_descriptor: "HighFashions",
             amount: {
               currency_code: "USD",
-              value: PrecioTotalArticulos.toFixed(2),
+              value: arrPrecio.toFixed(2),
             },
           },
         ],
@@ -73,28 +84,55 @@ export default function Pay() {
       })
       .then((orderId) => {
         return orderId;
-      });
+      }).catch(error =>
+        console.log(error)
+        )
   };
 
   const onApprove = (data, actions) => {
+    console.log(actions, "soy actions onApprove")
     return actions.order.capture().then(async function (detalles) {
       // en detalles esta todo lo que pasa en nuestro pago en un objeto
-      // const arregloSoloId = detalles.purchase_units[0].items.map((e) => {
-      //   let id = e.description.split("-")[1];
-      //   return id;
+      console.log(detalles, "soy detalles")
+
+      // const productsArray = articulos.map((e) => {
+      //   return { stock: e.stocks, userId: e.userId, price: e.price, idpurchase:e.idpurchase, creationdate:e.creationdate};
       // });
-      // const productsArray = detalles.purchase_units[0].items.map((e) => {
-      //   return { name: e.name, cant: e.quantity, price: e.unit_amount.value };
-      // });
-      // await postHistory(detalles.id,idUser,productsArray)
-      // await SendReview(username, productsArray, detalles.id);
-      // await CrearComentarioReview(username, arregloSoloId, detalles.id);
+
+      await History(/*detalles.stocks,*/detalles.purchase_units[0].amount.value,user.id,detalles.id, detalles.create_time)
+      console.log(detalles.purchase_units[0].amount.value,user.id,detalles.id, detalles.create_time)
+
+      // const sendOrderPP = {
+      //   price: arrPrecio.toFixed(2),
+      //   stocks: productJSON.map((e) => {
+      //     return {
+      //       amount: e.amount,
+      //       value: e.price,
+      //       productId: e.productId,
+      //       // moreinfo: {
+      //       //   origin: e.origin,
+      //       //   destination: e.destination,
+      //       //   departureHour: e.departureHour,
+      //       //   arrivalHour: e.arrivalHour
+      //       // }
+      //     }
+      //   }),
+      //   // userId: user.length ? user.id : null,
+      //   // idpurchase: detalles.id,
+      //   // creationdate: detalles.create_time,
+      // };
+
+      // dispatch(createOrder(sendOrderPP));
       
       Swal.fire({
         icon: "success",
         title: "Payment Successful!",
       });
-
+      
+      let arregloObjetosIdQuantity = productJSON.map((e) => {
+        // let id = e.description.split("-")[1];
+        return {size: e.size, stock: e.quantity };
+      });
       const arr = [];
       for (let i = 0; i < productJSON.length; i++) {
         arr.push({
@@ -105,10 +143,6 @@ export default function Pay() {
       }
       dispatch(DeleteDrop(arr));
 
-      let arregloObjetosIdQuantity = articulos.map((e) => {
-        let id = e.description.split("-")[1];
-        return { id: id, size: e.size, stock: e.quantity };
-      });
 
       let stockProducts = arregloObjetosIdQuantity;
 
@@ -119,8 +153,12 @@ export default function Pay() {
       })
         .then((e)=>e.data,dispatch(ChangeCarryProducts([])))
         .catch((e) => console.log(e));
-      history.push("/");
-    });
+        setTimeout(() => {
+          history.push("/orders");
+        }, 2000);
+  }).catch(error =>
+    console.log(error)
+    )
   };
 
   //   {id: '6DX94897RC997852V', intent: 'CAPTURE', status: 'COMPLETED', purchase_units: Array(1), payer: {…}, …}
