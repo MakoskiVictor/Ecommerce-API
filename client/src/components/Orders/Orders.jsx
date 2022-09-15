@@ -1,66 +1,57 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { searchProductId,getChecklogin, getOrders } from '../../redux/actions/index'
-import { Card, TableRow, TableHead, TableContainer, TableCell, TableBody, Table, Button, IconButton, Collapse, Modal, Box } from '@mui/material';
+import { searchProductId, getOrders } from '../../redux/actions/index'
+import { Card, TableRow,  TableContainer, TableCell, TableBody, Table, Button, Modal, Box } from '@mui/material';
 import s from "./Order.module.css"
 import { useHistory } from 'react-router-dom';
 // import empty from '../styles/assets/emptyorders.png'
 // import { CartContext } from './CartContext';
 // import { darkModeContext } from '../DarkModeContext';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Comments from "../Comments/Comments";
-// import CARRY_LOCALHOST from "../Globales";
 
 function Orders() {
-    const dispatch = useDispatch()
-    const navigate = useHistory()    
-
-    const ordersArr = useSelector(state => state.orders)
-    const product = useSelector((state) => state.products);
-    const user = useSelector(state=>state.user_login)
-
-    let userOrders = ordersArr?.filter((data) => data.userId === user.id)
-    console.log(userOrders)
+  const dispatch = useDispatch()
+  const navigate = useHistory()    
+  const ordersArr = useSelector(state => state.orders)
+  const product = useSelector((state) => state.products);
+  const user = useSelector(state=>state.user_login)
+  let userOrders = ordersArr?.filter((data) => data.userId === user.id)
+  console.log(user, "user")
     // console.log(JSON.parse(localStorage.getItem(CARRY_LOCALHOST)))
     
-    useEffect(() => {
-      dispatch(getOrders())
-      dispatch(getChecklogin())
-      dispatch(searchProductId())
-    }, [])
+  useEffect(() => {
+    dispatch(getOrders())
+    // dispatch(getChecklogin())
+    dispatch(searchProductId())
+  }, [])
 
-    function handleClick(e){
-      e.preventDefault();
-      navigate.replace('/')
-      window.location.reload()
-    }
+  function handleClick(e){
+    e.preventDefault();
+    navigate.replace('/')
+    window.location.reload()
+  }
 
-    function Row(props) {
-      const { row, orderID,allStocks } = props
-      const [open, setOpen] = useState(false);
-
-      const [ openReview, setOpenReview ] = useState(false);
-      // console.log(openReview)
-
-      const handleOpenReview = () => {
-        setOpenReview(true);
-      };
-      const handleCloseReview = () => {
-        setOpenReview(false);
-      };
-
-      return <>
+  function Row(props) {
+    const { row, orderID,allStocks } = props
+    const [open, setOpen] = useState(false);
+    const [ openReview, setOpenReview ] = useState(false);
+    // console.log(openReview)
+    const handleOpenReview = () => {
+      setOpenReview(true);
+    };
+    const handleCloseReview = () => {
+      setOpenReview(false);
+    };
+    return <>
 
       <TableRow key={row.id}>
         {product.map((product) => {
-              return <TableCell className={""}  key={product.name}>{product.productId}</TableCell>
+          return <TableCell className={""}  key={product.name}>{product.productId}</TableCell>
         })}
 
-        <TableCell className={""} key={row.amount}>{row.amount}</TableCell>   
+        <TableCell className={""} key={row.amount}>Amount:{row.amount}</TableCell>   
         <TableCell className={""} key={row.value}>${row.value}</TableCell> 
-
-        <TableCell className={""}>
+       
           <Button onClick={handleOpenReview} disabled={row.review === true}>Review</Button>
             <Modal open={openReview} onClose={handleCloseReview}>
               <Box className={""}>
@@ -69,9 +60,7 @@ function Orders() {
               </Box>
             </Modal>
 
-        </TableCell>
-
-        <TableCell className={""}>
+        {/* <TableCell className={""}>
             <IconButton
               aria-label="expand row"
               size="small"
@@ -79,39 +68,37 @@ function Orders() {
             >
             {open ? <KeyboardArrowUpIcon color='primary' /> : <KeyboardArrowDownIcon color='primary' />}
           </IconButton>
-        </TableCell>
-        </TableRow> 
+        </TableCell> */}
+      </TableRow>
 
-        <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-          <TableCell s={{ paddingBottom: 15, paddingTop: 15 }} colSpan={6}>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <h3 className={ ""}>More Details</h3>
-              <Table size='small'>
-
-                <TableHead>
-                  <TableRow>
-                    <TableCell key='origin' className={""}>Origin</TableCell>
-                    <TableCell key='destination' className={""}>Destination</TableCell>
-                    <TableCell key='arrival' className={""}>Arrival Hour</TableCell>
-                    <TableCell key='departure' className={""}>Departure Hour</TableCell>
-                  </TableRow>
-                </TableHead>
-
-                <TableBody>
-                  <TableRow>
-                    <TableCell key={row.moreinfo.origin} className={""}>{row.moreinfo.origin}</TableCell>
-                    <TableCell key={row.moreinfo.destination} className={""}>{row.moreinfo.destination}</TableCell>
-                    <TableCell key={row.moreinfo.arrivalHour} className={""}>{row.moreinfo.arrivalHour}</TableCell>
-                    <TableCell key={row.moreinfo.departureHour} className={""}>{row.moreinfo.departureHour}</TableCell>
-                  </TableRow>
-                </TableBody>
-    
-              </Table>
-            </Collapse>  
-          </TableCell> 
-        </TableRow>                        
-      </>
-    }
+      {/* <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+        <TableCell s={{ paddingBottom: 15, paddingTop: 15 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <h3 className={ ""}>More Details</h3>
+            <Table size='small'>
+              <TableHead>
+                <TableRow>
+                  <TableCell key='origin' className={""}>Origin</TableCell>
+                  <TableCell key='destination' className={""}>Destination</TableCell>
+                  <TableCell key='arrival' className={""}>Arrival Hour</TableCell>
+                  <TableCell key='departure' className={""}>Departure Hour</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell key={row.moreinfo.origin} className={""}>{row.moreinfo.origin}</TableCell>
+                  <TableCell key={row.moreinfo.destination} className={""}>{row.moreinfo.destination}</TableCell>
+                  <TableCell key={row.moreinfo.arrivalHour} className={""}>{row.moreinfo.arrivalHour}</TableCell>
+                  <TableCell key={row.moreinfo.departureHour} className={""}>{row.moreinfo.departureHour}</TableCell>
+                </TableRow>
+              </TableBody>
+  
+            </Table>
+          </Collapse>  
+        </TableCell> 
+      </TableRow>                         */}
+    </>
+  }
 
   return (
     <div className={ ""}>
@@ -146,17 +133,16 @@ function Orders() {
                         <TableCell key='moreinfo' className={""}><strong>More info</strong></TableCell>                        
                       </TableRow>
                     </TableHead> */}
-{/* 
+
                     <TableBody key={data.id}>
+                      {console.log(data.stocks,"soy data")}
         
                       {
                         data.stocks?.map((stock)=>{
                         return (<Row key={data.id} row={stock} orderID={data.id} allStocks={data.stocks}/>)
                         })
-
-                          
                       }  
-                    </TableBody> */}
+                    </TableBody> 
                     
                   </Table>
                 </TableContainer>

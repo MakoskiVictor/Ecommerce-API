@@ -12,7 +12,10 @@ module.exports = (sequelize) => {
       userId: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
+        allowNull: false,},       
+      stocks: {
+        type: DataTypes.JSON, //ARRAY(DataTypes.JSON)
+         allowNull: false,
       },
       price: {
         type: DataTypes.FLOAT,
@@ -23,6 +26,7 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
       creationdate: {
+        // type: DataTypes.DATE,
         type: DataTypes.STRING,
         allowNull: true,
       },

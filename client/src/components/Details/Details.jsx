@@ -13,7 +13,7 @@ import {
   ChangeCarryProducts,
   getStockbyID,
   deleteStockbyID,
-  LoginGoogleUser
+  // LoginGoogleUser
 } from "../../redux/actions";
 
 export default function Details(props) {
@@ -22,7 +22,10 @@ export default function Details(props) {
   const genderPrevius = useSelector((state) => state.filters.filterGender);
   const carryProducts = useSelector((state) => state.carryProducts);
   const stock_by_ID = useSelector((state) => state.stock_by_ID);
-  const user = useSelector(state=>  state.user_login)
+  const user = useSelector(state=>state.user_login)
+  const product = useSelector((state) => state.products);
+  console.log(user,"soy user detalle")
+
 
   const [stateSize, SetstateSize] = useState({
     size: undefined,
@@ -35,11 +38,11 @@ export default function Details(props) {
     dispatch(getStockbyID(props.match.params.id));
     dispatch(searchProductId(props.match.params.id));
     return () => {
-      dispatch(deleteDetails());
+      // dispatch(deleteDetails());
       dispatch(deleteStockbyID());
       SetstateSize(undefined);
     };
-  }, [dispatch]);
+  }, []);
 
   function Number2Decimals(x) {
     return Number.parseFloat(x).toFixed(2);
@@ -106,7 +109,11 @@ export default function Details(props) {
   if (stateSize === undefined)
     SetstateSize({ size: undefined, stock: undefined });
 
-
+    let producto = product.map((producto) => {
+      if (detail.airlineId === producto.id) {
+        return producto.name
+      }
+    })
   return (
     <div className={style.cardDetailMainContainer}>
       <div className={style.cardDetailContainer}>
@@ -207,8 +214,8 @@ export default function Details(props) {
         <Link to={`/products/${genderPrevius}`}>
           <button className={style.btnDetails}>Go Back</button>
         </Link>
-        <Comments userName={user.name} productId={props.match.params.id}></Comments>
-        {/* <FeedBack productId={detail.productId} product={detail.product} />   */}
+        {/* <Comments userName={user.name} productId={props.match.params.id}></Comments> */}
+        <FeedBack productId={props.match.params.id} products={producto} />  
       </div>
     </div>
   );
