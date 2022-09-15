@@ -10,10 +10,10 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      productId: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+      // productId: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      // },
       comment: {
         type: DataTypes.STRING,
         allowNull: false,
