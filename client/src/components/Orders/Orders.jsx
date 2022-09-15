@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Comments from "../Comments/Comments";
-import CARRY_LOCALHOST from "../Globales";
+// import CARRY_LOCALHOST from "../Globales";
 
 function Orders() {
     const dispatch = useDispatch()
@@ -20,7 +20,7 @@ function Orders() {
     const product = useSelector((state) => state.products);
     const user = useSelector(state=>state.user_login)
 
-    let userOrders = ordersArr?.filter((data) => user.length && data.userId === user.id)
+    let userOrders = ordersArr?.filter((data) => data.userId === user.id)
     console.log(userOrders)
     // console.log(JSON.parse(localStorage.getItem(CARRY_LOCALHOST)))
     
@@ -28,7 +28,6 @@ function Orders() {
       dispatch(getOrders())
       dispatch(getChecklogin())
       dispatch(searchProductId())
-      JSON.parse(localStorage.getItem(CARRY_LOCALHOST))
     }, [])
 
     function handleClick(e){
@@ -55,9 +54,7 @@ function Orders() {
 
       <TableRow key={row.id}>
         {product.map((product) => {
-            if(row.product === product.id) {
-              return <TableCell className={""} key={product.name}>{product.name}</TableCell>
-            }
+              return <TableCell className={""}  key={product.name}>{product.productId}</TableCell>
         })}
 
         <TableCell className={""} key={row.amount}>{row.amount}</TableCell>   
@@ -68,7 +65,7 @@ function Orders() {
             <Modal open={openReview} onClose={handleCloseReview}>
               <Box className={""}>
                 <Button onClick={handleCloseReview}>X</Button>
-                <Comments detail={row && row} orderID={orderID} productId={row.productId} allStocks={allStocks} /*setOpenReview={setOpenReview}*/ />
+                <Comments detail={row && row} orderID={orderID} productId={row.productId} allStocks={allStocks} setOpenReview={setOpenReview} />
               </Box>
             </Modal>
 
@@ -140,7 +137,7 @@ function Orders() {
                 <TableContainer>
 
                   <Table>
-                    <TableHead>
+                    {/* <TableHead>
                       <TableRow>
                         <TableCell key='airline' className={""}><strong>Airline</strong></TableCell>
                         <TableCell key='amount' className={""}><strong>Amount</strong></TableCell>
@@ -148,8 +145,8 @@ function Orders() {
                         <TableCell key='review' className={""}><strong>Review</strong></TableCell>
                         <TableCell key='moreinfo' className={""}><strong>More info</strong></TableCell>                        
                       </TableRow>
-                    </TableHead>
-
+                    </TableHead> */}
+{/* 
                     <TableBody key={data.id}>
         
                       {
@@ -159,7 +156,7 @@ function Orders() {
 
                           
                       }  
-                    </TableBody>
+                    </TableBody> */}
                     
                   </Table>
                 </TableContainer>

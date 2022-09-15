@@ -3,7 +3,7 @@ import {
    CHANGE_FILTER_BRAND, GET_CATEGORYS, CHANGE_FILTER_MAX, CHANGE_FILTER_MIN, CHANGE_FILTER_PRICE,
    CHANGE_PAGINATED_PRODUCTS, CHANGE_PAGINATED_PAGE, SEARCH_PRODUCT_ID, DELETE_DETAILS, CHANGE_FILTER_NAME,
     GET_STOCK_PRODUCT_BY_ID, DELETE_STOCK_ID, GET_STOCK_PRODUCT_BY_ID_TOTAL, CHANGE_PRODUCTS_CARRY
-   , CHANGE_USER_LOGIN,GET_ORDERS, GET_ALL_USERS,CHANGE_PRODUCTS_BY_PAGE,CHANGE_FILTER_URL, DELETE_USERS
+   , CHANGE_USER_LOGIN,GET_ORDERS, GET_ALL_USERS,CHANGE_PRODUCTS_BY_PAGE,CHANGE_FILTER_URL, DELETE_USERS,GET_COMMENTS
    
 } from "../actions";
 
@@ -25,7 +25,8 @@ const initialState = {
    carryProducts: ObtenerInicialProductsCarry(),
    user_login: ObtenerInicial_ID_Login(),
    allUsers: [],   
-   orders:[]
+   orders:[],
+   comments: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -164,13 +165,18 @@ const rootReducer = (state = initialState, action) => {
          return {
             ...state,
             allUsers: action.payload
-         };
-      case DELETE_USERS:
-         return {
-            ...state,
-            allUsers: action.payload
-         };
-
+         }
+         case GET_COMMENTS: {
+            return {
+              ...state,
+              comments: action.payload,
+            }
+         }
+         case DELETE_USERS:
+            return {
+               ...state,
+               allUsers: action.payload
+            };
       default:
          return state;
    }
