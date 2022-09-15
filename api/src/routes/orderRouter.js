@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { DataTypes } = require("sequelize/types");
+const { DataTypes } = require("sequelize");
 const { Order } = require("../db");
 const { User } = require("../db");
 const orderRouter = Router();
@@ -41,6 +41,8 @@ orderRouter.post("/", async (req, res) => {
     res.status(400).send(error);
   }
 });
+
+// orderRouter.put('/', async ())
 
 module.exports = orderRouter;
 
