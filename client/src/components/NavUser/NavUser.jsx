@@ -31,16 +31,16 @@ function NavUser() {
 
 
   return (
-    <div class={Style.navbar}>
-      <div class={Style.dropdown}>
+    <div className={Style.navbar}>
+      <div className={Style.dropdown}>
 
-        <button class={Style.dropbtn} >
+        <button className={Style.dropbtn} >
           <IconContext.Provider value={{ color: 'white', size: '25px' }}>
             <BiUser />
           </IconContext.Provider>
-          <i class={Style.fa_fa_caret_down}></i>
+          <i className={Style.fa_fa_caret_down}></i>
         </button>
-        <div class={Style.dropdown_content}>
+        <div className={Style.dropdown_content}>
           <a href="#" onClick={handleLogout}>Logout</a>
           <a href="/profile">Profile</a>
           {/*<a href="#">Link 2</a>
