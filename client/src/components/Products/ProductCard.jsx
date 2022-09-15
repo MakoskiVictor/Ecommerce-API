@@ -1,17 +1,16 @@
 import React from "react";
-import styles from "./ProductCard.module.css";
 import { Link } from "react-router-dom";
 
-function ProductCard({ img, name, brand, price, id }) {
+function ProductCard({ img, name, brand, price, id,styleCard }) {
   return (
-    <div className={styles.productContainer}>
-      <div className={styles.photoContainer}>
+    <div className={styleCard.productContainer}>
+      <div className={styleCard.photoContainer}>
         <div>
         <img src={`https://${img}`} alt="No Found"  width="140" height="150" /></div>
       </div>
       <h3>{name}</h3>
       <p>{brand}</p>
-      <div className={styles.priceCartContainer}>
+      <div className={styleCard.priceCartContainer}>
         <div>{`$/${Number2Decimals(price)}`}</div>
         <Link to={`/details/${id}`}>
           <button>Details</button>

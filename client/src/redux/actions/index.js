@@ -25,6 +25,9 @@ export const GET_COMMENTS = "GET_COMMENTS";
 export const GET_ALL_USERS = "GET_ALL_USERS";
 export const CHANGE_PRODUCTS_CARRY = "CHANGE_PRODUCTS_CARRY";
 export const GET_ORDERS = "GET_ORDERS";
+export const CHANGE_PRODUCTS_BY_PAGE="CHANGE_PRODUCTS_BY_PAGE";
+export const CHANGE_FILTER_URL="CHANGE_FILTER_URL"
+export const DELETE_USERS = "DELETE_USERS";
 
 export function searchNameProduct(name) {
   return async function (dispatch) {
@@ -94,6 +97,20 @@ export function getCategorys() {
     }
   };
 }
+
+export function changeFilterURL(url) {
+  return async function (dispatch) {
+    try {
+      return dispatch({
+        type: CHANGE_FILTER_URL,
+        payload: url,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
 
 export function changeFilterGender(gender) {
   return async function (dispatch) {
@@ -201,6 +218,19 @@ export function changePaginatedPage(newPage) {
   };
 }
 
+export function changePaginatedByPage(productsByPage) {
+   return async function (dispatch) {
+     try {
+       return dispatch({
+         type: CHANGE_PRODUCTS_BY_PAGE,
+         payload: productsByPage,
+       });
+     } catch (error) {
+       console.log(error);
+     }
+   };
+ }
+
 export function ChangeCarryProducts(CarryNew) {
   return async function (dispatch) {
     try {
@@ -228,7 +258,7 @@ export function getStockbyID(id) {
   };
 }
 
-export function getStockbyIDTotal(carry) {
+export function getStockbyIDTotalFilterCarry(carry) {
   return async function (dispatch) {
     try {
       let Stocks = [];
@@ -256,6 +286,7 @@ export function getStockbyIDTotal(carry) {
     }
   };
 }
+
 
 export function DeleteDrop(payload) {
   return async function () {
@@ -397,7 +428,7 @@ export function getOrders() {
   };
 }
 
-//USERS ADMIN
+ //USERS ADMIN
 
 export function getAllUsers() {
   return function (dispatch) {
@@ -409,3 +440,10 @@ export function getAllUsers() {
     });
   };
 }
+
+ export function deleteUsers() {
+   return {
+     type: DELETE_USERS,
+     payload: []
+   }
+};

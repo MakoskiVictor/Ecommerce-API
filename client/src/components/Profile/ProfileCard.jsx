@@ -6,7 +6,6 @@ function ProfileCard({
   email,
                                 name,
                                 lastName,
-                                password,
                                 image,
                                 address,
                                 isAdmin,

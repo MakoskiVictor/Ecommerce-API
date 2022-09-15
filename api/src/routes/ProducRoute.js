@@ -6,45 +6,65 @@ const getApiProducts = require("./getApiProducts");
 
 const router = Router();
 
+router.delete("/:id", async (req, res, next) => {
+  console.log("Entra")
+  const { id } = req.params;
+  try {
+    const exProduct = await Product.destroy({ where: { id: id } });
+    res.send(`${exProduct} product has been deleted`);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.post("/", async (req, res, next) => {
-   const { name, price, image, brand, gender, categoryId, stock, description } =
-      req.body;
-   // let id = 0;
-   // let l = UUID(id).uuid()
-   // console.log(l)
-   let id = uuidv4();
-   try {
-      const product = await Product.findOrCreate({
-         where: {
-            id,
-            name,
-            price,
-            image,
-            brand,
-            gender,
-            categoryId,
-            description,
-         },
-      });
-      stock.forEach((item) => {
-         Stock.create({
-            productSize: item.size,
-            stock: item.stock,
-            productId: id,
-         });
-      });
-      res.status(202).send("product created successfully");
-   } catch (err) {
-      next(err);
-   }
+  const { name, price, image, brand, gender, nameCategory, description } =
+    req.body;
+  // let id = 0;
+  // let l = UUID(id).uuid()
+  // console.log(l)
+  let id = uuidv4();
+  try {
+    var createCategory = await Category.findOrCreate({
+      where: {
+         name: nameCategory,
+         gender: gender,
+      },
+   });
+   let NewIdCategory=createCategory[0].dataValues.id;
+
+    const product = await Product.findOrCreate({
+      where: {
+        id,
+        name,
+        price,
+        image,
+        brand,
+        gender,
+        categoryId:NewIdCategory,
+        description,
+      },
+    });
+    res.status(202).send("Producto Creado Satisfactoriamente");
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.get("/", async (req, res, next) => {
   const { name, category } = req.query;
-  let ProductosTotales = await Product.findAll();
+  let ProductosTotales = await Product.findAll({
+    include: {
+      model: Stock,
+    }
+  })
   if (ProductosTotales.length === 0) {
-    await getApiProducts()
-    ProductosTotales = await Product.findAll()
+    await getApiProducts();
+    ProductosTotales = await Product.findAll({
+      include: {
+        model: Stock,
+      }
+    })
   }
   try {
     if (name) {
@@ -54,6 +74,9 @@ router.get("/", async (req, res, next) => {
             [Op.iLike]: `%${name}%`,
           },
         },
+        include: {
+          model: Stock,
+        }
       });
       res.send(filteredProducts);
     } else if (category) {
@@ -61,6 +84,9 @@ router.get("/", async (req, res, next) => {
         where: {
           categoryId: category,
         },
+        include: {
+          model: Stock,
+        }
       });
       res.send(filteredProducts);
     } else {

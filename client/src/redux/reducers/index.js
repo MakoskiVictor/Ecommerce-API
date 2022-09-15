@@ -1,15 +1,13 @@
-import { act } from "react-dom/test-utils";
 import {
    SEARCH_NAME, CHANGE_FILTER_GENDER, CHANGE_FILTER_CATEGORY,
    CHANGE_FILTER_BRAND, GET_CATEGORYS, CHANGE_FILTER_MAX, CHANGE_FILTER_MIN, CHANGE_FILTER_PRICE,
    CHANGE_PAGINATED_PRODUCTS, CHANGE_PAGINATED_PAGE, SEARCH_PRODUCT_ID, DELETE_DETAILS, CHANGE_FILTER_NAME,
     GET_STOCK_PRODUCT_BY_ID, DELETE_STOCK_ID, GET_STOCK_PRODUCT_BY_ID_TOTAL, CHANGE_PRODUCTS_CARRY
-   , CHANGE_USER_LOGIN,GET_ORDERS, GET_ALL_USERS,GET_COMMENTS
+   , CHANGE_USER_LOGIN,GET_ORDERS, GET_ALL_USERS,CHANGE_PRODUCTS_BY_PAGE,CHANGE_FILTER_URL, DELETE_USERS,GET_COMMENTS
    
 } from "../actions";
 
 import { CARRY_LOCALHOST, USER_ID } from "../../components/Globales";
-import swal from "sweetalert2";
 
 const PAGE_START = 1;
 
@@ -19,9 +17,9 @@ const initialState = {
    categorys: [],
    filters: {
       nameProductSearched: "", filterGender: "Men", filterBrand: [],
-      filterCategory: 0, min: 0, max: 500, filterForPrice: false
+      filterCategory: 0, min: 0, max: 500, filterForPrice: false,filterUrl:undefined
    },
-   paginated: { page: PAGE_START, productsView: [] },
+   paginated: { page: PAGE_START, productsView: [] ,productsViewPage: []},
    stock_by_ID: [],
    carryProductsStocks: [],
    carryProducts: ObtenerInicialProductsCarry(),
@@ -60,6 +58,12 @@ const rootReducer = (state = initialState, action) => {
             ...state,
             categorys: action.payload
          };
+         case CHANGE_FILTER_URL:
+            return {
+               ...state,
+               filters: { ...state.filters, filterGender: "Men", filterBrand: [], filterCategory: 0,filterUrl:action.payload },
+               paginated: { ...state.paginated, page: PAGE_START }
+            };
       case CHANGE_FILTER_GENDER:
          return {
             ...state,
@@ -112,6 +116,11 @@ const rootReducer = (state = initialState, action) => {
             ...state,
             paginated: { ...state.paginated, page: action.payload }
          };
+         case CHANGE_PRODUCTS_BY_PAGE:
+            return {
+               ...state,
+               paginated: { ...state.paginated, productsViewPage: action.payload }
+            };
       case CHANGE_FILTER_NAME:
          return {
             ...state,
@@ -161,9 +170,13 @@ const rootReducer = (state = initialState, action) => {
             return {
               ...state,
               comments: action.payload,
+            }
+         }
+         case DELETE_USERS:
+            return {
+               ...state,
+               allUsers: action.payload
             };
-          }
-
       default:
          return state;
    }
