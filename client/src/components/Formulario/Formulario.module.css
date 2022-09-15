@@ -277,6 +277,7 @@ input {
    border-radius: 10px;
    box-decoration-break: none;
    cursor: pointer;
+   transition: all 1s;
 }
 .buttonCreateCategory:hover {
    color: #333;
