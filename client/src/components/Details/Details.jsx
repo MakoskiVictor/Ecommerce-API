@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import style from "./Details.module.css";
 import CARRY_LOCALHOST from "../Globales";
 import swal from "sweetalert2";
-// import Comments from "../Comments/Comments";
-import FeedBack from "../Orders/Order"
+import Comments from "../Comments/Comments";
+import FeedBack from "../Orders/FeedBack"
 
 import {
   deleteDetails,
@@ -13,6 +13,7 @@ import {
   ChangeCarryProducts,
   getStockbyID,
   deleteStockbyID,
+  LoginGoogleUser
 } from "../../redux/actions";
 
 export default function Details(props) {
@@ -21,6 +22,7 @@ export default function Details(props) {
   const genderPrevius = useSelector((state) => state.filters.filterGender);
   const carryProducts = useSelector((state) => state.carryProducts);
   const stock_by_ID = useSelector((state) => state.stock_by_ID);
+  const user = useSelector(state=>  state.user_login)
 
   const [stateSize, SetstateSize] = useState({
     size: undefined,
@@ -101,10 +103,9 @@ export default function Details(props) {
     });
   }
 
-  if (stateSize == undefined)
+  if (stateSize === undefined)
     SetstateSize({ size: undefined, stock: undefined });
 
-    console.log(carryProducts)
 
   return (
     <div className={style.cardDetailMainContainer}>
@@ -206,10 +207,9 @@ export default function Details(props) {
         <Link to={`/products/${genderPrevius}`}>
           <button className={style.btnDetails}>Go Back</button>
         </Link>
-        {/* <Comments userName={user.name} productId={props.match.params.id}></Comments> */}
+        <Comments userName={user.name} productId={props.match.params.id}></Comments>
         {/* <FeedBack productId={detail.productId} product={detail.product} />   */}
       </div>
     </div>
   );
 }
-
