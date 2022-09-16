@@ -19,23 +19,24 @@ orderRouter.get("/", async (req, res, next) => {
 });
 
 orderRouter.post("/", async (req, res) => {
-  const { price, userId, idpurchase, creationdate, stateOrder } = req.body;
+  const { price, userId, stocks } = req.body;
   try {
-    console.log(price, userId, idpurchase, creationdate);
+    console.log(price, userId, stocks);
 
     let newOrder = await Order.create({
       price,
       userId,
+      stocks,
+      stateOrder: "Creada",
       creationdate: new Date(),
-      stateOrder: stateOrder,
     });
-    console.log("compro");
-    let cliente = await User.findByPk(userId);
+
+   /* let cliente = await User.findByPk(userId);
 
     console.log(cliente);
 
     await cliente.addOrder(newOrder);
-    console.log("agrego");
+    console.log("agrego");*/
     res.send(newOrder);
   } catch (error) {
     res.status(400).send(error);
