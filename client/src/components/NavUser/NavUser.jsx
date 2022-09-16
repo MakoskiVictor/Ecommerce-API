@@ -1,14 +1,14 @@
 import { BiUser } from "react-icons/bi";
 import { IconContext } from "react-icons";
 import Style from "./NavUser.module.css"
-import { useDispatch } from "react-redux";
+import { useDispatch ,useSelector} from "react-redux";
 import { Logout } from "../../redux/actions";
 import { useAuth } from "../../context/authContext";
-
 
 function NavUser() {
   //login Google
   const { logout, user } = useAuth();
+  const user2 = useSelector((state) => state.user_login);
 
   const handleLogout = async () => {
     try {
@@ -43,6 +43,14 @@ function NavUser() {
         <div className={Style.dropdown_content}>
           <a href="#" onClick={handleLogout}>Logout</a>
           <a href="/profile">Profile</a>
+          {user2.id!=undefined && user2.id!=false &&
+          user2.isAdmin!=undefined && user2.isAdmin==true &&
+          <div>
+          <a href="/gestionProducts">Administracion Productos</a>
+          <a href="/usersAdmin">Administracion Usuarios</a>
+          <a href="/orders">Administracion Ventas</a>
+          </div>
+          }
           {/*<a href="#">Link 2</a>
           <a href="#">Link 3</a>*/}
         </div>
