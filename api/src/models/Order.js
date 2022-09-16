@@ -5,14 +5,9 @@ module.exports = (sequelize) => {
     "order",
     {
       id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-      userId: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
+        primaryKey: true,
       },
       stocks: {
         type: DataTypes.JSON, //ARRAY(DataTypes.JSON)
@@ -24,13 +19,14 @@ module.exports = (sequelize) => {
       },
       idpurchase: {
         type: DataTypes.STRING,
-        allowNull: true,
       },
       creationdate: {
-        // type: DataTypes.DATE,
-        type: DataTypes.STRING,
+        type: DataTypes.DATE,
         allowNull: true,
       },
+      stateOrder:{
+        type: DataTypes.ENUM('Creada', 'Cancelada', 'Despachada')
+      }
     }
     // {
     //   timestamps: false,

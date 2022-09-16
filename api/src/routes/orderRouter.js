@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { DataTypes } = require("sequelize");
 const { Order } = require("../db");
 const { User } = require("../db");
 const orderRouter = Router();
@@ -18,21 +19,20 @@ orderRouter.get("/", async (req, res, next) => {
 });
 
 orderRouter.post("/", async (req, res) => {
-  const { stocks,price, userId, idpurchase,creationdate } = req.body;
+  const { price, userId, idpurchase, creationdate, stateOrder } = req.body;
   try {
-    console.log( stocks,price, userId, idpurchase,creationdate);
+    console.log(price, userId, idpurchase, creationdate);
 
     let newOrder = await Order.create({
-      stocks,
       price,
       userId,
-      idpurchase,
-      creationdate
+      creationdate: new Date(),
+      stateOrder: stateOrder,
     });
     console.log("compro");
     let cliente = await User.findByPk(userId);
 
-    // console.log(cliente);
+    console.log(cliente);
 
     await cliente.addOrder(newOrder);
     console.log("agrego");
@@ -42,4 +42,55 @@ orderRouter.post("/", async (req, res) => {
   }
 });
 
+orderRouter.put("/:id", async (req, res, next) => {
+  const { type } = req.query;
+  const { id } = req.params;
+  const { idpurchase, stateOrder } = req.body;
+  try {
+    const order = await Order.findOne({ where: { id: id } });
+    switch (type) {
+      case "idpurchase":
+        order.idpurchase = idpurchase;
+        await order.save();
+        res.send(`The purchased id has been changed`);
+        break;
+      case "stateOrder":
+        order.stateOrder = stateOrder;
+        await order.save();
+        res.send(`The state has been changed`);
+        break;
+      default:
+        break;
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = orderRouter;
+
+/* id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
+      stocks: {
+        type: DataTypes.JSON, //ARRAY(DataTypes.JSON)
+        allowNull: false,
+      },
+      price: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+      },
+      idpurchase: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      creationdate: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+      stateOrder:{
+        type: DataTypes.ENUM('Creada', 'Cancelada', 'Despachada')
+      }
+    }*/

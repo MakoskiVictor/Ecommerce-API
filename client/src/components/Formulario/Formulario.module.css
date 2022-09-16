@@ -16,7 +16,7 @@
    align-items: center;
 }
 
-.optionCreate{
+.optionCreate {
    color: #efb810;
 }
 
@@ -263,4 +263,42 @@ input {
 .buttonStock:active {
    color: #fff;
    border: 1px solid #fff;
+}
+
+.buttonCreateCategory {
+   margin: auto 10px;
+   background-color: #efb810;
+   border: none;
+   width: 100px;
+   height: 40px;
+   color: #000;
+   font-size: 16px;
+   font-weight: 600;
+   border-radius: 10px;
+   box-decoration-break: none;
+   cursor: pointer;
+   transition: all 1s;
+}
+.buttonCreateCategory:hover {
+   color: #333;
+   border: 1px solid #333;
+}
+
+.containerCrate {
+   height: 60px;
+   margin-top: 0px;
+   margin-bottom: 30px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.fieldCreate {
+   margin-bottom: 0px;
+   outline: none;
+   border-radius: 3px;
+   border: 0;
+   align-self: center;
+   border: solid 1px #ccc;
+   padding: 5px;
 }
