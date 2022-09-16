@@ -100,7 +100,7 @@ router.get("/", async (req, res, next) => {
 router.put("/:id", async (req, res, next) => {
   const { type } = req.query;
   const { id } = req.params;
-  const { name, price, image, brand, gender, nameCategory, description } =
+  const { name, price, image, brand, gender, categoryId, description } =
     req.body;
   const product = await Product.findOne({ where: { id: id } });
   try {
@@ -130,10 +130,10 @@ router.put("/:id", async (req, res, next) => {
         await product.save();
         res.send(`gender changed successfully`);
         break;
-      case "nameCategory":
-        product.nameCategory = nameCategory;
+      case "categoryId":
+        product.categoryId = categoryId;
         await product.save();
-        res.send(`nameCategory changed successfully`);
+        res.send(`categoryId changed successfully`);
         break;
       case "description":
         product.description = description;

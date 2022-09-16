@@ -98,7 +98,16 @@ class Carry extends Component {
 
   onContinueBuy() {
     let { actualiceBuy } = this.VerificarStocks();
-    if (!actualiceBuy) this.props.history.push("/payment");
+    if(this.props.user_login==false || this.props.user_login.id==undefined || this.props.user_login.id==false){
+      Swal.fire({
+        title: `You must log in before buying`,
+        icon: "info",
+        button: "Ok",
+      });
+    }
+    else{
+      if (!actualiceBuy) this.props.history.push("/payment");
+    }
   }
 
   VerificarStocks() {
@@ -236,6 +245,7 @@ function mapStateToProps(state) {
   return {
     carryProductsStocks: state.carryProductsStocks,
     carryProducts: state.carryProducts,
+    user_login:state.user_login,
   };
 }
 
