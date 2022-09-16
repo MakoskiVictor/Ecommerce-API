@@ -4,7 +4,7 @@ const router = Router();
 
 router.post("/", async (req, res, next) => {
   const { userId, productId } = req.body;
-  console.log("hola");
+  console.log("USER ID", userId, "PRODUCT ID", productId);
   try {
     const favoriteProduct = await favorites.create({
       productId: productId,
@@ -22,7 +22,10 @@ router.get("/:id", async (req, res, next) => {
     const favoritesProducts = await favorites.findAll({
       where: { userId: id },
     });
-    res.send(favoritesProducts);
+    const filterFavs = favoritesProducts.map(fav => fav.productId);
+    console.log("soy FILTERFAVS", filterFavs)
+    console.log("SOY EL FAV ID", favoritesProducts)
+    res.send(filterFavs);
   } catch (err) {
     next(err);
   }
