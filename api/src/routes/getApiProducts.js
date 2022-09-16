@@ -7,7 +7,7 @@ module.exports = async () => {
    const size = ["S", "M", "L"];
    const stock = [0, 5, 10, 20, 30, 40, 50];
    let products = [];
-   const apiKey = "2a3cd4f900msh07821a39625ea73p1e7beejsne773ee3fac08";
+   const apiKey = "17b111c6e0msheb9ad03017c02dep1dabd1jsn8c8a9a0b69c3";
    for (let index = 0; index < IDs.length; index++) {
       let api = (
          await axios.get(

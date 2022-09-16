@@ -4,7 +4,6 @@ const router = Router();
 
 router.post("/", async (req, res, next) => {
   const { userId, productId } = req.body;
-  console.log("hola");
   try {
     const favoriteProduct = await favorites.create({
       productId: productId,
