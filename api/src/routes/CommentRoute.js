@@ -4,26 +4,27 @@ const { Product } = require("../db");
 // const { Order } = require("../db");
 const router = Router();
 
-router.get("/:id", async (req, res, next) => {
-  const { id } = req.params;
+router.get("/", async (req, res, next) => {
   try {
-    const allComments = await Comment.findAll({ where: { productId: id } });
+    const allComments = await Comment.findAll();
     allComments.length
       ? res.status(200).json(allComments)
       : res.status(404).send("no hay comentarios");
   } catch (error) {
-    next(error.message);
+    next(error);
   }
 });
 
 router.post("/", async (req, res, next) => {
   try {
-    const { productId, comment, rating, userId } = req.body;
+    const { productId, comment, rating, name } = req.body;
+    console.log({ productId, comment, rating, name })
     let newComment = await Comment.create({
+      productId,
       comment,
       rating,
-      userId,
-      productId
+      name,
+      // userId,
     });
     let productComments = await Product.findByPk(productId);
     await productComments.addComment(newComment);

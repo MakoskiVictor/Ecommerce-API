@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { searchProductId, getOrders } from '../../redux/actions/index'
+import { searchProductId, getOrders, searchNameProduct } from '../../redux/actions/index'
 import { Card, TableRow,  TableContainer, TableCell, TableBody, Table, Button, Modal, Box } from '@mui/material';
 import s from "./Order.module.css"
 import { useHistory } from 'react-router-dom';
@@ -14,14 +14,16 @@ function Orders() {
   const navigate = useHistory()    
   const ordersArr = useSelector(state => state.orders)
   const product = useSelector((state) => state.products);
+  console.log(product,"soy products")
   const user = useSelector(state=>state.user_login)
   let userOrders = ordersArr?.filter((data) => data.userId === user.id)
-  console.log(user, "user")
+  console.log(userOrders, "userOrders")
     // console.log(JSON.parse(localStorage.getItem(CARRY_LOCALHOST)))
     
   useEffect(() => {
     dispatch(getOrders())
     // dispatch(getChecklogin())
+    dispatch(searchNameProduct())
     dispatch(searchProductId())
   }, [])
 
@@ -33,6 +35,7 @@ function Orders() {
 
   function Row(props) {
     const { row, orderID,allStocks } = props
+    console.log(row ,"soy row")
     const [open, setOpen] = useState(false);
     const [ openReview, setOpenReview ] = useState(false);
     // console.log(openReview)
@@ -107,6 +110,8 @@ function Orders() {
           color='primary'
           onClick={(e)=>handleClick(e)}>Go back to home</Button>
         <h1 className={ ""}>Your orders</h1>
+
+      {  console.log(userOrders,"userOrders")}
 
         { userOrders.length ? userOrders.map((data)=>{
             return (

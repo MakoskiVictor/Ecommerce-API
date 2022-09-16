@@ -89,14 +89,7 @@ export default function Comments({ userName,orderID, productId, allStocks,/* set
         rating: '',
         comment: '',
         name: userName,
-        //  name: Mat,
-        // moreInfo: [
-        //   {
-        //     flightName: '',
-        //     origin: '',
-        //     destination: ''
-        //   }
-        // ],
+
         productId: productId,
     })
     //   setOpenReview(false)
@@ -130,15 +123,7 @@ export default function Comments({ userName,orderID, productId, allStocks,/* set
         </Box>
         {error.rating && <span>{error.rating}</span>}
 
-        {/* <TextField
-          type="text"
-          id="outlined-uncontrolled"
-          label="Users name"
-          name='name'
-          defaultValue={input.name}
-          focused
-        />
-        {error.name && <span>{error.name}</span>} */}
+
 
         <TextField
           id="outlined-multiline-static"
