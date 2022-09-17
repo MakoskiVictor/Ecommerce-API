@@ -17,7 +17,7 @@ export default function Favs ({id}) {
     const userId = user_login.id; */
 
     //CARGAR EL ESTADO
-    console.log("SOY LOS FAVS", favs)
+    /* console.log("SOY LOS FAVS", favs) */
 
     useEffect( () => {
         if(user_login.id){
@@ -26,9 +26,14 @@ export default function Favs ({id}) {
     }, [dispatch]);
 
     //VER SI EL PRODUCT ESTA EN LOS FAVS
+    let comprobateFavs = [];
 
-    const isInFav = favs.some(productId => productId === id);
-    console.log("SOY ISINFAV", isInFav);
+    for(let i = 0; i < favs.length; i++) {
+        comprobateFavs.push(favs[i].id);
+    };
+
+    const isInFav = comprobateFavs.some(productId => productId === id);
+    /* console.log("SOY ISINFAV", isInFav); */
 
     const handleClickAddFav = async () => {
         if(user_login.id!==undefined && user_login.id !== false) {
@@ -55,7 +60,7 @@ export default function Favs ({id}) {
     //QUITAR FAVORITO
     const handleClickRemoveFav = async () => {
         if(user_login.id!==undefined && user_login.id !== false) {
-            console.log("SOY USER ID", user_login.id, "Y PRODUCT ID", id);
+            /* console.log("SOY USER ID", user_login.id, "Y PRODUCT ID", id); */
             await axios.delete("http://localhost:3001/favorites", { data: {
                 userId: user_login.id,
                 productId: id
