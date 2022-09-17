@@ -261,6 +261,7 @@ export function getStockbyID(id) {
 }
 
 export function getStockbyIDTotalFilterCarry(carry) {
+  console.log("Entra"   ,  carry)
   return async function (dispatch) {
     try {
       let Stocks = [];
@@ -269,6 +270,7 @@ export function getStockbyIDTotalFilterCarry(carry) {
         let json = await axios.get(`http://localhost:3001/stock/${element.id}`);
         let array = json.data;
         let elementoIndice = -1;
+        console.log(array)
         for (let index = 0; index < array.length; index++) {
           const element2 = array[index];
           console.log(element2.productSize, "  ", element.state.size);
@@ -420,9 +422,9 @@ export function getAllComments() {
   };
 }
 
-export function getOrders() {
+export function getOrders(type,parameter) {
   return function (dispatch) {
-    axios.get("http://localhost:3001/orders").then((res) => {
+    axios.get(`http://localhost:3001/orders?type=${type}&parameter=${parameter}`).then((res) => {
       dispatch({
         type: GET_ORDERS,
         payload: res.data,
@@ -432,6 +434,7 @@ export function getOrders() {
 }
 
 export function createOrder(payload) {
+  console.log(payload)
   return function (dispatch) {
     axios
       .post("http://localhost:3001/orders", payload)

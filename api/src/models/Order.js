@@ -20,10 +20,6 @@ module.exports = (sequelize) => {
       idpurchase: {
         type: DataTypes.STRING,
       },
-      creationdate: {
-        type: DataTypes.DATE,
-        allowNull: true,
-      },
       stateOrder:{
         type: DataTypes.ENUM('Creada', 'Cancelada', 'Despachada')
       }
