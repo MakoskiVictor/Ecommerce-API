@@ -20,6 +20,7 @@ import { AuthProvider } from "./context/authContext.jsx";
 import Profile from "./components/Profile/Profile";
 import ModifyItem from "./components/ModifyITem/ModifyItem";
 import UsersAdmin from "./components/UsersAdmin/UsersAdmin";
+import Favorites from "./components/Favs/Favorites";
 
 import NavUser from "./components/NavUser/NavUser.jsx";
 import Orders from "./components/Orders/Orders";
@@ -52,6 +53,7 @@ function App() {
           <Route path="/details/:id" component={Details}></Route>{" "}
           <Route exact path="/createProduct" component={Formulario} />{" "}
           {/*Se pone asi porque los componentes estan creadas como Funcion*/}
+          <Route path="/favorites" component={Favorites} />
           <Route  exact path="/about" component={About}></Route>
           <Route exact path="/contact" component={Contact} />
           <Route exact path="/LoginGoogle" component={LoginGoogle} />

@@ -4,7 +4,7 @@ import {
    CHANGE_PAGINATED_PRODUCTS, CHANGE_PAGINATED_PAGE, SEARCH_PRODUCT_ID, DELETE_DETAILS, CHANGE_FILTER_NAME,
     GET_STOCK_PRODUCT_BY_ID, DELETE_STOCK_ID, GET_STOCK_PRODUCT_BY_ID_TOTAL, CHANGE_PRODUCTS_CARRY
    , CHANGE_USER_LOGIN,GET_ORDERS, GET_ALL_USERS,CHANGE_PRODUCTS_BY_PAGE,CHANGE_FILTER_URL, DELETE_USERS,GET_COMMENTS,CREATE_ORDER,
-   GET_ALL_FAVS
+   GET_ALL_FAVS, DELETE_FAVS
    
 } from "../actions";
 
@@ -189,6 +189,11 @@ const rootReducer = (state = initialState, action) => {
                ...state,
                favs: action.payload
             };
+         case DELETE_FAVS:
+            return {
+               ...state,
+               favs: action.payload
+            }
       default:
          return state;
    }
