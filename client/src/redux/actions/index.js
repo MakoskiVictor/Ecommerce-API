@@ -30,6 +30,7 @@ export const CHANGE_FILTER_URL="CHANGE_FILTER_URL"
 export const DELETE_USERS = "DELETE_USERS";
 export const CREATE_ORDER = "CREATE_ORDER";
 export const GET_ALL_FAVS = "GET_ALL_FAVS";
+export const DELETE_FAVS = "DELETE_FAVS";
 
 export function searchNameProduct(name) {
   return async function (dispatch) {
@@ -481,4 +482,11 @@ export function getAllFavs(payload) {
     })
     .catch((error) => console.log(error));
   }
-}
+};
+
+export function deleteFavs() {
+  return {
+     type: DELETE_FAVS,
+     payload: []
+   }
+};
