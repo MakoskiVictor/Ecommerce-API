@@ -14,10 +14,12 @@ router.get("/:id", async (req, res, next) => {
 });
 
 router.put("/drop", async (req, res, next) => {
+
   const { stockProducts } = req.body;
+  console.log(req.body, "soy stockProducts")
   const productsChanged = []
   try {
-    for (let i = 0; i < stockProducts.length; i++) {
+    for (let i = 0; i < stockProducts?.length; i++) {
       const productStock = await Stock.findOne({
         where: { productId: stockProducts[i].id, productSize: stockProducts[i].size },
       });
@@ -66,5 +68,49 @@ router.put('/add', async (req, res, next)=> {
     next(err);
   }
 })
+
+
+
+///RUTA EN DESARROLLO
+/*router.post("/Add_Stock_Size", async (req, res, next) => {
+  const { idProduct, size, stock } = req.body;
+  try {
+    const product = await Product.findOne({
+      where: {
+        id: idProduct
+      },
+      include: {
+        model: Stock,
+      }
+    });
+
+    if (product !== undefined && product.length !== 0) {
+    var FraseRespuesta="No found Stock"
+      for (let index = 0; index < product.stocks.length; index++) {
+        const stockData = product.stocks[index];
+        if (stockData.productSize == size) {
+          console.log(Number.parseInt(stockData.stock),"  ",Number.parseInt(stock))
+          FraseRespuesta=`Product "${product.name}" (Size ${size}) modified a Stock ${stockData.stock}` 
+          console.log( (Number.isInteger(stockData.stock) + Number.isInteger(stock)))
+          product.stocks[index].stock = Number.isInteger(stockData.stock) + Number.isInteger(stock)
+          await product.save()
+          break;
+        }
+      }
+      if(FraseRespuesta=="No found Stock"){
+      Stock.create({
+        productSize: size,
+        stock: stock,
+        productId: idProduct,
+      });
+      FraseRespuesta=`Product "${product.name}" (Size ${size}) created with Stock ${stockData.stock}` 
+    }}
+
+    res.status(202).send(FraseRespuesta);
+  } catch (err) {
+    next(err);
+  }
+});*/
+
 
 module.exports = router;

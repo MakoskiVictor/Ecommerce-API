@@ -1,106 +1,105 @@
 * {
-   text-decoration: none;
-}
-.container {
-   display: flex;
-   justify-content: space-between;
+  text-decoration: none;
 }
 
 .letra {
-   text-align: initial;
-   justify-content: space-between;
-   color: white;
-   text-decoration: none;
-   width: 100px;
-   margin-left: 80px;
+  justify-content: space-between;
+  color: white;
+  text-decoration: none;
+  width: 100px;
 }
 
 .letra:hover {
-   color: green;
+  color: green;
+}
+
+.btnCarry {
+  color: white;
+}
+
+.btnCarry:hover {
+  color: green;
 }
 
 .NavUl {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   list-style: none;
-   width: 80%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0;
+  width: 50%;
 }
 
+.liFormat {
+  margin-left: 15px;
+}
 .NavBarComplete {
-   /* background-color: #b2785b; */
-   background: url("../image/FondoNavBar.jpg");
-   /* background-color: #f77f00; */
-   box-sizing: border-box;
-   display: flex;
-   align-items: center;
-   width: 100%;
-   text-align: left;
-   font: bold 16px sans-serif;
-   padding: 3px 5px;
-   margin-top: 0px;
-   border-bottom: 5px solid white;
+  background: url("../image/FondoNavBar.jpg");
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font: bold 16px sans-serif;
+  padding: 3px 5px;
 }
 
 /* IZQUIERDA */
 
 .left {
-   width: 20%;
+  display: flex;
+  width: 30%;
+  justify-content: space-between;
+  gap: 10px;
 }
 .center {
-   width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 40%;
 }
 
 .NavBarComplete .logo {
-   border-radius: 5rem;
-   margin-left: 3rem;
+  border-radius: 5rem;
+  margin-left: 3rem;
 }
 .logo:hover {
-   transform: scale(1.025, 1.025);
-   filter: drop-shadow(0 0 12px white);
+  transform: scale(1.025, 1.025);
+  filter: drop-shadow(0 0 12px white);
 }
 
+.buttonlogin {
+  width: 30%;
+  padding: 10px 10px;
+  background-color: #008000;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  color: white;
+
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+.buttonlogin:hover {
+  background-color: #02d302;
+}
 /* CENTRO */
 
 /* DERECHA */
 
-.right {
-   width: 20%;
-}
-
-/*     LOGIN   */
-
+/* .right {
+  width: 20%;
+} */
 .ModalAbiertoBackground {
    position: absolute;
    background-color: #273141c3;
    top: 0;
    width: 100%;
-   height: 100vh;
+   height: 100%;
 }
 
 .ModalLogin {
    position: absolute;
    left: 50%;
    transform: translateX(-50%);
-   top: 140%;
+   top: 15%;
 }
-
-
-.buttonlogin {
-    text-align: initial;
-    justify-content: space-between;
-    color: rgb(2, 2, 2);
-    text-decoration: none;
-    width: 100px;
-    margin-left: 80px;
-
-}
-.buttonregister {
-    text-align: initial;
-   justify-content: space-between;
-   color: rgb(2, 2, 2);
-   text-decoration: none;
-   width: 100px;
-   margin-left: 80px;
-}
-

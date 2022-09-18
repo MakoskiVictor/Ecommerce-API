@@ -2,25 +2,41 @@ import React from "react";
 import styles from "./CarryCard.module.css";
 import { Link } from "react-router-dom";
 
-function CarryCard({ img, name, brand, price, id, size, amount, onDelete, onDecrease, onIncrease }) {
+function CarryCard({
+  img,
+  name,
+  brand,
+  price,
+  id,
+  size,
+  amount,
+  onDelete,
+  onDecrease,
+  onIncrease,
+}) {
   return (
     <div className={styles.productContainer}>
       <div className={styles.photoContainer}>
-        <img src={`https://${img}`} alt="No Found" width="140" height="150" />
+        <img src={`https://${img}`} alt="No Found" />
       </div>
       <div className={styles.texContainer}>
-        <h3>{name}</h3>
-        <p>{brand}</p>
+        <h2>{name}</h2>
+        {/* <p>{brand}</p> */}{" "}
+        {/* Me parece innecesario en este punto de la compra */}
         <div className={styles.priceCartContainer}>
-          <h3>{`Price: $/${Number2Decimals(price)}`}</h3>
-          <h3>Size: {size}</h3>
+          <p>{`Price: $/${Number2Decimals(price)}`}</p>
+          <p>Size: {size}</p>
         </div>
-        <div>
-          <p><button onClick={onDecrease}>-</button>
-            {amount}
-            <button onClick={onIncrease}>+</button></p>
-        </div >
-        <button onClick={onDelete}>delete</button>
+        <div className={styles.btnsContainer}>
+          <div className={styles.btnPlusMinus}>
+            <button onClick={onDecrease}>-</button>
+            <span>{amount}</span>
+            <button onClick={onIncrease}>+</button>
+          </div>
+          <div className={styles.btnDelete}>
+            <button onClick={onDelete}>Delete</button>
+          </div>
+        </div>
       </div>
     </div>
   );

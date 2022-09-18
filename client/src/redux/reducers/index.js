@@ -1,10 +1,14 @@
-import { act } from "react-dom/test-utils";
 import {
    SEARCH_NAME, CHANGE_FILTER_GENDER, CHANGE_FILTER_CATEGORY,
    CHANGE_FILTER_BRAND, GET_CATEGORYS, CHANGE_FILTER_MAX, CHANGE_FILTER_MIN, CHANGE_FILTER_PRICE,
    CHANGE_PAGINATED_PRODUCTS, CHANGE_PAGINATED_PAGE, SEARCH_PRODUCT_ID, DELETE_DETAILS, CHANGE_FILTER_NAME,
-   ADD_PRODUCT_CARRY, GET_STOCK_PRODUCT_BY_ID, DELETE_STOCK_ID, GET_STOCK_PRODUCT_BY_ID_TOTAL,
+    GET_STOCK_PRODUCT_BY_ID, DELETE_STOCK_ID, GET_STOCK_PRODUCT_BY_ID_TOTAL, CHANGE_PRODUCTS_CARRY
+   , CHANGE_USER_LOGIN,GET_ORDERS, GET_ALL_USERS,CHANGE_PRODUCTS_BY_PAGE,CHANGE_FILTER_URL, DELETE_USERS,GET_COMMENTS,CREATE_ORDER,
+   GET_ALL_FAVS, DELETE_FAVS
+   
 } from "../actions";
+
+import { CARRY_LOCALHOST, USER_ID } from "../../components/Globales";
 
 const PAGE_START = 1;
 
@@ -14,11 +18,17 @@ const initialState = {
    categorys: [],
    filters: {
       nameProductSearched: "", filterGender: "Men", filterBrand: [],
-      filterCategory: 0, min: 0, max: 500, filterForPrice: false
+      filterCategory: 0, min: 0, max: 500, filterForPrice: false,filterUrl:undefined
    },
-   paginated: { page: PAGE_START, productsView: [] },
+   paginated: { page: PAGE_START, productsView: [] ,productsViewPage: []},
    stock_by_ID: [],
-   carryProductsStocks:[],
+   carryProductsStocks: [],
+   carryProducts: ObtenerInicialProductsCarry(),
+   user_login: ObtenerInicial_ID_Login(),
+   allUsers: [],   
+   orders:[],
+   comments: [],
+   favs: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -50,6 +60,12 @@ const rootReducer = (state = initialState, action) => {
             ...state,
             categorys: action.payload
          };
+         case CHANGE_FILTER_URL:
+            return {
+               ...state,
+               filters: { ...state.filters, filterGender: "Men", filterBrand: [], filterCategory: 0,filterUrl:action.payload },
+               paginated: { ...state.paginated, page: PAGE_START }
+            };
       case CHANGE_FILTER_GENDER:
          return {
             ...state,
@@ -102,17 +118,22 @@ const rootReducer = (state = initialState, action) => {
             ...state,
             paginated: { ...state.paginated, page: action.payload }
          };
+         case CHANGE_PRODUCTS_BY_PAGE:
+            return {
+               ...state,
+               paginated: { ...state.paginated, productsViewPage: action.payload }
+            };
       case CHANGE_FILTER_NAME:
          return {
             ...state,
             filters: { ...state.filters, nameProductSearched: action.payload, filterBrand: [] },
             paginated: { ...state.paginated, page: PAGE_START }
          };
-      case ADD_PRODUCT_CARRY:
-         let ArrayCarry = AddOrModifyCarry(action.payload, state.carryProducts)
+      case CHANGE_PRODUCTS_CARRY:
+         localStorage.setItem(CARRY_LOCALHOST, JSON.stringify(action.payload))
          return {
             ...state,
-            carryProducts: ArrayCarry,
+            carryProducts: action.payload,
          };
       case GET_STOCK_PRODUCT_BY_ID:
          return {
@@ -124,7 +145,55 @@ const rootReducer = (state = initialState, action) => {
             ...state,
             carryProductsStocks: action.payload
          };
-
+      case CHANGE_PRODUCTS_CARRY:
+         console.log("Cambio aca ", action.payload)
+         return {
+            ...state,
+            carryProducts: action.payload
+         };
+      case CHANGE_USER_LOGIN:
+         Cambiar_ID_Login(action.payload)
+         return {
+            ...state,
+            user_login: action.payload
+         };
+         case GET_ORDERS: {
+            return {
+              ...state,
+              orders: action.payload,
+            };
+          }
+      case GET_ALL_USERS:
+         return {
+            ...state,
+            allUsers: action.payload
+         }
+         case GET_COMMENTS: {
+            return {
+              ...state,
+              comments: action.payload,
+            }
+         }
+         case DELETE_USERS:
+            return {
+               ...state,
+               allUsers: action.payload
+            };
+         case CREATE_ORDER:
+            return {
+               ...state,
+               orders:action.payload
+            };
+         case GET_ALL_FAVS:
+            return {
+               ...state,
+               favs: action.payload
+            };
+         case DELETE_FAVS:
+            return {
+               ...state,
+               favs: action.payload
+            }
       default:
          return state;
    }
@@ -145,43 +214,24 @@ function AgregarDesagregarArray(elementos, action) {
    return element;
 }
 
-function AddOrModifyCarry(carryAdd, carryProducts) {
-   let array = carryProducts;
-   let indice = (carryProducts.findIndex(carry => (carry.id === carryAdd.id && JSON.stringify(carry.size) === JSON.stringify(carryAdd.size))))
-   if (indice == -1) {
-      array.push({ id: carryAdd.id, size: carryAdd.size, amount: carryAdd.amount, details: carryAdd.detail })
+function ObtenerInicialProductsCarry() {
+   let Data = JSON.parse(localStorage.getItem(CARRY_LOCALHOST))
+   var Array = []
+   if (Data !== undefined && Data !== null && Data.length !== 0) {
+      Array=Data;
    }
-   else {
-      let cantidad = array[indice].amount + carryAdd.amount;
-      cantidad = cantidad > carryAdd.size.stock ? carryAdd.size.stock : cantidad;
-      array[indice].amount = cantidad;
-   }
-   return array;
+   return Array
 }
 
-function DisminuirCantidad(carryProducts, index) {
-   let array = Object.assign([], carryProducts);
-
-   let cantidad = array[index].amount - 1;
-   if (cantidad == 0) {
-      array.splice(index, 1)
+function ObtenerInicial_ID_Login() {
+   let Data = JSON.parse(localStorage.getItem(USER_ID))
+   var Id_user = { id: false }
+   if (Data !== undefined && Data !== null && Data.id!=undefined) {
+      Id_user = Data
    }
-   else {
-      array[index].amount = cantidad;
-   }
-   return array;
+   return Id_user
 }
 
-function AumentarCantidad(carryProducts, index) {
-   let array = Object.assign([], carryProducts);
-
-   let cantidad = array[index].amount + 1;
-   if (cantidad > array[index].size.stock) {
-      array[index].amount = array[index].size.stock;
-      console.log("No hay mas stock para aumentar")
-   }
-   else {
-      array[index].amount = cantidad;
-   }
-   return array;
+function Cambiar_ID_Login(Dato) {
+   localStorage.setItem(USER_ID, JSON.stringify(Dato));
 }

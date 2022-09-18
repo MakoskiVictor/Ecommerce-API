@@ -1,79 +1,80 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import Swal from "sweetalert2";
 import axios from "axios";
-import Carry from "../Carry/Carry"
-import { Link, useHistory } from "react-router-dom";
-
-
-// import { CartContext } from "../Cart/CartContext";
-// import { postHistory } from "./History";
-// import { use } from "../../../../api/src/routes";
-
+import {Link, useHistory }from "react-router-dom";
+import CARRY_LOCALHOST from "../Globales";
+import styles from "./Pay.module.css";
+import {History} from "./History"
+import { DeleteDrop ,ChangeCarryProducts,createOrder} from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Pay() {
+  const dispatch = useDispatch();
+  const carryProducts = useSelector((state) => state.carryProducts);
 
-  const PATH = 'http://localhost:3001'
+  const PATH = "http://localhost:3001";
+
+  console.log(JSON.parse(localStorage.getItem(CARRY_LOCALHOST)));
+
+  const history = useHistory();
+
+  const user = useSelector(state=>state.user_login)
+
+  let [arrProduc,setArrProduc] = useState([])
+  let [arrPrecio,setArrPrecio] = useState(0)
+  let product = localStorage.getItem(CARRY_LOCALHOST);
+
+  let productJSON = JSON.parse(product);
+
+  useEffect(()=>{
+
+    let product = localStorage.getItem(CARRY_LOCALHOST);
+    let productJSON = JSON.parse(product);
+
+    let articulos = productJSON.map((e) => {
+      return {
+        name: e.details.name,
+        description: e.details.name + "-" + e.details.id,
+        unit_amount: {
+          currency_code: "USD",
+          value: e.details.price + "", //aca
+        },
+        quantity: e.amount,
+      };
+    });
+    setArrProduc(articulos)
+    console.log(articulos, "jajaja")
+    let PrecioTotalArticulos = articulos[0].unit_amount.value * articulos[0].quantity;
+  
+    let multiplicacionEntreValueYQuantity = articulos.map((e) => {
+      return e.unit_amount.value * e.quantity;
+    });
+  
+    if (articulos.length > 1) {
+      PrecioTotalArticulos = multiplicacionEntreValueYQuantity.reduce(
+        (prev, current) => {
+          return prev + current;
+        }
+      );
+    }
+    setArrPrecio(PrecioTotalArticulos)
+  }, [])
 
   
-
-  // const history = useHistory();
-
-
-//   const idUser = window.atob(localStorage.getItem('id'));
-
-//   const navigate = useNavigate();
-//   const username = window.atob(localStorage.getItem("username")); //julianpardeiro
-  let product = localStorage.getItem("cartProducts");
-  //   console.log("product: ", product);
-  
-
-
-    // descomentar
-//   let productJSON = JSON.parse(product);
-
-
-  // console.log("productJSON: ", productJSON);
-
-// descomentar
-
-//   let articulos = productJSON.map((e) => {
-//     return {
-//       name: e.name,
-//       description: e.category[0] + "-" + e.id,
-//       unit_amount: {
-//         currency_code: "USD",
-//         value: e.price + "", //aca
-//       },
-//       quantity: e.amount,
-//     };
-//   });
-  //console.log("puntos: ", points);
-
-  // descomentar
-//   let PrecioTotalArticulos =
-//     articulos[0].unit_amount.value * articulos[0].quantity;
-
-//   let multiplicacionEntreValueYQuantity = articulos.map((e) => {
-//     return e.unit_amount.value * e.quantity;
-//   });
-
-//   if (articulos.length > 1) {
-//     PrecioTotalArticulos = multiplicacionEntreValueYQuantity.reduce(
-//       (prev, current) => {
-//         return prev + current;
-//       }
-//     );
-//   }
-  const createOrder = (data, actions) => {
-    return actions.order.create({
+  const createOrderPaypal = (data, actions) => {
+    console.log(actions,"soy actions")
+    return actions.order
+      .create({
         purchase_units: [
           {
+            reference_id: "PUHF",
+            description: "Sporting Goods",
+            custom_id: "CUST-HighFashions",
+            soft_descriptor: "HighFashions",
             amount: {
               currency_code: "USD",
-              //descomentar
-                //   value: PrecioTotalArticulos.toFixed(2),
-                value:10
+              value: arrPrecio.toFixed(2),
             },
           },
         ],
@@ -82,75 +83,82 @@ export default function Pay() {
         },
       })
       .then((orderId) => {
-        //console.log("createOrder-orderId: ", orderId);
         return orderId;
-      });
+      }).catch(error =>
+        console.log(error)
+        )
   };
 
   const onApprove = (data, actions) => {
+    console.log(actions, "soy actions onApprove")
     return actions.order.capture().then(async function (detalles) {
       // en detalles esta todo lo que pasa en nuestro pago en un objeto
-    //   const arregloSoloId = detalles.purchase_units[0].items.map((e) => {
-    //     let id = e.description.split("-")[1];payer
-    //     return id;
-    //   });
-    //   const productsArray = detalles.purchase_units[0].items.map((e) => {
-    //     return { name: e.name, cant: e.quantity, price: e.unit_amount.value };
-    //   });
-    //   await postHistory(detalles.id,idUser,productsArray)
-    //   await SendReview(username, productsArray, detalles.id);
-    //   await CrearComentarioReview(username, arregloSoloId, detalles.id);
+      // console.log(detalles.stocks)
+      console.log(detalles, "soy detalles")
+
+      // const productsArray = articulos.map((e) => {
+      //   return { stock: e.stocks, userId: e.userId, price: e.price, idpurchase:e.idpurchase, creationdate:e.creationdate};
+      // });
+      // await History(detalles.stocks,detalles.purchase_units[0].amount.value,user.id,detalles.id, detalles.create_time)
+      // console.log("history",detalles.purchase_units[0].amount.value,user.id,detalles.id, detalles.create_time)
+      console.log("")
+            const sendOrderPP = {
+        price: arrPrecio.toFixed(2),
+        stocks: productJSON.map((e) => {
+          return {
+            amount: e.amount,
+            value: e.price,
+            productId: e.productId,
+            //  moreinfo: {
+            //    product: e.product,
+            //    destination: e.destination,
+            //    departureHour: e.departureHour,
+            //    arrivalHour: e.arrivalHour
+            //  }
+          }
+        }),
+        userId: user.id,
+        idpurchase: detalles.id,
+        creationdate: detalles.create_time,
+      };
+
+      dispatch(createOrder(sendOrderPP));
+      console.log(createOrder("hola soy sendOrder",sendOrderPP))
+      
       Swal.fire({
         icon: "success",
         title: "Payment Successful!",
-        html:
-          `Payer: ${detalles.payer.name.given_name} ${detalles.payer.name.surname}` +
-          "</br>" +
-          "</br>" +
-          /// descomentar
-          // `Amount paid: ${detalles.purchase_units[0].amount.value} USD` +
-          "</br>" +
-          "</br>" +
-          `Transaction number: ${detalles.id}`,
-        // text: `Transaction number: ${detalles.id}`,
-        // text: `Amount paid: ${detalles.purchase_units[0].amount.value}`
-        // footer: '<a href="">Why do I have this issue?</a>'
       });
-
-      //descomentar
-      // let arregloObjetosIdQuantity = detalles.purchase_units[0].items.map(
-      //   (e) => {
-      //     let id = e.description.split("-")[1];
-      //     return { id: id, size:e.size, stock: e.quantity };
-      //   }
-      // );
-      // console.log("arregloObjetosIdQuantity: ", arregloObjetosIdQuantity);
-
-      let stockProducts = [ {
-      id:"07b1051d-663f-4023-bcc8-d13861dd4787",
-      stock:"10", 
-      size:"L" 
-    },
-    {
-      id:"4dd34920-1cea-4638-b6e6-eb67de312cb5",
-      stock:"10", 
-      size:"L" 
-    }
-  ]
+      
+      let arregloObjetosIdQuantity = productJSON.map((e) => {
+        return {size: e.size, stock: e.quantity };
+      });
+      const arr = [];
+      for (let i = 0; i < productJSON.length; i++) {
+        arr.push({
+          id: productJSON[i].details.id,
+          stock: productJSON[i].amount,
+          size: productJSON[i].state.size,
+        });
+      }
+      dispatch(DeleteDrop(arr));
 
 
+      let stockProducts = arregloObjetosIdQuantity;
 
       await axios({
         method: "put",
         url: `${PATH}/stock/drop`,
         data: stockProducts,
-        // headers: { "X-Requested-With": "XMLHttpRequest" },
-        // withCredentials: true,
       })
-        .then((e) => e.data)
+        .then((e)=>e.data,dispatch(ChangeCarryProducts([])))
         .catch((e) => console.log(e));
-      // history("/done");
-    });
+        setTimeout(() => {
+          history.replace("/orders");
+        }, 2000);
+  }).catch(error =>
+    console.log(error)
+    )
   };
 
   //   {id: '6DX94897RC997852V', intent: 'CAPTURE', status: 'COMPLETED', purchase_units: Array(1), payer: {…}, …}
@@ -163,16 +171,13 @@ export default function Pay() {
   //   status: "COMPLETED"
   //   update_time: "2022-06-29T17:22:20Z"
 
-
-
-  
-
   const onCancel = (data) => {
     Swal.fire({
       icon: "error",
       title: "Payment Cancelled",
       text: "Your payment has been cancelled and will not be charged",
     });
+    history.push("/");
   };
 
   const onError = (error) => {
@@ -182,37 +187,28 @@ export default function Pay() {
       text: "There has been an error in your payment and will not be charged",
     });
     console.log("Error: ", error);
+    history.push("/");
   };
 
   return (
     <div className="">
-      <span className="">
-      <Link to = "/">
-      <button className="">Back to home</button>
-      </Link>
-      </span>
       <div className="">
-      
-        <h1 className="">
-          CIOCLOTHES
-        </h1>
+        <h1 className={styles.title}>CIOCLOTHES</h1>
       </div>
-      <div className="">
-        <div
-          name="CIOCLOTHES"
-        >
-        <PayPalScriptProvider>
-            <PayPalButtons
-              createOrder={(data, actions) => createOrder(data, actions)}
-              onApprove={(data, actions) => onApprove(data, actions)}
-              onCancel={onCancel}
-             
-              onError={onError}
-            />
-        </PayPalScriptProvider>
 
-        </div>
-      </div>
+      <br />
+      <br />
+      <PayPalScriptProvider>
+        <PayPalButtons
+          createOrder={(data, actions) => createOrderPaypal(data, actions)}
+          onApprove={(data, actions) => onApprove(data, actions)}
+          onCancel={onCancel}
+          onError={onError}
+        />
+      </PayPalScriptProvider>
+      <a href="/">
+        <button className={styles.btnBack}>Back to home</button>
+      </a>
     </div>
   );
 }

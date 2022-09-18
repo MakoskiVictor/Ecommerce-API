@@ -1,25 +1,23 @@
 .titulo {
-   color: #000;
-   margin: 10px auto 20px;
-   width: 80%;
+   color: white;
+   margin: 10px 0 0;
    padding-bottom: 10px;
    font-family: "Signika", sans-serif;
-   font-size: 45px;
-   font-weight: 700;
-   border-bottom: 1px solid #333;
+   font-size: 2.2rem;
 }
 
 .containerMain {
-   /* background-color: white; */
-   /* background-color: #ddb892; */
-
-   /* margin: 0; */
-   width: auto;
-   overflow: auto;
    background-image: url(../image/fondo.png);
    /* background-image: url(../image/Fondo2.png); */
+   background-size: cover;
+   background-repeat: no-repeat;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
 
-   background-size: 50% auto;
+.optionCreate {
+   color: #efb810;
 }
 
 /*                                FORMULARIO HORIZONTAL                 */
@@ -96,17 +94,20 @@ input {
    font-size: 20px;
    font-weight: 500;
    background-color: #343a40;
-  /* background: url("../image/FondoCreateProduct.jpg");
-   background-size:     cover;  */
+   background: url("../image/FondoTarjetas.jpg");
+   background-size: cover;
    color: #fff;
    padding: 10px 10px 30px;
-   margin: 0 auto;
-   margin-bottom: 30px;
    width: 380px;
-   height: auto;
+   margin-top: 20px;
+   margin-bottom: 40px;
    border-radius: 10px;
-  /*-webkit-box-shadow: 5px 5px 50px 5px #000000; 
+   /*-webkit-box-shadow: 5px 5px 50px 5px #000000; 
   box-shadow: 5px 5px 50px 5px #000000;*/
+}
+
+.form p {
+   margin-top: 0;
 }
 
 /* input {
@@ -122,7 +123,6 @@ input {
    border-radius: 3px;
    border: 0;
 
-   
    border: solid 1px #ccc;
    padding: 5px;
 }
@@ -147,6 +147,7 @@ input {
 
 .select {
    position: relative;
+   margin-bottom: 15px;
 }
 
 .select .select {
@@ -170,7 +171,7 @@ input {
    content: "";
    position: absolute;
    right: 90px;
-   bottom: 8px;
+   bottom: 24px;
    width: 0;
    height: 0;
    border-style: solid;
@@ -182,7 +183,7 @@ input {
 /*                          BUTTTON SUBMIT                            */
 
 .submit {
-   margin-top: 40px;
+   margin-top: 20px;
    margin-bottom: 20px;
    background-color: #efb810;
    border: none;
@@ -217,4 +218,87 @@ input {
    font-size: 26px;
    font-weight: 600;
    margin-top: 50px;
+}
+
+/*  STOCK   */
+
+.stockTitle {
+   font-size: 35px;
+   margin-bottom: 18px;
+}
+
+.stockContainerPrincipal {
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+   margin-bottom: 30px;
+}
+
+.stockNumberContain {
+   margin: 0 auto;
+   display: flex;
+   align-items: center;
+   margin-bottom: 10px;
+   /* padding-left: 10px; */
+}
+
+.stockNumber {
+   padding-left: 10px;
+   font-size: 34px;
+}
+
+.buttonStock {
+   margin: 0 10px;
+   background-color: #efb810;
+   border: none;
+   width: 60px;
+   height: 30px;
+   color: #000;
+   font-size: 22px;
+   font-weight: 600;
+   border-radius: 10px;
+   box-decoration-break: none;
+   cursor: pointer;
+}
+.buttonStock:active {
+   color: #fff;
+   border: 1px solid #fff;
+}
+
+.buttonCreateCategory {
+   margin: auto 10px;
+   background-color: #efb810;
+   border: none;
+   width: 100px;
+   height: 40px;
+   color: #000;
+   font-size: 16px;
+   font-weight: 600;
+   border-radius: 10px;
+   box-decoration-break: none;
+   cursor: pointer;
+   transition: all 1s;
+}
+.buttonCreateCategory:hover {
+   color: #333;
+   border: 1px solid #333;
+}
+
+.containerCrate {
+   height: 60px;
+   margin-top: 0px;
+   margin-bottom: 30px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.fieldCreate {
+   margin-bottom: 0px;
+   outline: none;
+   border-radius: 3px;
+   border: 0;
+   align-self: center;
+   border: solid 1px #ccc;
+   padding: 5px;
 }
