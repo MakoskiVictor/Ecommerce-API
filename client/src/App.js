@@ -23,7 +23,8 @@ import UsersAdmin from "./components/UsersAdmin/UsersAdmin";
 import Favorites from "./components/Favs/Favorites";
 
 import NavUser from "./components/NavUser/NavUser.jsx";
-import Orders from "./components/Orders/Orders";
+import Orders2 from "./components/Orders/Orders2";
+import OrdersDetails from "./components/Orders/OrdersDetails";
 
 // login Google
 import LoginGoogle from "./components/Login/Login Google/LoginGoogle";
@@ -63,7 +64,8 @@ function App() {
           </Route>
           
           <Route exact path="/payment" component={payment} />
-          <Route exact path="/orders" component={Orders} />
+          <Route exact path="/orders" component={Orders2} />
+          <Route path="/OrderDetails/:id" component={OrdersDetails}/>
           <Route exact path="/usersAdmin" component={UsersAdmin} />  
           <Route component={ErrorPage}></Route>
           {/* sprint 2 */}
