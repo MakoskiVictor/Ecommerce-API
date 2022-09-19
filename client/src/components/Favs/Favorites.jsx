@@ -6,11 +6,12 @@ import Login from "../Login/Login";
 
 export default function Favorites () {
 
+    //SETEO ESTADOS DEL REDUCER
     const favorites = useSelector((state) => state.favs);
     const user_login = useSelector((state) => state.user_login);
     const dispatch = useDispatch()
 
-
+    //ME ASEGURO DE CARGAR LOS ESTADOS
     useEffect( () => {
         if(user_login.id){
             dispatch(getAllFavs(user_login.id))
@@ -26,6 +27,7 @@ export default function Favorites () {
                     {favorites.length > 0 && favorites ? favorites.map((f) => {
                         return( 
                             <FavoritesCards 
+                            user_login={user_login}
                             key={f.id}
                             id={f.id}
                             image={f.image}
