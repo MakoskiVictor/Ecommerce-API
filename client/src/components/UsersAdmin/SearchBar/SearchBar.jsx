@@ -22,7 +22,6 @@ export default function SearchBar({ users }) {
 
     return (
         <div className={style.containSearchBar}>
-            {console.log("usuario:", users)}
             <section className={style.mainInput}>
                 <div className={style.mainInputContainer}>
                     <input
