@@ -17,11 +17,21 @@ router.post("/", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
+  let productsFavorites = [];
   try {
     const favoritesProducts = await favorites.findAll({
       where: { userId: id },
     });
-    res.send(favoritesProducts);
+    const filterFavs = favoritesProducts.map(fav => fav.productId);
+
+    for(let i = 0; i < filterFavs.length; i++) {
+      await Product.findByPk(filterFavs[i])
+      .then((res)=> productsFavorites.push(res))
+    };
+
+    console.log("SOY PRODUCTS FAVORITES", productsFavorites)
+    
+    res.send(productsFavorites);
   } catch (err) {
     next(err);
   }
