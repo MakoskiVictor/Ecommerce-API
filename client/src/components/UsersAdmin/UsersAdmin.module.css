@@ -1,0 +1,25 @@
+.containMain {
+   background-color: aqua;
+}
+/* .containMain {
+   height: 80%;
+} */
+
+.containMain {
+   /* background-image: url(../image/fondo.png); */
+   background-color: #fff;
+   /* background-image: url(../image/Fondo2.png); */
+   background-size: cover;
+   background-repeat: no-repeat;
+   min-height: 700px;
+   display: flex;
+   justify-content: center;
+   /* align-items: center; */
+}
+
+.noUsers {
+   font-size: 60px;
+   font-weight: 600;
+   color: rgb(223, 16, 16);
+   margin-top: 100px;
+}
