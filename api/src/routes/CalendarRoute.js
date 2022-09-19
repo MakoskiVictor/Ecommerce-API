@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Calendar } = require("../db");
+const { Calendar, order_calendar } = require("../db");
 var moment = require("moment");
 
 const generateDate = (month, day) => {
@@ -46,10 +46,15 @@ router.get("/", async (req, res, next) => {
 
 router.put("/:id", async (req, res, next) => {
   const { id } = req.params;
+  const { orderId } = req.query;
   try {
     const date = await Calendar.findOne({ where: { id: id } });
     date.stock = Number(date.stock) - 1;
     await date.save();
+    await order_calendar.create({
+      calendarId: date.id,
+      orderId: orderId,
+    });
     res.send(date);
   } catch (err) {
     next(err);
