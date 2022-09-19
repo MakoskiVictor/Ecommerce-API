@@ -101,19 +101,20 @@ export default function Pay() {
       // });
       // await History(detalles.stocks,detalles.purchase_units[0].amount.value,user.id,detalles.id, detalles.create_time)
       // console.log("history",detalles.purchase_units[0].amount.value,user.id,detalles.id, detalles.create_time)
-      const sendOrderPP = {
+      console.log("")
+            const sendOrderPP = {
         price: arrPrecio.toFixed(2),
         stocks: productJSON.map((e) => {
           return {
             amount: e.amount,
             value: e.price,
             productId: e.productId,
-             moreinfo: {
-               product: e.product,
-               destination: e.destination,
-               departureHour: e.departureHour,
-               arrivalHour: e.arrivalHour
-             }
+            //  moreinfo: {
+            //    product: e.product,
+            //    destination: e.destination,
+            //    departureHour: e.departureHour,
+            //    arrivalHour: e.arrivalHour
+            //  }
           }
         }),
         userId: user.id,

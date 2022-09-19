@@ -56,6 +56,11 @@ export default function NavBar(props) {
                 WOMEN
               </Link>
             </li>
+            <li>
+              <Link to={"/favorites"} className={Style.letra}>
+                FAVORITES
+              </Link>
+            </li>
           </ul>
         </div>
         <div className={Style.center}>

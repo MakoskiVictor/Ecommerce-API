@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getStockbyIDTotalFilterCarry, VerificarCambioCarrito ,ChangeCarryProducts} from "../../redux/actions";
+import { getStockbyIDTotalFilterCarry,ChangeCarryProducts, createOrder} from "../../redux/actions";
 import style from "./Carry.module.css";
 import CarryCard from "./CarryCard.jsx";
 import CARRY_LOCALHOST from "../Globales";
@@ -106,7 +106,26 @@ class Carry extends Component {
       });
     }
     else{
-      if (!actualiceBuy) this.props.history.push("/payment");
+      if (actualiceBuy) return
+      //////////////////////////////////
+      
+      const sendOrderPP = {
+        stocks: this.props.carryProducts.map((e) => {
+          return {
+            amount: e.amount,
+            value: e.details.price,
+            productId: e.id,
+            image: e.details.image
+          }
+        }),
+        userId: this.props.user_login.id,
+      };
+      console.log(sendOrderPP)
+
+      this.props.createOrder(sendOrderPP)
+
+      /////////////////////////////////////
+      this.props.history.push("/payment");
     }
   }
 
@@ -187,12 +206,12 @@ class Carry extends Component {
     return { priceTotal: Total, actualiceBuy: actualizoBuy };
   }
 
+  
+
   render() {
     let carryProducts = this.props.carryProducts;
     let { priceTotal } = this.VerificarStocks();
     let fraseNoResultados = "There are no products added to the shopping cart";
-    console.log(this.props.carryProducts);
-   
     console.log(this.props.carryProducts);
 
     return (
@@ -254,6 +273,7 @@ function mapDispatchToProps(dispatch) {
   return {
       getStockbyIDTotalFilterCarry: (carry) => dispatch(getStockbyIDTotalFilterCarry(carry)),
       ChangeCarryProducts: (carrynew) => dispatch(ChangeCarryProducts(carrynew)),
+      createOrder:(SendPP)=>dispatch(createOrder(SendPP)),
     //changePaginatedPage: (page) => dispatch(changePaginatedPage(page)),
   };
 }

@@ -45,6 +45,9 @@ Product.belongsTo(Category);
 Comment.belongsTo(Product, { foreignKey: "productId" });
 Product.hasMany(Comment, { foreignKey: "productId" });
 
+Comment.belongsTo(User, { foreignKey: "userId" });
+User.hasMany(Comment, { foreignKey: "userId" });
+
 Product.hasMany(Stock);
 Stock.belongsTo(Product);
 

@@ -28,7 +28,9 @@ export const GET_ORDERS = "GET_ORDERS";
 export const CHANGE_PRODUCTS_BY_PAGE="CHANGE_PRODUCTS_BY_PAGE";
 export const CHANGE_FILTER_URL="CHANGE_FILTER_URL"
 export const DELETE_USERS = "DELETE_USERS";
-export const CREATE_ORDER = "CREATE_ORDER"
+export const CREATE_ORDER = "CREATE_ORDER";
+export const GET_ALL_FAVS = "GET_ALL_FAVS";
+export const DELETE_FAVS = "DELETE_FAVS";
 
 export function searchNameProduct(name) {
   return async function (dispatch) {
@@ -261,6 +263,7 @@ export function getStockbyID(id) {
 }
 
 export function getStockbyIDTotalFilterCarry(carry) {
+  console.log("Entra"   ,  carry)
   return async function (dispatch) {
     try {
       let Stocks = [];
@@ -269,6 +272,7 @@ export function getStockbyIDTotalFilterCarry(carry) {
         let json = await axios.get(`http://localhost:3001/stock/${element.id}`);
         let array = json.data;
         let elementoIndice = -1;
+        console.log(array)
         for (let index = 0; index < array.length; index++) {
           const element2 = array[index];
           console.log(element2.productSize, "  ", element.state.size);
@@ -420,9 +424,9 @@ export function getAllComments() {
   };
 }
 
-export function getOrders() {
+export function getOrders(type,parameter) {
   return function (dispatch) {
-    axios.get("http://localhost:3001/orders").then((res) => {
+    axios.get(`http://localhost:3001/orders?type=${type}&parameter=${parameter}`).then((res) => {
       dispatch({
         type: GET_ORDERS,
         payload: res.data,
@@ -432,6 +436,7 @@ export function getOrders() {
 }
 
 export function createOrder(payload) {
+  console.log(payload)
   return function (dispatch) {
     axios
       .post("http://localhost:3001/orders", payload)
@@ -455,13 +460,36 @@ export function getAllUsers() {
         type: GET_ALL_USERS,
         payload: res.data,
       });
-    });
+    })
+    .catch((error) => console.log(error));
   };
 }
 
  export function deleteUsers() {
    return {
      type: DELETE_USERS,
+     payload: []
+   }
+};
+
+//FAVS
+
+export function getAllFavs(payload) {
+  return function (dispatch) {
+    axios.get(`http://localhost:3001/favorites/${payload}`)
+    .then((res) => {
+      dispatch({
+        type: GET_ALL_FAVS,
+        payload: res.data,
+      })
+    })
+    .catch((error) => console.log(error));
+  }
+};
+
+export function deleteFavs() {
+  return {
+     type: DELETE_FAVS,
      payload: []
    }
 };

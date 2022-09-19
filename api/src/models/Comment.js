@@ -10,10 +10,10 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      // productId: {
-      //   type: DataTypes.STRING,
-      //   allowNull: false,
-      // },
+      productId: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       comment: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -22,10 +22,9 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      userId: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       moreInfo: {
         type: DataTypes.ARRAY(DataTypes.JSON),

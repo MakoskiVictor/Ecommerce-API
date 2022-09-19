@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { DataTypes } = require("sequelize");
+const { DataTypes, where } = require("sequelize");
 const { Order } = require("../db");
 const { User } = require("../db");
 const orderRouter = Router();
@@ -7,9 +7,30 @@ const orderRouter = Router();
 require("dotenv").config();
 
 orderRouter.get("/", async (req, res, next) => {
+  const { type, parameter } = req.query;
   try {
-    let allOrders = await Order.findAll();
+    var allOrders = [];
+    console.log(type,"  ",parameter)
 
+    if (type!=="UserID" && type!=="OrderID")
+      allOrders = await Order.findAll();
+    else if (type === "UserID" ) {
+      allOrders = await Order.findAll(
+        {
+          where: {
+            userId: parameter,
+          }
+        })
+    }
+    else {
+      allOrders = await Order.findAll(
+        {
+          where: {
+            id: parameter,
+          }
+        })
+    }
+    console.log(allOrders)
     allOrders.length
       ? res.status(200).json(allOrders)
       : res.status(400).send("no hay nada");
@@ -19,23 +40,26 @@ orderRouter.get("/", async (req, res, next) => {
 });
 
 orderRouter.post("/", async (req, res) => {
-  const { price, userId, idpurchase, creationdate, stateOrder } = req.body;
+  const { userId, stocks } = req.body;
   try {
-    console.log(price, userId, idpurchase, creationdate);
+    console.log(userId,"  ",stocks)
+    var priceTotal = 0;
+    for (let index = 0; index < stocks.length; index++) {
+      const element = stocks[index];
+      priceTotal += (element.amount * element.value)
+      stocks[index] = { ...stocks[index], comment: false }
+    }
+    priceTotal = priceTotal.toFixed(2);
+
+    let stocksJSON = JSON.stringify(stocks);
 
     let newOrder = await Order.create({
-      price,
+      price: priceTotal,
       userId,
-      creationdate: new Date(),
-      stateOrder: stateOrder,
+      stocks: stocksJSON,
+      stateOrder: "Creada",
     });
-    console.log("compro");
-    let cliente = await User.findByPk(userId);
-
-    console.log(cliente);
-
-    await cliente.addOrder(newOrder);
-    console.log("agrego");
+    console.log(newOrder)
     res.send(newOrder);
   } catch (error) {
     res.status(400).send(error);
@@ -45,17 +69,23 @@ orderRouter.post("/", async (req, res) => {
 orderRouter.put("/:id", async (req, res, next) => {
   const { type } = req.query;
   const { id } = req.params;
-  const { idpurchase, stateOrder } = req.body;
+  const { data } = req.body;
+  console.log(type," ",id," ",data)
   try {
     const order = await Order.findOne({ where: { id: id } });
     switch (type) {
       case "idpurchase":
-        order.idpurchase = idpurchase;
+        order.idpurchase = data;
         await order.save();
         res.send(`The purchased id has been changed`);
         break;
       case "stateOrder":
-        order.stateOrder = stateOrder;
+        order.stateOrder = data;
+        await order.save();
+        res.send(`The state has been changed`);
+        break;
+      case "stocks":
+        order.stocks = JSON.stringify(data);
         await order.save();
         res.send(`The state has been changed`);
         break;
