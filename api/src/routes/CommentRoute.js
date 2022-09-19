@@ -17,14 +17,14 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const { productId, comment, rating, name } = req.body;
-    console.log({ productId, comment, rating, name })
+    const { productId, comment, rating, name ,userId} = req.body;
+    console.log({ productId, comment, rating, name,userId })
     let newComment = await Comment.create({
       productId,
       comment,
       rating,
       name,
-      // userId,
+      userId,
     });
     let productComments = await Product.findByPk(productId);
     await productComments.addComment(newComment);

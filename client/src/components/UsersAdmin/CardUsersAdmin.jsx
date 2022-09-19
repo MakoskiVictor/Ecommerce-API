@@ -9,54 +9,94 @@ export default function CardUsersAdmin ({image, name, lastName, id, email, addre
     async function handleAdmin (e) {
         e.preventDefault();
         
-        swal({
-            title: "Change Admin Status",
-            text: "Are you sure you want to continue?",
-            icon: "warning",
-            buttons: ["Cancel", "I am sure"]
-        }).then(resp=>{
-            if(resp) {
-                    /* console.log("ESTE USER AHORA ES ADMIN", !isAdmin) */
-                    axios.put(`http://localhost:3001/users/${id}?type=admin`)
-            .then(swal({
-                title: "Success",
-                icon: "success",
+        if(isBaned) {
+            swal({
+                title: "First need remove Ban Status",
+                icon: "error",
                 button: "Ok"
-            }))
-            .then(res => {
-                if(res) {
-                    window.location.reload()
-            }})
-            };
-        }).catch((error) => {
-            console.log(error)
-        })
-    };
-
-    async function handleBan (e) {
-        e.preventDefault();
-        swal({
-            title: "Change Ban Status",
-            text: "Are you sure you want to continue?",
-            icon: "warning",
-            buttons: ["Cancel", "I am sure"]
-        }).then(resp=>{
-            if(resp) {
-                /* console.log("ESTE USER ESTA BANNED", !isBaned) */
-                axios.put(`http://localhost:3001/users/${id}?type=ban`)
-            .then(swal({
-                title: "Success",
-                icon: "success",
+        })} else if (
+            email === "enzoholgadodev@gmail.com" ||
+            email === "makoski.ed@gmail.com" ||
+            email === "sebaslkjh@gmail.com" ||
+            email === "ingdcuevas@gmail.com" ||
+            email === "mattvalenti11@gmail.com" ||
+            email === "rider_shock@outlook.es" ||
+            email === "marina-mansilla@hotmail.com" ||
+            email === "eze-leiva@hotmail.com"
+         ) {
+            swal({
+                title: "Imposible quit Admin to Super Admin",
+                icon: "error",
                 button: "Ok"
-            }))
-            .then(res => {
+        })} else
+            swal({
+                title: "Change Admin Status",
+                text: "Are you sure you want to continue?",
+                icon: "warning",
+                buttons: ["Cancel", "I am sure"]
+            }).then(resp=>{
+                if(resp) {
+                        axios.put(`http://localhost:3001/users/${id}?type=admin`)
+                .then(swal({
+                    title: "Success",
+                    icon: "success",
+                    button: "Ok"
+                }))
+                .then(res => {
                     if(res) {
                         window.location.reload()
                 }})
-            };
-        }).catch((error) => {
-            console.log(error)
-        })
+                };
+            }).catch((error) => {
+                console.log(error)
+            })
+        };
+
+    async function handleBan (e) {
+        e.preventDefault();
+
+        if(isAdmin === true) {
+            swal({
+                title: "First need remove Admin Status",
+                icon: "error",
+                button: "Ok"
+        })} else if (
+            email === "enzoholgadodev@gmail.com" ||
+            email === "makoski.ed@gmail.com" ||
+            email === "sebaslkjh@gmail.com" ||
+            email === "ingdcuevas@gmail.com" ||
+            email === "mattvalenti11@gmail.com" ||
+            email === "rider_shock@outlook.es" ||
+            email === "marina-mansilla@hotmail.com" ||
+            email === "eze-leiva@hotmail.com"
+         ) {
+            swal({
+                title: "Imposible get ban to Super Admin",
+                icon: "error",
+                button: "Ok"
+        })} else {
+            swal({
+                title: "Change Ban Status",
+                text: "Are you sure you want to continue?",
+                icon: "warning",
+                buttons: ["Cancel", "I am sure"]
+            }).then(resp=>{
+                if(resp) {
+                    axios.put(`http://localhost:3001/users/${id}?type=ban`)
+                .then(swal({
+                    title: "Success",
+                    icon: "success",
+                    button: "Ok"
+                }))
+                .then(res => {
+                        if(res) {
+                            window.location.reload()
+                    }})
+                };
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
     };
 
     return (
@@ -71,9 +111,8 @@ export default function CardUsersAdmin ({image, name, lastName, id, email, addre
                 <p>Admin: {isAdmin === false ? "False" : "True"} </p>
                 <p>Banned: {isBaned === false ? "False" : "True"} </p>
             </div>
-            {/* {isAdmin === false ? <button onClick={handleAdmin}>PROMOTE TO ADMIN</button> : <button onClick={handleAdmin}>REMOVE ADMIN</button>} */}
-            <button onClick={handleAdmin} name="adminButton" > {isAdmin === false ? "PROMOTE TO ADMIN" : "REMOVE ADMIN"} </button>
-            <button onClick={handleBan}> {isBaned === false ? "BAN" : "REMOVE BAN"} </button>
-    </div>
+                <button onClick={handleAdmin} name="adminButton" > {isAdmin === false ? "PROMOTE TO ADMIN" : "REMOVE ADMIN"} </button>
+                <button onClick={handleBan}> {isBaned === false ? "BAN" : "REMOVE BAN"} </button>
+            </div>
     )
 };
