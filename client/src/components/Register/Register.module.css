@@ -1,11 +1,13 @@
 .contaierMain {
    display: flex;
    justify-content: center;
+   align-items: center;
    min-height: 520px;
 }
 
 .container {
    min-width: 350px;
+   min-height: 380px;
    margin: 15px auto;
    border-radius: 15px;
    background: url("../image/FondoNavBar.jpg");
