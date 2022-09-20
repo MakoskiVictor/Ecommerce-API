@@ -213,12 +213,12 @@ const rootReducer = (state = initialState, action) => {
             ...state,
             user_login: action.payload,
          };
-      case GET_ORDERS: {
-         return {
-            ...state,
-            orders: action.payload,
-         };
-      }
+         case GET_ORDERS: {
+            return {
+              ...state,
+              orders: action.payload,
+            };
+          }
       case GET_ALL_USERS:
          return {
             ...state,
