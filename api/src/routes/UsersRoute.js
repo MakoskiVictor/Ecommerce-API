@@ -301,7 +301,7 @@ router.put("/put/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     const { email, name, lastName, password, address } = req.body;
-    console.log("hola")
+    console.log({ email, name, lastName, password, address });
     const toEdit = await User.update(
       {
         email,
@@ -313,7 +313,8 @@ router.put("/put/:id", async (req, res, next) => {
       },
       { where: { id } }
     );
-    res.send(toEdit);
+    res.send("done");
+    console.log("chau");
   } catch (error) {
     next(error);
   }

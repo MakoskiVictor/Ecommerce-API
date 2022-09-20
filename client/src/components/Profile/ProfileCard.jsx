@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./ProfileCard.module.css";
 import { Link } from "react-router-dom";
+import  ModifyUser  from "../ModifyUser/ModifyUser";
 /** Debemos agregar Componente para poder modificar El perfil de la persona usando el boton de 
   abajo 
  */
@@ -23,8 +24,8 @@ function ProfileCard({ email, name, lastName, image, address, isAdmin }) {
       </section>
 
       <div className={styles.buttonModify}>
-        <Link to={`/Home`}>
-          <button>Modify <span></span></button>
+        <Link to={`/ModifyUser`}>
+          <button> <span></span></button>
           {/* se debe de agregar el componente para configurar el usuario */}
         </Link>
       </div>

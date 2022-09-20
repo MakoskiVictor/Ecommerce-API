@@ -25,12 +25,13 @@ export const GET_COMMENTS = "GET_COMMENTS";
 export const GET_ALL_USERS = "GET_ALL_USERS";
 export const CHANGE_PRODUCTS_CARRY = "CHANGE_PRODUCTS_CARRY";
 export const GET_ORDERS = "GET_ORDERS";
-export const CHANGE_PRODUCTS_BY_PAGE="CHANGE_PRODUCTS_BY_PAGE";
-export const CHANGE_FILTER_URL="CHANGE_FILTER_URL"
+export const CHANGE_PRODUCTS_BY_PAGE = "CHANGE_PRODUCTS_BY_PAGE";
+export const CHANGE_FILTER_URL = "CHANGE_FILTER_URL";
 export const DELETE_USERS = "DELETE_USERS";
 export const CREATE_ORDER = "CREATE_ORDER";
 export const GET_ALL_FAVS = "GET_ALL_FAVS";
 export const DELETE_FAVS = "DELETE_FAVS";
+export const PUT_USERS = "PUT_USERS";
 
 export function searchNameProduct(name) {
   return async function (dispatch) {
@@ -114,7 +115,6 @@ export function changeFilterURL(url) {
   };
 }
 
-
 export function changeFilterGender(gender) {
   return async function (dispatch) {
     try {
@@ -131,7 +131,7 @@ export function changeFilterGender(gender) {
 export function changeFilterCategory(value) {
   return async function (dispatch) {
     try {
-      console.log(value)
+      console.log(value);
       return dispatch({
         type: CHANGE_FILTER_CATEGORY,
         payload: value,
@@ -223,17 +223,17 @@ export function changePaginatedPage(newPage) {
 }
 
 export function changePaginatedByPage(productsByPage) {
-   return async function (dispatch) {
-     try {
-       return dispatch({
-         type: CHANGE_PRODUCTS_BY_PAGE,
-         payload: productsByPage,
-       });
-     } catch (error) {
-       console.log(error);
-     }
-   };
- }
+  return async function (dispatch) {
+    try {
+      return dispatch({
+        type: CHANGE_PRODUCTS_BY_PAGE,
+        payload: productsByPage,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 
 export function ChangeCarryProducts(CarryNew) {
   return async function (dispatch) {
@@ -263,7 +263,7 @@ export function getStockbyID(id) {
 }
 
 export function getStockbyIDTotalFilterCarry(carry) {
-  console.log("Entra"   ,  carry)
+  console.log("Entra", carry);
   return async function (dispatch) {
     try {
       let Stocks = [];
@@ -272,7 +272,7 @@ export function getStockbyIDTotalFilterCarry(carry) {
         let json = await axios.get(`http://localhost:3001/stock/${element.id}`);
         let array = json.data;
         let elementoIndice = -1;
-        console.log(array)
+        console.log(array);
         for (let index = 0; index < array.length; index++) {
           const element2 = array[index];
           console.log(element2.productSize, "  ", element.state.size);
@@ -292,7 +292,6 @@ export function getStockbyIDTotalFilterCarry(carry) {
     }
   };
 }
-
 
 export function DeleteDrop(payload) {
   return async function () {
@@ -411,7 +410,7 @@ export function updateReview(payload) {
 
 export function getAllComments() {
   return function (dispatch) {
-    console.log("gjogfjog")
+    console.log("gjogfjog");
     axios
       .get("http://localhost:3001/comment")
       .then((res) => {
@@ -424,19 +423,21 @@ export function getAllComments() {
   };
 }
 
-export function getOrders(type,parameter) {
+export function getOrders(type, parameter) {
   return function (dispatch) {
-    axios.get(`http://localhost:3001/orders?type=${type}&parameter=${parameter}`).then((res) => {
-      dispatch({
-        type: GET_ORDERS,
-        payload: res.data,
+    axios
+      .get(`http://localhost:3001/orders?type=${type}&parameter=${parameter}`)
+      .then((res) => {
+        dispatch({
+          type: GET_ORDERS,
+          payload: res.data,
+        });
       });
-    });
   };
 }
 
 export function createOrder(payload) {
-  console.log(payload)
+  console.log(payload);
   return function (dispatch) {
     axios
       .post("http://localhost:3001/orders", payload)
@@ -450,46 +451,80 @@ export function createOrder(payload) {
   };
 }
 
-
- //USERS ADMIN
+//USERS ADMIN
 
 export function getAllUsers() {
   return function (dispatch) {
-    axios.get("http://localhost:3001/users").then((res) => {
-      dispatch({
-        type: GET_ALL_USERS,
-        payload: res.data,
-      });
-    })
-    .catch((error) => console.log(error));
+    axios
+      .get("http://localhost:3001/users")
+      .then((res) => {
+        dispatch({
+          type: GET_ALL_USERS,
+          payload: res.data,
+        });
+      })
+      .catch((error) => console.log(error));
   };
 }
+export function putUser(input, id) {
+  return async function (dispatch) {
+    try {
+      console.log(input, id);
 
- export function deleteUsers() {
-   return {
-     type: DELETE_USERS,
-     payload: []
-   }
-};
+      const res = await axios.put(
+        `http://localhost:3001/users/put/${id}`,
+        input
+      );
+      return dispatch({
+        type: PUT_USERS,
+        payload: res.data,
+      });
+    } catch (error) {
+      alert("Already exist or some trouble during creation! Come back later");
+    }
+  };
+}
+// export function getUserId(id) {
+//   console.log(id)
+//   return function (dispatch) {
+//     axios
+//       .get(`http://localhost:3001/users/${id}`)
+//       .then((res) => {
+//         dispatch({
+//           type: CHANGE_USER_LOGIN,
+//           payload: res.data,
+//         });
+//       })
+//       .catch((error) => console.log(error));
+//   };
+// }
+
+export function deleteUsers() {
+  return {
+    type: DELETE_USERS,
+    payload: [],
+  };
+}
 
 //FAVS
 
 export function getAllFavs(payload) {
   return function (dispatch) {
-    axios.get(`http://localhost:3001/favorites/${payload}`)
-    .then((res) => {
-      dispatch({
-        type: GET_ALL_FAVS,
-        payload: res.data,
+    axios
+      .get(`http://localhost:3001/favorites/${payload}`)
+      .then((res) => {
+        dispatch({
+          type: GET_ALL_FAVS,
+          payload: res.data,
+        });
       })
-    })
-    .catch((error) => console.log(error));
-  }
-};
+      .catch((error) => console.log(error));
+  };
+}
 
 export function deleteFavs() {
   return {
-     type: DELETE_FAVS,
-     payload: []
-   }
-};
+    type: DELETE_FAVS,
+    payload: [],
+  };
+}
