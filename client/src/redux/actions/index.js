@@ -506,6 +506,21 @@ export function putUser(input, id) {
 //   };
 // }
 
+export function getSearchUser(name) {
+   return async function (dispatch) {
+      try {
+         var json = await axios.get(
+            `http://localhost:3001/users/?name=${name}`
+         );
+         return dispatch({
+            type: GET_SEARCH_USER,
+            payload: json.data,
+         });
+      } catch (error) {
+         console.log(error);
+      }
+   };
+}
 export function deleteUsers() {
   return {
     type: DELETE_USERS,
@@ -516,26 +531,6 @@ export function deleteUsers() {
 //FAVS
 
 export function getAllFavs(payload) {
-<<<<<<< HEAD
-  return function (dispatch) {
-    axios
-      .get(`http://localhost:3001/favorites/${payload}`)
-      .then((res) => {
-        dispatch({
-          type: GET_ALL_FAVS,
-          payload: res.data,
-        });
-      })
-      .catch((error) => console.log(error));
-  };
-}
-
-export function deleteFavs() {
-  return {
-    type: DELETE_FAVS,
-    payload: [],
-  };
-=======
    return function (dispatch) {
       axios
          .get(`http://localhost:3001/favorites/${payload}`)
@@ -554,5 +549,4 @@ export function deleteFavs() {
       type: DELETE_FAVS,
       payload: [],
    };
->>>>>>> c449c542b56e62bc9da93cc5e0026d627e8153d4
 }
