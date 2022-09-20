@@ -63,7 +63,7 @@
   background-color: #ddd;
 }
 
-/* / Show the dropdown menu on hover */ */
+/* / Show the dropdown menu on hover */ 
 .dropdown:hover .dropdown_content {
   display: block;
 }
