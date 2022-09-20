@@ -22,7 +22,7 @@ import ModifyItem from "./components/ModifyITem/ModifyItem";
 import UsersAdmin from "./components/UsersAdmin/UsersAdmin";
 import DemoTable from "./components/AdminOrders/AdminOrders.tsx";
 import Favorites from "./components/Favs/Favorites";
-import ModifyUser from "./components/ModifyUser/ModifyUser"
+import ModifyUser from "./components/ModifyUser/ModifyUser";
 
 import NavUser from "./components/NavUser/NavUser.jsx";
 import Orders2 from "./components/Orders/Orders2";
@@ -54,6 +54,7 @@ function App() {
                </Route>
                <Route exact path="/profile" component={Profile} />
                <Route exact path="/login" component={Login} />
+               <Route exact path="/rutaPrueba" component={DemoTable} />
                <Route path="/details/:id" component={Details}></Route>{" "}
                <Route exact path="/createProduct" component={Formulario} />{" "}
                {/*Se pone asi porque los componentes estan creadas como Funcion*/}
@@ -70,7 +71,6 @@ function App() {
                <Route path="/OrderDetails/:id" component={OrdersDetails} />
                <Route exact path="/usersAdmin" component={UsersAdmin} />
                <Route exact path="/ModifyUser" component={ModifyUser} />
-
                <Route component={ErrorPage}></Route>
                {/* sprint 2 */}
                {/* <Route exact path="/profile">aca va el componente del perfil de usuario</Route> */}
