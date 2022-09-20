@@ -57,7 +57,6 @@
   justify-content: space-evenly;
   width: 40%;
 }
-
 .NavBarComplete .logo {
   border-radius: 5rem;
   margin-left: 3rem;
@@ -82,11 +81,11 @@
 .buttonlogin:hover {
   background-color:rgb(38, 241, 38);
 }
-/* CENTRO */
+/* CENTRO /
 
-/* DERECHA */
+/ DERECHA /
 
-/* .right {
+/ .right {
   width: 20%;
 } */
 .ModalAbiertoBackground {

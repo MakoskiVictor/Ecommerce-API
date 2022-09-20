@@ -1,7 +1,7 @@
 .productContainer {
    width: 900px;
    min-height: 190px;
-   /* background: url("../image/FondoTarjetas.jpg"); */
+   /* background: url("../image/FondoTarjetas.jpg");  */
    background-size: cover;
    color: black;
    padding: 15px 10px;
@@ -16,14 +16,14 @@
 }
 
 .productContainer h3 {
-   margin: 0;
+   margin: 1;
 }
 
 .photoContainer {
-   /* display: inline-block; */
+   /* display: inline-block;  */
    width: 600px;
    height: 400px;
-   /* margin-bottom: 15px; */
+   /* margin-bottom: 15px;  */
    border-radius: 10px;
    margin-left: auto;
 }
@@ -32,7 +32,7 @@
    border-radius: 15px;
    height: 100%;
    width: 70%;
-   
+
 }
 
 .priceCartContainer {
@@ -56,7 +56,6 @@
 .priceCartContainer button:hover {
    background-color: #02d302;
 }
-
 .containerMain {
    width: 90%;
    display: flex;
@@ -78,7 +77,7 @@ p {
    margin: 2px 8px;
 }
 
-/*                    STOCK                 */
+/* /                    STOCK                 / */
 
 .containMainStock {
    display: flex;
@@ -96,8 +95,7 @@ p {
    color: #efb810;
 }
 
-/*                 DELETE                  */
-
+/* /                 DELETE                  */ 
 .buttonContain {
    display: flex;
    justify-content: center;
@@ -110,8 +108,8 @@ p {
    align-items: center;
    width: 150px;
    height: 44px;
-   /* padding: 2px 20px; */
-   /* margin-top: 20px; */
+   /* padding: 2px 20px; /
+   / margin-top: 20px; /
    background-color: rgb(223, 16, 16);
    border: 2px solid var(--bitcoin-orange);
    border-radius: 6px;
@@ -119,7 +117,7 @@ p {
    font-weight: bold;
    text-align: justify;
    font-family:Arial, Helvetica, sans-serif;
-   /* line-height: -80px; */
+   / line-height: -80px; /
    color: var(--black);
 }
 
@@ -130,9 +128,9 @@ p {
    height: 30px;
    background-image: url("../image/icon-warning.png");
    background-size: contain;
-   /* background-position: center; */
+   / background-position: center; /
    background-repeat: no-repeat;
-   /* vertical-align: text-bottom; */
+   / vertical-align: text-bottom; */
 }
 
 .buttonContain button:hover {
