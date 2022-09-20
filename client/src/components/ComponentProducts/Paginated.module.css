@@ -15,7 +15,7 @@
 }
 
 .pagination li:hover {
-  background-color: #008000;
+  background-color: rgb(92, 202, 129);
 }
 
 #pagSeleccionada {
