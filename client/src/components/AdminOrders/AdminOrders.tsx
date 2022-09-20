@@ -120,7 +120,7 @@ class AdminOrders extends Component<QuoteProps, QuoteState> {
 
   state: QuoteState = {
     currentIndex: "",
-    option: "ID",
+    option: "ID_Order",
   };
 
 
@@ -143,6 +143,8 @@ class AdminOrders extends Component<QuoteProps, QuoteState> {
         { id: order.id, stateOrder: order.stateOrder, price: order.price, userId: order.userId, createdAt: Date_ }
       );
     })
+  
+    console.log(this.state.option)
 
     ROW = this.state.option == "ID_Order" ? ROW.filter(row => row.id.toLowerCase().startsWith(this.state.currentIndex.toLowerCase()))
       : ROW.filter(row => row.userId.toLowerCase().startsWith(this.state.currentIndex.toLowerCase()));
