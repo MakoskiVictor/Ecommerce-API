@@ -4,6 +4,8 @@ import { getAllComments,getAllUsers} from '../../redux/actions/index'
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
+import Paginated from "../Paginated Reutilizable/Paginated_Reutilizable.jsx";
+import stylePaginated from "./Paginated.module.css";
 
 
 export default function FeedBack({ productId, products }) {
@@ -14,11 +16,27 @@ export default function FeedBack({ productId, products }) {
     
     
     const productComments = allComments.filter(e => productId === e.productId);
-    if(allComments.length!==0){
-
-      console.log(productId, "productId")
-      console.log(allComments,"soy allComments")
-    }
+    
+    const [paginated, SetPaginated] = useState({
+      productsView: [],
+      page: 1,
+      productsViewPage:[]
+    });
+  
+  
+    const changePaginatedPage = (newPage) => {
+      SetPaginated({
+          ...paginated,
+          page: newPage,
+        });
+     };
+  
+     const changePaginatedByPage = (productsByPage) => {
+      SetPaginated({
+          ...paginated,
+          productsViewPage: productsByPage,
+        });
+     };
 
 
   
@@ -47,8 +65,19 @@ export default function FeedBack({ productId, products }) {
         dispatch(getAllComments())
     }, [dispatch])
 
+    if( JSON.stringify(paginated.productsView)!=JSON.stringify(productComments)){
+      console.log(paginated.productsView ,"  ",productComments)
+      SetPaginated({
+          ...paginated,
+          productsView: productComments,
+        }); 
+     }
+  
+
   return (
     <div className={""}>
+     <Paginated stylePaginated={stylePaginated} NumMaxtarg={10} changePaginatedPage={(e)=>changePaginatedPage(e)} 
+              changePaginatedByPage={(e)=>changePaginatedByPage(e)} paginated={paginated} />
       <div className={""}>
         <h1 className={""}>{products}</h1>
         <Box>
@@ -65,7 +94,7 @@ export default function FeedBack({ productId, products }) {
         <div className={""}>
         <h1 className={""}>Customers Review:</h1>
         <br />
-            { productComments.length ? productComments.map(e => {
+            { paginated.productsViewPage.length ? paginated.productsViewPage.map(e => {
                 return (
                   <div className={""} key={e.id}>
                     <Box>
