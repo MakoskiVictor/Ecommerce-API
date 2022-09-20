@@ -75,7 +75,7 @@ function Login(props) {
     <div className={style.loginContainer}>
       {/* console.log(firebase) */}
       <div className={style.login}>
-        <button className={style.btnClose} onClick={(e) => handleClose(e)}>Close <b>X</b></button>
+        <button className={style.btnClose} onClick={(e) => handleClose(e)}><b>X</b></button>
         <h1>Login</h1>
         <input type="text" name="email" onChange={(e) => handleChange(e)} placeholder="Email" />
         <input type="password" name="password" onChange={(e) => handleChange(e)} placeholder="Password" />
