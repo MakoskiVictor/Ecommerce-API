@@ -79,6 +79,22 @@ function validate(input) {
     errores.brand = "Dont input blank space";
   }
 
+  /*      DESCRIPTION      */
+
+  else if (!input.description) {
+    errores.description = "the description is required";
+  } else if (input.description.length < 20) {
+    errores.description = "The description must contain at least 20 letters";
+  } else if (/^\s+$/.test(input.description)) {
+    errores.description = "The description cannot be a blank space";
+  } else if (input.description.startsWith(" ")) {
+    errores.description = "Dont input blank spaces";
+  } else if (input.description.endsWith(" ")) {
+    errores.description = "Dont input blank space";
+  }
+
+
+
   /*      SOTCK           */
   // else if (input.stock === 0) {
   //   errores.stock = "Stock is not 0";
@@ -115,7 +131,7 @@ function Formulario() {
     gender: "",
     categoryId: undefined,
     NewCategory: "",
-    description: "is very good quality clothing, made by the brand in the USA with the best quality materials. We have different sizes and colors of this product so you can choose the one you like best",
+    description: "",
     nameCategory: "",
     categorysGender: [],
   };
@@ -414,6 +430,23 @@ function Formulario() {
               <button className={style.buttonCreateCategory} onClick={(e) => CreateNewCategory(e)}>Create category</button>
             </div>
           )}
+
+          {/* DESCRIPTION */}
+          <section className={style.ContainTextarea}>
+            <p>Description: </p>
+            {error.description && ( // si hay un error hara un <p> nuevo con el error
+              <p className={style.error}>{error.description}</p>
+            )}
+            <textarea
+              name="description"
+              value={input.description}
+              onChange={(e) => handleChange(e)}
+              className={style.contactTextarea}
+              placeholder="Description Product"
+              cols="30"
+              rows="8">
+            </textarea>
+          </section>
 
 
           {/* STOCK */}

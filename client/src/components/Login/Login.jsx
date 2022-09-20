@@ -1,9 +1,9 @@
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import { googleLog, postLogin } from "../../Redux/Reducer/reducer";
 // import { Link, useNavigate } from "react-router-dom";
 import style from "./Login.module.css";
-import {getChecklogin} from "../../redux/actions";
+import { getChecklogin } from "../../redux/actions";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import LoginGoogle from "./Login Google/LoginGoogle";
@@ -21,7 +21,7 @@ function Login(props) {
   const [user, setUser] = useState({ email: "", password: "" })
   const user_login = useSelector((state) => state.user_login);
 
-  function handleChange (e) {
+  function handleChange(e) {
     setUser({
       ...user,
       [e.target.name]: e.target.value
@@ -48,14 +48,14 @@ function Login(props) {
     props.close(false)
   }
 
-  function changePageCreateAccount(e){
+  function changePageCreateAccount(e) {
     e.preventDefault();
     props.close(false)
     history.push("/register")
   }
 
-    if(user_login.id==undefined || user_login.id!==false)
-   props.close(false)
+  if (user_login.id == undefined || user_login.id !== false)
+    props.close(false)
 
   // const googleLogin = async () => {
   //   //ejecutamos la auth de firebase y guardamos la respuesta
@@ -75,13 +75,13 @@ function Login(props) {
     <div className={style.loginContainer}>
       {/* console.log(firebase) */}
       <div className={style.login}>
-        <button className={style.btnClose} onClick={(e) => handleClose(e)}>Close</button>
+        <button className={style.btnClose} onClick={(e) => handleClose(e)}><b>X</b></button>
         <h1>Login</h1>
         <input type="text" name="email" onChange={(e) => handleChange(e)} placeholder="Email" />
         <input type="password" name="password" onChange={(e) => handleChange(e)} placeholder="Password" />
         <button className={style.btnPrimary} onClick={(e) => handleSubmit(e)}>LOGIN</button>
         <p>Or log using google:</p>
-         <LoginGoogle/>
+        <LoginGoogle />
       </div>
       <hr />
       <div className={style.createAcc}>

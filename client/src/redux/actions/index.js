@@ -31,6 +31,7 @@ export const DELETE_USERS = "DELETE_USERS";
 export const CREATE_ORDER = "CREATE_ORDER";
 export const GET_ALL_FAVS = "GET_ALL_FAVS";
 export const DELETE_FAVS = "DELETE_FAVS";
+export const PUT_USERS = "PUT_USERS";
 export const GET_SEARCH_USER = "GET_SEARCH_USER";
 
 export function searchNameProduct(name) {
@@ -133,7 +134,7 @@ export function changeFilterGender(gender) {
 export function changeFilterCategory(value) {
    return async function (dispatch) {
       try {
-         console.log(value);
+         console.log(value);;
          return dispatch({
             type: CHANGE_FILTER_CATEGORY,
             payload: value,
@@ -472,6 +473,38 @@ export function getAllUsers() {
          .catch((error) => console.log(error));
    };
 }
+export function putUser(input, id) {
+  return async function (dispatch) {
+    try {
+      console.log(input, id);
+
+      const res = await axios.put(
+        `http://localhost:3001/users/put/${id}`,
+        input
+      );
+      return dispatch({
+        type: PUT_USERS,
+        payload: res.data,
+      });
+    } catch (error) {
+      alert("Already exist or some trouble during creation! Come back later");
+    }
+  };
+}
+// export function getUserId(id) {
+//   console.log(id)
+//   return function (dispatch) {
+//     axios
+//       .get(`http://localhost:3001/users/${id}`)
+//       .then((res) => {
+//         dispatch({
+//           type: CHANGE_USER_LOGIN,
+//           payload: res.data,
+//         });
+//       })
+//       .catch((error) => console.log(error));
+//   };
+// }
 
 export function getSearchUser(name) {
    return async function (dispatch) {
@@ -488,12 +521,11 @@ export function getSearchUser(name) {
       }
    };
 }
-
 export function deleteUsers() {
-   return {
-      type: DELETE_USERS,
-      payload: [],
-   };
+  return {
+    type: DELETE_USERS,
+    payload: [],
+  };
 }
 
 //FAVS

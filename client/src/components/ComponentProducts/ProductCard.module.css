@@ -39,7 +39,7 @@
 }
 
 .priceCartContainer button {
-  background-color: #008000;
+  background-color: rgb(92, 202, 129);
   padding: 10px 13px;
   border-radius: 10px;
   cursor: pointer;
@@ -50,5 +50,5 @@
 }
 
 .priceCartContainer button:hover {
-  background-color: #02d302;
+  background-color:darkgray;
 }
