@@ -300,16 +300,14 @@ router.put("/:userId", async (req, res, next) => {
 router.put("/put/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { email, name, lastName, password, address } = req.body;
-    console.log({ email, name, lastName, password, address });
+    const { name, lastName, address, phone  } = req.body;
+    console.log({name, lastName, address,phone });
     const toEdit = await User.update(
       {
-        email,
         name,
         lastName,
-        password,
-        //  image,
         address,
+        phone
       },
       { where: { id } }
     );

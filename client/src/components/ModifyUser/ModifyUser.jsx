@@ -4,16 +4,10 @@ import {Link, useHistory} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getAllUsers, putUser } from '../../redux/actions';
-import CardUsersAdmin from '../UsersAdmin/CardUsersAdmin';
-// import axios from 'axios';
-// import swal from 'sweetalert';
 
 
 
-
-
-
-export default function ModifyUser({image, name, lastName, id, email, address,password}) {
+export default function ModifyUser({ name, lastName, address, phone }) {
 
   const dispatch  = useDispatch()
 
@@ -24,12 +18,10 @@ export default function ModifyUser({image, name, lastName, id, email, address,pa
   const history = useHistory()
 
   const [input, setInput] = useState({
-      email:"",
       name:"",
       lastName:"",
-      password:"",
-      //  image,
       address:"",
+      phone:" "
   })
 
   function handleChange(e){
@@ -43,21 +35,16 @@ export default function ModifyUser({image, name, lastName, id, email, address,pa
 
   function handleSubmit(e){
     e.preventDefault();
-    console.log(input.name)
-    console.log(input.email)
-    if(!input.email){return email}
     if(!input.name){return name}
     if(!input.lastName){return lastName}
-    // if(!input.password){return password}
     if(!input.address){return address}
+    if( !/^(?:[1-9]\d{0,2}(?:,\d{3})*|0)(?:\.\d+)?$/.test(input.rating) || !input.phone){return phone}
     dispatch(putUser(input, user_login.id))
     setInput({
-      email:"",
       name:"",
       lastName:"",
-      password:"",
-      //  image,
       address:"",
+      phone:0
       
   })
     history.push("/profile")
@@ -79,17 +66,6 @@ export default function ModifyUser({image, name, lastName, id, email, address,pa
           </div>
 
           <h1>Modifity User</h1>
-          <div>
-            <label>Email:</label>
-            <input 
-              type="text" 
-              name='email'
-              value={input.email}
-              id="email"
-              placeholder="Enter the Email"
-              onChange={(e)=>handleChange(e)}
-              />
-          </div>
           <div>
             <label> Name:</label>
             <input 
@@ -121,6 +97,19 @@ export default function ModifyUser({image, name, lastName, id, email, address,pa
                   value={input.address}
                   id="address"
                   placeholder='Enter the address'
+                  onChange={(e)=>handleChange(e)}
+                />
+                 <label > {user.address}</label>
+              </div>
+              <div>
+                <label>Phone</label>
+                <input 
+                  type="number" 
+                  name= "phone"
+                  value={input.phone}
+                  id="phone"
+                  step="1"
+                  placeholder='Enter the phone'
                   onChange={(e)=>handleChange(e)}
                 />
                  <label > {user.address}</label>
