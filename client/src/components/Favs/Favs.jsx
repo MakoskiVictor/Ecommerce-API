@@ -13,11 +13,7 @@ export default function Favs ({id}) {
     const history = useHistory();
     const dispatch = useDispatch();
 
-/*     const productId = id;
-    const userId = user_login.id; */
-
-    //CARGAR EL ESTADO
-    /* console.log("SOY LOS FAVS", favs) */
+    //TRAIGO LOS ESTADOS
 
     useEffect( () => {
         if(user_login.id){
@@ -33,7 +29,8 @@ export default function Favs ({id}) {
     };
 
     const isInFav = comprobateFavs.some(productId => productId === id);
-    /* console.log("SOY ISINFAV", isInFav); */
+    
+    //BOTON AGREGAR FAV
 
     const handleClickAddFav = async () => {
         if(user_login.id!==undefined && user_login.id !== false) {
@@ -57,10 +54,11 @@ export default function Favs ({id}) {
             history.push("/login");
         }
     };
-    //QUITAR FAVORITO
+
+    //BOTON QUITAR FAV
     const handleClickRemoveFav = async () => {
         if(user_login.id!==undefined && user_login.id !== false) {
-            /* console.log("SOY USER ID", user_login.id, "Y PRODUCT ID", id); */
+           
             await axios.delete("http://localhost:3001/favorites", { data: {
                 userId: user_login.id,
                 productId: id
