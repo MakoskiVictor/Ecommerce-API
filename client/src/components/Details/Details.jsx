@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import style from "./Details.module.css";
 import CARRY_LOCALHOST from "../Globales";
 import swal from "sweetalert2";
-import FeedBack from "../Orders/FeedBack"
+import Comments from "../Comments/Comments";
+import FeedBack from "../Orders/FeedBack";
+import Favs from "../Favs/Favs";
 
 import {
   deleteDetails,
@@ -208,6 +210,9 @@ export default function Details(props) {
         ) : (
           <p>LOADING...</p>
         )}
+      </div>
+      <div>
+        <Favs id={props.match.params.id} key="id"/>
       </div>
       <div>
         <Link to={`/products/${genderPrevius}`}>
