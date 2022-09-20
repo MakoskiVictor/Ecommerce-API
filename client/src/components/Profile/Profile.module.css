@@ -3,7 +3,7 @@
 }
 
 .mainContainer {
-   background-image: url(../image/fondo.png);
+   /* background-image: url(../image/fondo.png); */
    /* background-image: url(../image/Fondo2.png); */
    background-size: cover;
    background-repeat: no-repeat;
