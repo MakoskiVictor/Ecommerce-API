@@ -30,7 +30,6 @@ orderRouter.get("/", async (req, res, next) => {
           }
         })
     }
-    console.log(allOrders)
     allOrders.length
       ? res.status(200).json(allOrders)
       : res.status(400).send("no hay nada");

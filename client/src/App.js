@@ -20,6 +20,7 @@ import { AuthProvider } from "./context/authContext.jsx";
 import Profile from "./components/Profile/Profile";
 import ModifyItem from "./components/ModifyITem/ModifyItem";
 import UsersAdmin from "./components/UsersAdmin/UsersAdmin";
+import DemoTable from "./components/AdminOrders/AdminOrders.tsx";
 
 import NavUser from "./components/NavUser/NavUser.jsx";
 import Orders2 from "./components/Orders/Orders2";
@@ -29,6 +30,7 @@ import OrdersDetails from "./components/Orders/OrdersDetails";
 import LoginGoogle from "./components/Login/Login Google/LoginGoogle";
 
 import styles from "./App.module.css";
+import AdminDetailOrder from "./components/AdminOrders/AdminDetailOrder.jsx";
 
 function App() {
   return (
@@ -60,10 +62,11 @@ function App() {
           <Route path="/carry">
             <Carry />{" "}
           </Route>
-          
+          <Route exact path="/rutaPrueba" component={DemoTable}></Route>   
           <Route exact path="/payment" component={payment} />
           <Route exact path="/orders" component={Orders2} />
           <Route path="/OrderDetails/:id" component={OrdersDetails}/>
+          <Route path="/AdminDetailOrder/:id" component={AdminDetailOrder}/>
           <Route exact path="/usersAdmin" component={UsersAdmin} />  
           <Route component={ErrorPage}></Route>
           {/* sprint 2 */}

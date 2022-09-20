@@ -50,6 +50,7 @@ export class Filter extends Component {
     if (filterForPrice)
       productosNuevos = productosNuevos.filter(element => (min <= element.price && element.price <= max));
     //console.log(productosNuevos);
+    productosNuevos = productosNuevos.filter(element => (element.stocks.some((stock) => stock.stock>0)));
 
     if (JSON.stringify(paginated.productsView) !== JSON.stringify(productosNuevos))
       this.props.changePaginatedProducts(productosNuevos)
