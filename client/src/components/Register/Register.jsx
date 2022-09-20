@@ -18,7 +18,7 @@ export default function Register() {
 
   const history = useHistory();
   //EXTRAIGO EL SINGUP DEL OBJETO
- // const { singup } = useAuth();
+  // const { singup } = useAuth();
 
   //VALIDACIONES
 
@@ -120,10 +120,10 @@ export default function Register() {
     //SI LAS VALIDACIONES ESTAN OK
 
     try {
-   //   await singup(email, password)
-     // .then  (
-        await register(name, lastName, password, email)//)
-      .then((response) => {
+      //   await singup(email, password)
+      // .then  (
+      await register(name, lastName, password, email)//)
+        .then((response) => {
           swal({
             title: "User created successfully!",
             icon: "success",
@@ -133,9 +133,9 @@ export default function Register() {
           });
         });
 
-      
+
     } catch (error) {
-      if(error.code === "auth/email-already-in-use") {
+      if (error.code === "auth/email-already-in-use") {
         return swal({
           title: "Email alredy in use!",
           icon: "error",
@@ -148,61 +148,63 @@ export default function Register() {
   };
 
   return (
-    <div className={styles.container}>
-      <h1>Register</h1>
-      <form onSubmit={handleRegister} className={styles.inputContainer}>
-        <div>
-          <input
-            type="text"
-            maxLength="35"
-            value={name}
-            placeholder="Name"
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div>
-          <input
-            type="text"
-            maxLength="35"
-            value={lastName}
-            placeholder="LastName"
-            onChange={(e) => setLastName(e.target.value)}
-          />
-        </div>
-        <div>
-          <input
-            type="password"
-            maxLength={18}
-            value={password}
-            name="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div>
-          <input
-            type="password"
-            maxLength={18}
-            value={passwordConfirm}
-            name="PasswordConfirm"
-            placeholder="Confirm Password"
-            onChange={(e) => setPasswordConfirm(e.target.value)}
-          />
-        </div>
-        <div>
-          <input
-            type="text"
-            value={email}
-            name="email"
-            maxLength="40"
-            placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <button type="submit" className={styles.btnRegister}>
-          REGISTER
-        </button>
-      </form>
+    <div className={styles.contaierMain}>
+      <div className={styles.container}>
+        <h1>Register</h1>
+        <form onSubmit={handleRegister} className={styles.inputContainer}>
+          <div>
+            <input
+              type="text"
+              maxLength="35"
+              value={name}
+              placeholder="Name"
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              maxLength="35"
+              value={lastName}
+              placeholder="LastName"
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </div>
+          <div>
+            <input
+              type="password"
+              maxLength={18}
+              value={password}
+              name="password"
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div>
+            <input
+              type="password"
+              maxLength={18}
+              value={passwordConfirm}
+              name="PasswordConfirm"
+              placeholder="Confirm Password"
+              onChange={(e) => setPasswordConfirm(e.target.value)}
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              value={email}
+              name="email"
+              maxLength="40"
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <button type="submit" className={styles.btnRegister}>
+            REGISTER
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
