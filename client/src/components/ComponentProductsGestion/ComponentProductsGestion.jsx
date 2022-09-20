@@ -10,6 +10,8 @@ import styleCard from "./ProductGestionCard.module.css";
 import styleFilterDetail from "./FilterDetailGestion.module.css";
 
 export const ComponentProductsGestion = () => {
+    const Paginado=Paginated(styleCards={styleCards}) ;
+    console.log(Paginado)
     return (
         <div className={s.containerProductsGlobal}>
             <div>
