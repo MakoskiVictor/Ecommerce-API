@@ -1,150 +1,162 @@
 .productContainer {
-    width: 900px;
-    min-height: 290px;
-    /* background: url("../image/FondoTarjetas.jpg"); */
-    background-size: cover;
-    color: rgb(2, 2, 2);
-    padding: 10px 5px;
-    margin: 10px auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 15px;
-    -webkit-box-shadow: 5px 5px 50px 5px #000000;
-    box-shadow: 5px 5px 50px 5px #575555;
- }
- 
- .productContainer h3 {
-    margin: 1;
- }
- 
- .photoContainer {
-    /* display: inline-block; */
-    width: 300px;
-    height: 270px;
-    margin-top: 10px;
-    border-radius: 15px;
- }
- 
- .photoContainer img {
-    border-radius: 50%;
-    height: 70%;
-    width: 70%;
- }
- 
- .buttonContain {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
- }
- 
- .buttonContain .remove {
-    width: 20%;
-    background-color: #858080;
-    padding: 10px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    border:none;
-    border-width: 0px;
-    color: rgb(255, 255, 255);
-    font-size: 1.1rem;
-    font-family:serif;
-    letter-spacing: 1px;
-    margin-right: 5px;
-    align-items: center;
-    
- }
- 
- .buttonContain .remove:hover {
+   width: 900px;
+   min-height: 290px;
+   /* background: url("../image/FondoTarjetas.jpg"); */
+   background-size: cover;
+   color: rgb(2, 2, 2);
+   padding: 10px 5px;
+   margin: 20px auto;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   border-radius: 15px;
+   -webkit-box-shadow: 5px 5px 50px 5px #000000;
+   box-shadow: 5px 5px 50px 5px #575555;
+}
+
+.productContainer h3 {
+   margin: 1;
+}
+
+.photoContainer {
+   /* display: inline-block; */
+   width: 300px;
+   height: 270px;
+   margin-top: 10px;
+   border-radius: 15px;
+}
+
+.photoContainer img {
+   border-radius: 50%;
+   height: 70%;
+   width: 70%;
+}
+
+.buttonContain {
+   width: 100%;
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+}
+
+.buttonContain .remove {
+   width: 20%;
+   background-color: rgb(223, 16, 16);
+   padding: 10px 10px;
+   border-radius: 5px;
+   cursor: pointer;
+   border: none;
+   border-width: 0px;
+   color: rgb(255, 255, 255);
+   font-size: 1.1rem;
+   font-family: serif;
+   letter-spacing: 1px;
+   margin-right: 5px;
+   align-items: center;
+   margin-right: 25px;
+}
+
+.buttonContain .remove:hover {
+   background-color: rgb(143, 13, 13);
+}
+
+.containerMain {
+   width: 85%;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   /* flex-direction: row; */
+}
+
+.MainContainerInfo {
+   width: 600px;
+}
+
+.brandGender {
+   display: flexbox;
+   flex-direction: column;
+}
+.brandGender h4,
+p {
+   margin: 4px 10px;
+}
+
+/*                    STOCK                 */
+
+.containMainStock {
+   display: flex;
+   justify-content: space-around;
+   margin-bottom: 10px;
+}
+
+.stocks {
+   margin-bottom: 10px;
+   font-size: 26px;
+   font-weight: 500;
+}
+
+.stockSize {
+   color: #efb810;
+}
+
+/*                 DELETE                  */
+
+.buttonContain {
+   display: flex;
+   justify-content: center;
+   margin-top: 10px;
+}
+
+.buttonContain .buttonDelete {
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   width: 60px;
+   height: 40px;
+   /* padding: 2px 20px; */
+   /* margin-top: 20px; */
+   background-color: rgb(223, 16, 16);
+
+   border-radius: 5px;
+   font-size: 1.1rem;
+   /* font-weight: bold; */
+   text-align: justify;
+   font-family: serif;
+   /* line-height: -80px; */
+   /* color: var(--black); */
+   color: rgb(255, 255, 255);
+   border-width: 0px;
+}
+
+.buttonContain .buttonDelete:hover {
+   background-color: rgb(143, 13, 13);
+   cursor: pointer;
+}
+
+.buttonContain .promote {
+   background-color: #008000;
+   width: 22%;
+   padding: 10px 10px;
+   border-radius: 5px;
+   cursor: pointer;
+   border: none;
+   border-width: 0px;
+   color: rgb(255, 255, 255);
+   font-size: 1.1rem;
+   font-family: serif;
+   letter-spacing: 1px;
+   margin-right: 5px;
+   align-items: center;
+   margin-right: 25px;
+}
+
+.buttonContain .promote:hover {
+   background-color: #02d302;
+}
+
+/* .buttonContain button:hover {
    background-color: rgb(73, 72, 72);
- }
- 
- .containerMain {
-    width: 85%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* flex-direction: row; */
- }
- 
- .MainContainerInfo {
-    width: 600px;
- }
- 
- .brandGender {
-    display:flexbox;
-    flex-direction: column;
- }
- .brandGender h4,
- p {
-    margin: 4px 10px;
- }
- 
- /*                    STOCK                 */
- 
- .containMainStock {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 10px;
- }
- 
- .stocks {
-    margin-bottom: 10px;
-    font-size: 26px;
-    font-weight: 500;
- }
- 
- .stockSize {
-    color: #efb810;
- }
- 
- /*                 DELETE                  */
- 
- .buttonContain {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-    
- }
- 
- .buttonContain .buttonDelete {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 60px;
-    height: 40px;
-    /* padding: 2px 20px; */
-    /* margin-top: 20px; */
-    background-color: #858080;
-    border: 2px solid var(--bitcoin-orange);
-    border-radius: 5px;
-    font-size: 1.1rem;
-    /* font-weight: bold; */
-    text-align: justify;
-    font-family:serif;
-    /* line-height: -80px; */
-    /* color: var(--black); */
-    color: rgb(255, 255, 255);
-    border-width: 0px;
- }
- 
- .buttonDelete span {
-    display: inline-block;
-    margin: 0;
-    width: 40px;
-    height: 40px;
-    background-image: url("../image/icon-warning.png");
-    background-size: contain;
-    /* background-position: center; */
-    background-repeat: no-repeat;
-    /* vertical-align: text-bottom; */
- }
- 
- .buttonContain button:hover {
-    background-color: rgb(73, 72, 72);
-    cursor: pointer;
-    border: 1.5px solid rgb(73, 72, 72);
- }
- 
+   cursor: pointer;
+   border: 1.5px solid rgb(73, 72, 72);
+} */
