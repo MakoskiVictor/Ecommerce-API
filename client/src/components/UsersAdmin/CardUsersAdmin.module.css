@@ -52,7 +52,9 @@
     font-size: 1.1rem;
     font-family:serif;
     letter-spacing: 1px;
-    margin-right: 5px 
+    margin-right: 5px;
+    align-items: center;
+    
  }
  
  .buttonContain .remove:hover {
@@ -68,16 +70,16 @@
  }
  
  .MainContainerInfo {
-    width: 500px;
+    width: 600px;
  }
  
  .brandGender {
-    display: flex;
+    display:flexbox;
     flex-direction: column;
  }
  .brandGender h4,
  p {
-    margin: 2px 8px;
+    margin: 4px 10px;
  }
  
  /*                    STOCK                 */
