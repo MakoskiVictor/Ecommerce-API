@@ -1,8 +1,8 @@
 #SizeSeleccionada {
-  color: #02d302;
+  color:rgb(92, 202, 129);
   border-radius: 10px;
-  background-color: #343a40;
 }
+  
 
 .SizeSoldOut {
   font-size: 30px;
@@ -70,15 +70,17 @@
   padding: 10px 15px;
   outline: none;
   cursor: pointer;
-  background-color: #343a40;
+  background-color: #8f9191;
   color: white;
   border-radius: 10px;
   border: none;
   font-size: 1.2rem;
+ 
 }
 
 .btnAddCarry:hover {
-  color: #008000;
+  color: rgb(92, 202, 129);
+  margin-right: 5px;
 }
 
 .cardDetailContainer {
@@ -87,7 +89,8 @@
 
 .cardDetailContainer h1 {
   color: #343a40;
-  letter-spacing: 1px;
+  letter-spacing: 10px;
+  font-family: Montserrat;
 }
 
 .detailsContainer {
@@ -103,15 +106,15 @@
 }
 
 .infoContainer {
+  display: flexbox;
   flex-direction: column;
-  display: flex;
   justify-content: center;
   margin: 0 auto;
   align-items: center;
   border: 1px solid black;
   padding: 15px;
   border-radius: 15px;
-  background-color: #343a40;
+  background-color: #8f9191;
   color: white;
   width: 60%;
 }
@@ -129,9 +132,12 @@
   border-radius: 10px;
   border: none;
   font-size: 1.2rem;
+  margin-bottom:  8px;
+  
+
 }
 
 .btnDetails:hover {
   color: white;
-  background-color: #008000;
+  background-color: rgb(92, 202, 129);
 }
