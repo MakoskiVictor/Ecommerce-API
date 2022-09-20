@@ -20,6 +20,7 @@ import { AuthProvider } from "./context/authContext.jsx";
 import Profile from "./components/Profile/Profile";
 import ModifyItem from "./components/ModifyITem/ModifyItem";
 import UsersAdmin from "./components/UsersAdmin/UsersAdmin";
+import DemoTable from "./components/AdminOrders/AdminOrders.tsx";
 import Favorites from "./components/Favs/Favorites";
 import ModifyUser from "./components/ModifyUser/ModifyUser"
 
@@ -31,6 +32,7 @@ import OrdersDetails from "./components/Orders/OrdersDetails";
 import LoginGoogle from "./components/Login/Login Google/LoginGoogle";
 
 import styles from "./App.module.css";
+import AdminDetailOrder from "./components/AdminOrders/AdminDetailOrder.jsx";
 
 function App() {
    return (
