@@ -74,7 +74,7 @@
  }
  
  .brandGender {
-    display:flexbox;
+    display: flex;
     flex-direction: column;
  }
  .brandGender h4,

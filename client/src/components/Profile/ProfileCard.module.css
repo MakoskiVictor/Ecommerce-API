@@ -1,6 +1,6 @@
 .productContainer {
    min-width: 500px;
-   height: 50vh;
+   height: 40vh;
    /* background: url("../image/FondoTarjetas.jpg"); */
    background-size:contain;
    color: black;
@@ -62,7 +62,7 @@
 
 .photoContainer {
    width: 300px;
-   height: 180px;
+   height: 150px;
 }
 
 .photoContainer img {

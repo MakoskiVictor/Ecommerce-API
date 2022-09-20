@@ -10,7 +10,7 @@
 }
 
 .letra:hover {
-  color: rgb(92, 202, 129);
+  color: #008000;
 }
 
 .btnCarry {
@@ -18,7 +18,7 @@
 }
 
 .btnCarry:hover {
-  color: rgb(92, 202, 129);
+  color: #008000;
 }
 
 .NavUl {
@@ -70,7 +70,7 @@
 .buttonlogin {
   width: 30%;
   padding: 10px 10px;
-  background-color: rgb(92, 202, 129);
+  background-color: #008000;
   outline: none;
   border: none;
   border-radius: 10px;
@@ -80,7 +80,7 @@
   letter-spacing: 1px;
 }
 .buttonlogin:hover {
-  background-color:darkgray;
+  background-color:rgb(38, 241, 38);
 }
 /* CENTRO */
 
