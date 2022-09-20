@@ -55,7 +55,6 @@ export default function ModifyUser({ name, lastName, address, phone }) {
 }, [dispatch])
 
 
-
   return (
     <div>
         <form onSubmit={(e)=> handleSubmit(e)}>
