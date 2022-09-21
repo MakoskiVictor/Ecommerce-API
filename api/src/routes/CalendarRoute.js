@@ -35,10 +35,10 @@ router.get("/", async (req, res, next) => {
           });
         }
       }
-      deletePastDates();
+      await deletePastDates();
     }
     const dates = await Calendar.findAll();
-    res.send(dates);
+    res.send(dates.filter((item) => item.stock > 0));
   } catch (err) {
     next(err);
   }
