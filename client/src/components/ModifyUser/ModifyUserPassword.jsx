@@ -8,18 +8,18 @@ import axios from "axios";
 export default function ModifyUserPassword () {
 
     const user_login = useSelector((state) => state.user_login);
-    console.log("SOY USER LOGIN", user_login);
     const history = useHistory();
     const id = user_login.id;
 
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    console.log("OLD", oldPassword, "NEW", newPassword, "CONFIRM", confirmPassword)
 
     //FUNCION PARA CAMBIAR LA CONTRASEÑA
 
     const changePassword = async () => {
-        await axios.put(`http://localhost:3001/users/${id}?type=profile`, {
+        await axios.put(`http://localhost:3001/users/${id}?type=password`, {
             oldPassword,
             newPassword,
           });
@@ -79,7 +79,7 @@ export default function ModifyUserPassword () {
             <div>
                 <label>Old Password: </label>
                     <input 
-                    type="text" 
+                    type="password" 
                     maxLength={18}
                     value={oldPassword}
                     name="oldPassword"
@@ -90,7 +90,7 @@ export default function ModifyUserPassword () {
                 <div>
                 <label>New Password: </label>
                     <input 
-                    type="text" 
+                    type="password" 
                     maxLength={18}
                     value={newPassword}
                     name="newPassword"
@@ -101,7 +101,7 @@ export default function ModifyUserPassword () {
                 <div>
                 <label>Confirm Password: </label>
                     <input 
-                    type="text" 
+                    type="password" 
                     maxLength={18}
                     value={confirmPassword}
                     name="ConfirmPassword"

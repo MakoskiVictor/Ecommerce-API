@@ -270,8 +270,10 @@ router.put("/:userId", async (req, res, next) => {
         res.send(`image changed successfully`);
       case "password":
         const { oldPassword, newPassword } = req.body;
-        if (user.password === oldPassword) {
-          user.password = newPassword;
+        console.log("SOY DEL BACK Y TRAIGO OLD", oldPassword, "NEW", newPassword);
+        if(bcryptjs.compareSync(oldPassword, user.password)) {
+          let passwordHash = await bcryptjs.hash(newPassword, 8);
+          user.password = passwordHash;
           await user.save();
           res.send(`password changed successfully`);
         } else {
