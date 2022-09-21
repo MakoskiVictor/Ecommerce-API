@@ -29,6 +29,16 @@ function ProfileCard({ email, name, lastName, image, address, isAdmin }) {
           {/* se debe de agregar el componente para configurar el usuario */}
         </Link>
       </div>
+      <div>
+        <Link to={"/modifyUserImage"}>
+          <button> Change Image</button>
+        </Link>
+      </div>
+      <div>
+        <Link to={"/modifyUserPassword"}>
+          <button> Change Password</button>
+        </Link>
+      </div>
     </div>
   );
 }

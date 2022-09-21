@@ -33,6 +33,10 @@ export const GET_ALL_FAVS = "GET_ALL_FAVS";
 export const DELETE_FAVS = "DELETE_FAVS";
 export const PUT_USERS = "PUT_USERS";
 export const GET_SEARCH_USER = "GET_SEARCH_USER";
+export const CALENDAR_DAYS = "CALENDAR_DAYS";
+export const CHANGE_DELIVERY = "CHANGE_REFERENCE";
+export const CHANGE_DELIVERY_INITIAL = "CHANGE_REFERENCE_INITIAL";
+
 
 export function searchNameProduct(name) {
    return async function (dispatch) {
@@ -549,4 +553,46 @@ export function deleteFavs() {
       type: DELETE_FAVS,
       payload: [],
    };
+}
+
+export function getCalendar() {
+  return async function (dispatch) {
+     try {
+        var json = await axios.get(
+           `http://localhost:3001/calendar`
+        );
+        return dispatch({
+           type: CALENDAR_DAYS,
+           payload: json.data,
+        });
+     } catch (error) {
+        console.log(error);
+     }
+  };
+}
+
+
+export function ChangeDelivery(ObjectDelivey) {
+  return async function (dispatch) {
+     try {
+        return dispatch({
+           type: CHANGE_DELIVERY,
+           payload: ObjectDelivey,
+        });
+     } catch (error) {
+        console.log(error);
+     }
+  };
+}
+
+export function ChangeDeliveryInitial() {
+  return async function (dispatch) {
+     try {
+        return dispatch({
+           type: CHANGE_DELIVERY_INITIAL
+        });
+     } catch (error) {
+        console.log(error);
+     }
+  };
 }
