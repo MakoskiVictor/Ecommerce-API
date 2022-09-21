@@ -23,6 +23,8 @@ import UsersAdmin from "./components/UsersAdmin/UsersAdmin";
 import DemoTable from "./components/AdminOrders/AdminOrders.tsx";
 import Favorites from "./components/Favs/Favorites";
 import ModifyUser from "./components/ModifyUser/ModifyUser";
+import ModifyUserImage from "./components/ModifyUser/ModifyUserImage";
+import ModifyUserPassword from "./components/ModifyUser/ModifyUserPassword";
 
 import NavUser from "./components/NavUser/NavUser.jsx";
 import Orders2 from "./components/Orders/Orders2";
@@ -33,7 +35,9 @@ import LoginGoogle from "./components/Login/Login Google/LoginGoogle";
 
 import styles from "./App.module.css";
 import AdminDetailOrder from "./components/AdminOrders/AdminDetailOrder.jsx";
-import PasarelaDePago from "./components/PasarelaDePago/FormularioContactoDelivery.jsx"
+import FormDelivery from "./components/PasarelaDePago/FormularioContactoDelivery"
+import MethodPay from "./components/PasarelaDePago/ResumenMetododeCompra"
+
 
 function App() {
   return (
@@ -66,7 +70,8 @@ function App() {
             <Carry />{" "}
           </Route>
           <Route exact path="/rutaPrueba" component={DemoTable}></Route>   
-          <Route exact path="/rutaPrueba2" component={PasarelaDePago}></Route>   
+          <Route exact path="/FormDelivery" component={FormDelivery}></Route>
+          <Route exact path="/MethodPay" component={MethodPay}></Route>      
           <Route exact path="/payment" component={payment} />
           <Route exact path="/orders" component={Orders2} />
           <Route path="/OrderDetails/:id" component={OrdersDetails}/>

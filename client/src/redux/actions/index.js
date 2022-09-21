@@ -34,8 +34,8 @@ export const DELETE_FAVS = "DELETE_FAVS";
 export const PUT_USERS = "PUT_USERS";
 export const GET_SEARCH_USER = "GET_SEARCH_USER";
 export const CALENDAR_DAYS = "CALENDAR_DAYS";
-export const CHANGE_REFERENCE = "CHANGE_REFERENCE";
-export const CHANGE_REFERENCE_INITIAL = "CHANGE_REFERENCE_INITIAL";
+export const CHANGE_DELIVERY = "CHANGE_REFERENCE";
+export const CHANGE_DELIVERY_INITIAL = "CHANGE_REFERENCE_INITIAL";
 
 
 export function searchNameProduct(name) {
@@ -572,12 +572,12 @@ export function getCalendar() {
 }
 
 
-export function ChangeReference(type,value) {
+export function ChangeDelivery(ObjectDelivey) {
   return async function (dispatch) {
      try {
         return dispatch({
-           type: CHANGE_REFERENCE,
-           payload: {type,value},
+           type: CHANGE_DELIVERY,
+           payload: ObjectDelivey,
         });
      } catch (error) {
         console.log(error);
@@ -585,11 +585,11 @@ export function ChangeReference(type,value) {
   };
 }
 
-export function ChangeReferenceInitial() {
+export function ChangeDeliveryInitial() {
   return async function (dispatch) {
      try {
         return dispatch({
-           type: CHANGE_REFERENCE_INITIAL
+           type: CHANGE_DELIVERY_INITIAL
         });
      } catch (error) {
         console.log(error);

@@ -1,134 +1,171 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 
-import { getAllUsers, putUser } from "../../redux/actions";
-import styles from "./ModifyUser.module.css";
+import React from 'react'
+import { useState } from 'react';
+import {Link, useHistory} from "react-router-dom";
+import { useSelector } from "react-redux";
 
-export default function ModifyUser({ name, lastName, address, phone }) {
-  const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.allUsers);
+import axios from 'axios';
+import swal from "sweetalert";
+
+
+
+export default function ModifyUser() {
+
+  //TRAEMOS DATOS DEL USER
+
   const user_login = useSelector((state) => state.user_login);
+  
 
-  const [error, setError] = useState({});
+/*   const [error, setError] = useState({}); */
   const history = useHistory();
+  const id = user_login.id;
 
-  const [input, setInput] = useState({
-    name: "",
-    lastName: "",
-    address: "",
-    phone: " ",
-  });
+  //SETEAMOS ESTADO DE INFO
 
-  function handleChange(e) {
-    e.preventDefault();
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
+/*   const [newPhone, setNewPhone] = useState(0); */
+  const [newAddress, setNewAddress] = useState("");
+
+
+  //FUNCION DE CAMBIO
+  
+
+  
+  const changeProfile = async () =>{
+    try{
+      
+      await axios.put(`http://localhost:3001/users/${id}?type=profile`, {
+        name,
+        lastName,
+        newAddress,
+        /* newPhone */
+      })
+    }
+    catch(error) {
+      console.log(error)
+    }
+  };
+
+
+  //BOTON DE SUBMIT
+
+  async function handleSubmit(e){
+    e.preventDefault()
+
+    if(!name){
+      return swal({
+        title: "Need to have a Name!",
+        icon: "error",
+        button: "Ok",
+      });
+    }
+    if(!lastName){
+      return swal({
+        title: "Need to have a Lastname!",
+        icon: "error",
+        button: "Ok",
+      });
+    }
+    if(!newAddress){
+      return swal({
+        title: "Need to have an Address!",
+        icon: "error",
+        button: "Ok",
+      });
+    }
+/*     if( !/^(?:[1-9]\d{0,2}(?:,\d{3})*|0)(?:\.\d+)?$/.test(newPhone) || !newPhone){
+      return swal({
+        title: "Need to have a phone number!",
+        icon: "error",
+        button: "Ok",
+      });
+    } */
+    await changeProfile()
+      .then(() =>  {
+        swal({
+          title: "Success",
+          text: "Changes can take a few seconds to see",
+          icon: "success",
+          button: "Ok",
+          timer: 1000
+      })})
+      .then(() =>  {
+        history.push("/profile")
+      })
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (!input.name) {
-      return name;
-    }
-    if (!input.lastName) {
-      return lastName;
-    }
-    if (!input.address) {
-      return address;
-    }
-    if (
-      !/^(?:[1-9]\d{0,2}(?:,\d{3})*|0)(?:\.\d+)?$/.test(input.rating) ||
-      !input.phone
-    ) {
-      return phone;
-    }
-    dispatch(putUser(input, user_login.id));
-    setInput({
-      name: "",
-      lastName: "",
-      address: "",
-      phone: 0,
-    });
-    history.push("/profile");
-  }
+/*   useEffect(()=>{
+    dispatch(getAllUsers())
+}, [dispatch]) */
 
-  useEffect(() => {
-    dispatch(getAllUsers());
-  }, [dispatch]);
 
   return (
-    <div className={styles.componentContainer}>
-      <form className={styles.formContainer} onSubmit={(e) => handleSubmit(e)}>
-        <h1>Modify User</h1>
-        <div>
-          <label> Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={input.name}
-            id="name"
-            placeholder="Enter the Name"
-            onChange={(e) => handleChange(e)}
-          />
-          <label> {user.name}</label>
-        </div>
-        <div>
-          <label>LastName:</label>
-          <input
-            type="text"
-            name="lastName"
-            value={input.lastName}
-            id="lastName"
-            placeholder="Enter the lastName"
-            onChange={(e) => handleChange(e)}
-          />
-          <label> {user.lastName}</label>
-        </div>
-        <div>
-          <label>Address:</label>
-          <input
-            type="text"
-            name="address"
-            value={input.address}
-            id="address"
-            placeholder="Enter the address"
-            onChange={(e) => handleChange(e)}
-          />
-          <label> {user.address}</label>
-        </div>
-        <div>
-          <label>Phone:</label>
-          <input
-            type="number"
-            name="phone"
-            value={input.phone}
-            id="phone"
-            step="1"
-            placeholder="Enter the phone"
-            onChange={(e) => handleChange(e)}
-          />
-          <label> {user.address}</label>
-        </div>
+    <div>
+        <form  onSubmit={handleSubmit}>
+          <div>
+            <Link to="/profile">
+              <button>Cancel</button>
+            </Link>
+          </div>
 
-        <div className={styles.btnForm}>
-          <Link className={styles.btnBack} to="/profile">
-            Back
-          </Link>
+          <h1>Modify User</h1>
+          <div>
+            <label> Name:</label>
+            <input 
+              type="text" 
+              name= "name"
+              value={name}
+              id="name"
+              placeholder='Enter the Name'
+              onChange={(e)=>setName(e.target.value)}
+            />
+              {/* <label > {user_login.name}</label> */}
+              <div>
+                <label>LastName</label>
+                <input 
+                  type="text" 
+                  name= "lastName"
+                  value={lastName}
+                  id="lastName"
+                  placeholder='Enter the lastName'
+                  onChange={(e)=>setLastName(e.target.value)}
+                />
+                 {/* <label > {user_login.lastName}</label> */}
+              </div>
+              <div>
+                <label>Address</label>
+                <input 
+                  type="text" 
+                  name= "address"
+                  value={newAddress}
+                  id="address"
+                  placeholder='Enter the address'
+                  onChange={(e)=>setNewAddress(e.target.value)}
+                />
+                 {/* <label > {user_login.address}</label> */}
+              </div>
+{/*               <div>
+                <label>Phone</label>
+                <input 
+                  type="number" 
+                  name= "phone"
+                  value={newPhone}
+                  id="phone"
+                  step="1"
+                  placeholder='Enter the phone'
+                  onChange={(e)=>setNewPhone(e.target.value)}
+                />
+                 
+              </div> */}
 
-          <button
-            className={styles.btnSubmit}
-            type="submit"
-            onSubmit={handleSubmit}
-          >
-            Update
-          </button>
-        </div>
-      </form>
+              <button type="submit">
+                Update
+              </button>
+
+          </div>
+        </form>
     </div>
   );
 }
