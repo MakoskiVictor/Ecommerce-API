@@ -1,8 +1,7 @@
 #SizeSeleccionada {
-  color:#008000;
+  color: #008000;
   border-radius: 10px;
 }
-
 
 .SizeSoldOut {
   font-size: 30px;
@@ -75,7 +74,6 @@
   border-radius: 10px;
   border: none;
   font-size: 1.2rem;
-
 }
 .btnAddCarry:hover {
   color: white;
@@ -87,9 +85,8 @@
 }
 
 .cardDetailContainer h1 {
-  color: #343a40;
-  letter-spacing: 10px;
-  font-family: Montserrat;
+  color: rgba(52, 58, 64, 0.75);
+  letter-spacing: 1px;
 }
 
 .detailsContainer {
@@ -126,17 +123,22 @@
   padding: 10px 15px;
   outline: none;
   cursor: pointer;
-  background-color:#008000;
+  background-color: #008000;
   color: white;
   border-radius: 10px;
   border: none;
   font-size: 1.2rem;
-  margin-bottom:  8px;
-
-
+  margin-bottom: 8px;
 }
 
 .btnDetails:hover {
   color: white;
-  background-color: #008000
+  background-color: #05b405;
+}
+
+.btnBackFav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
 }

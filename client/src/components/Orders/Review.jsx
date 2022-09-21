@@ -4,6 +4,7 @@ import { createComment, updateReview, getOrders } from "../../redux/actions";
 import Swal from "sweetalert2";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
+import styles from "./Review.module.css";
 
 import { Modal, Box, Typography, Fade, Rating, Button } from "@mui/material";
 //import { withRouter } from "react-router-dom";
@@ -161,18 +162,25 @@ class Review extends Component {
       <div>
         {order.comment == false && this.state.disabled == false && (
           <div>
-            <label onClick={() => this.HandleReview()}>Create Review</label>
+            <label
+              className={styles.labelReview}
+              onClick={() => this.HandleReview()}
+            >
+              Create Review
+            </label>
             <Modal
+              className={styles.containerModal}
               open={this.state.OpenModal}
               onClose={() => this.HandleReview()}
               aria-labelledby="parent-modal-title"
               aria-describedby="parent-modal-description"
             >
               <Box
+                className={styles.boxModal}
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  width: 1 / 4,
+
                   alignItems: "center",
                 }}
               >
@@ -180,7 +188,7 @@ class Review extends Component {
                   <img
                     src={`https://${order.image}`}
                     alt="asd"
-                    style={{ maxHeight: "90%", maxWidth: "90%" }}
+                    style={{ maxHeight: "70%", maxWidth: "70%" }}
                   />
                 </Fade>
 
@@ -211,9 +219,13 @@ class Review extends Component {
                   onChange={(e) => this.handleCommentChange(e)}
                 />
                 <Button
+                  className={styles.btnSubmit}
                   type="submit"
                   variant="contained"
                   onClick={(e) => this.handleSubmit(e)}
+                  style={{
+                    marginTop: "10px",
+                  }}
                 >
                   Publicar
                 </Button>
