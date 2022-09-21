@@ -28,11 +28,12 @@ import {
    DELETE_FAVS,
    GET_SEARCH_USER,
    CALENDAR_DAYS,
-   CHANGE_REFERENCE,
-   CHANGE_REFERENCE_INITIAL
+   CHANGE_DELIVERY,
+   CHANGE_DELIVERY_INITIAL
 } from "../actions";
 
 import { CARRY_LOCALHOST, USER_ID } from "../../components/Globales";
+import { act } from "@testing-library/react";
 
 const PAGE_START = 1;
 
@@ -60,7 +61,7 @@ const initialState = {
    comments: [],
    favs: [],
    calendar: [],
-   reference: { adress: "", phone: "", reference: "" }
+   delivery: undefined
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -265,15 +266,16 @@ const rootReducer = (state = initialState, action) => {
             ...state,
             calendar: action.payload,
          }
-      case CHANGE_REFERENCE:
+      case CHANGE_DELIVERY:
+         console.log(action.payload)
          return {
             ...state,
-            reference: {...state.reference,[action.payload.type]:action.payload.value},
+            delivery: action.payload
          }
-         case CHANGE_REFERENCE_INITIAL:
+         case CHANGE_DELIVERY_INITIAL:
             return {
                ...state,
-               reference: { adress: "", phone: "", reference: "" }
+               delivery: undefined
             }
       default:
          return state;
