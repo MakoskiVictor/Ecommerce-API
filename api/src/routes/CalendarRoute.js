@@ -21,8 +21,10 @@ const deletePastDates = async () => {
 
 const router = Router();
 
-router.get("/", async (req, res, next) => {
+router.get("/:stock", async (req, res, next) => {
+  const {stock} = req.params;
   const fullCalendar = await Calendar.findAll();
+  const fullStock = 100 - stock;
   try {
     if (fullCalendar.length === 0) {
       for (let i = 0; i < 60; i++) {
@@ -31,14 +33,14 @@ router.get("/", async (req, res, next) => {
           await Calendar.create({
             date: actualDay,
             time: j,
-            stock: 5,
+            stock: 100,
           });
         }
       }
       await deletePastDates();
     }
     const dates = await Calendar.findAll();
-    res.send(dates.filter((item) => item.stock > 0));
+    res.send(dates.filter((item) => item.stock > fullStock));
   } catch (err) {
     next(err);
   }
