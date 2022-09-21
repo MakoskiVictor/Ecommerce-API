@@ -23,6 +23,8 @@ import UsersAdmin from "./components/UsersAdmin/UsersAdmin";
 import DemoTable from "./components/AdminOrders/AdminOrders.tsx";
 import Favorites from "./components/Favs/Favorites";
 import ModifyUser from "./components/ModifyUser/ModifyUser";
+import ModifyUserImage from "./components/ModifyUser/ModifyUserImage";
+import ModifyUserPassword from "./components/ModifyUser/ModifyUserPassword";
 
 import NavUser from "./components/NavUser/NavUser.jsx";
 import Orders2 from "./components/Orders/Orders2";
