@@ -125,7 +125,7 @@ class Carry extends Component {
       this.props.createOrder(sendOrderPP)
 
       /////////////////////////////////////
-      this.props.history.push("/payment");
+      this.props.history.push("/FormDelivery");
     }
   }
 
