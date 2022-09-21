@@ -237,6 +237,7 @@ router.post("/", async (req, res, next) => {
 router.put("/:userId", async (req, res, next) => {
   const { type } = req.query;
   const { userId } = req.params;
+  console.log("SOY TYPE", type, "SOY USERID", userId);
   const user = await User.findOne({ where: { id: userId } });
   console.log(userId);
   try {
@@ -252,23 +253,21 @@ router.put("/:userId", async (req, res, next) => {
           res.send(`the user ${user.name} is now an administrator`);
         }
         break;
-      case "name":
-        const { name, lastName } = req.body;
+      case "profile":
+        const { name, lastName, newAddress, newPhone } = req.body;
+        console.log("SOY API PROFILE", name, lastName, newAddress, newPhone);
         user.name = name;
         user.lastName = lastName;
+        user.address = newAddress;
+        user.phone = newPhone;
         await user.save();
-        res.send(`name changed successfully`);
+        res.send(`Changed successfully`);
         break;
       case "image":
         const { newImage } = req.body;
         user.image = newImage;
         await user.save();
         res.send(`image changed successfully`);
-      case "address":
-        const { newAddress } = req.body;
-        user.address = newAddress;
-        await user.save();
-        res.send(`address changed successfully`);
       case "password":
         const { oldPassword, newPassword } = req.body;
         if (user.password === oldPassword) {
