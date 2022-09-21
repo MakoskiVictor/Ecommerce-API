@@ -1,8 +1,11 @@
+const e = require("express");
 const { Router } = require("express");
 const { DataTypes, where } = require("sequelize");
 const { Order } = require("../db");
 const { User } = require("../db");
 const orderRouter = Router();
+//email
+const transporter = require("../../config/mailer");
 
 require("dotenv").config();
 
@@ -39,7 +42,21 @@ orderRouter.post("/", async (req, res) => {
    // email para orden creada osea se compro
    const { userId, stocks } = req.body;
    try {
-      console.log(userId, "  ", stocks);
+      // ENVIAR EMAIL
+      let userEmail = await User.findAll({
+         where: { id: userId },
+      });
+      const { email, name } = userEmail[0].dataValues;
+      await transporter.sendMail({
+         from: '"Ecommerce Clothes👻" <dominicode.xyz@gmail.com>', // sender address
+         to: email, // list of receivers
+         subject: "your purchase has been completed successfully!", // Subject line
+         // text: "Hello world?", // plain text body
+         html: `
+             <b> Hello ${name} you Compra Se ha Realizado con Exito dentro de poco tendras un mensaje sobre el estado de tu compra<b>`, // html body
+      });
+
+      console.log("email", userEmail[0].dataValues);
       var priceTotal = 0;
       for (let index = 0; index < stocks.length; index++) {
          const element = stocks[index];
@@ -56,7 +73,7 @@ orderRouter.post("/", async (req, res) => {
          stocks: stocksJSON,
          stateOrder: "Creada",
       });
-      console.log(newOrder);
+      console.log("orden", newOrder.dataValues.stocks);
       res.send(newOrder);
    } catch (error) {
       res.status(400).send(error);
