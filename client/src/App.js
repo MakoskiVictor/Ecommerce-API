@@ -69,6 +69,10 @@ function App() {
           <Route path="/carry">
             <Carry />{" "}
           </Route>
+          <Route path={"/Favorites"} component={Favorites}></Route>
+          <Route path={"/ModifyUser"} component={ModifyUser}></Route>
+          <Route path={"/ModifyUserImage"} component={ModifyUserImage}></Route>
+          <Route path={"/ModifyUserPassword"} component={ModifyUserPassword}></Route>
           <Route exact path="/rutaPrueba" component={DemoTable}></Route>   
           <Route exact path="/FormDelivery" component={FormDelivery}></Route>
           <Route exact path="/MethodPay" component={MethodPay}></Route>      
