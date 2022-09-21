@@ -27,6 +27,9 @@ import {
    GET_ALL_FAVS,
    DELETE_FAVS,
    GET_SEARCH_USER,
+   CALENDAR_DAYS,
+   CHANGE_REFERENCE,
+   CHANGE_REFERENCE_INITIAL
 } from "../actions";
 
 import { CARRY_LOCALHOST, USER_ID } from "../../components/Globales";
@@ -56,6 +59,8 @@ const initialState = {
    orders: [],
    comments: [],
    favs: [],
+   calendar: [],
+   reference: { adress: "", phone: "", reference: "" }
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -213,12 +218,12 @@ const rootReducer = (state = initialState, action) => {
             ...state,
             user_login: action.payload,
          };
-         case GET_ORDERS: {
-            return {
-              ...state,
-              orders: action.payload,
-            };
-          }
+      case GET_ORDERS: {
+         return {
+            ...state,
+            orders: action.payload,
+         };
+      }
       case GET_ALL_USERS:
          return {
             ...state,
@@ -255,6 +260,21 @@ const rootReducer = (state = initialState, action) => {
             ...state,
             favs: action.payload,
          };
+      case CALENDAR_DAYS:
+         return {
+            ...state,
+            calendar: action.payload,
+         }
+      case CHANGE_REFERENCE:
+         return {
+            ...state,
+            reference: {...state.reference,[action.payload.type]:action.payload.value},
+         }
+         case CHANGE_REFERENCE_INITIAL:
+            return {
+               ...state,
+               reference: { adress: "", phone: "", reference: "" }
+            }
       default:
          return state;
    }
