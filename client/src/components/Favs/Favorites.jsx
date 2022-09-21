@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllFavs, deleteFavs } from "../../redux/actions";
 import FavoritesCards from "./FavoritesCards";
 import Login from "../Login/Login";
+import { style as s} from "@mui/system" ;
 
 export default function Favorites () {
 
@@ -22,8 +23,8 @@ export default function Favorites () {
     return (
         <>
             {user_login.id ?
-                <div>
-                    <h1>FAVORITES</h1>
+                <div className={s.containerFav}>
+                    <span className={s.tituloFav}>FAVORITES</span>
                     {favorites.length > 0 && favorites ? favorites.map((f) => {
                         return( 
                             <FavoritesCards 
@@ -34,7 +35,8 @@ export default function Favorites () {
                             name={f.name}
                             />
                         )})
-                    : <p>NOTHING HERE</p>
+
+                    : <span className={s.nothingFav}>NOTHING HERE</span>
                 }
                 </div>
             :

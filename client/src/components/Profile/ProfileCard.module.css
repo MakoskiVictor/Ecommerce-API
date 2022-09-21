@@ -1,12 +1,12 @@
 .productContainer {
    min-width: 500px;
    height: 40vh;
-background-size:contain;
+   background-size:contain;
    color: black;
    padding: 15px;
    margin: 15px auto;
    display:flexbox;
-font-size: 22px;
+   font-size: 22px;
    gap: 5px;
    align-items:stretch;
    flex-direction: column;
@@ -16,6 +16,7 @@ font-size: 22px;
    border-width: 0px;
    letter-spacing:initial;
    font-family:serif;
+
 
 }
 .titulo {
