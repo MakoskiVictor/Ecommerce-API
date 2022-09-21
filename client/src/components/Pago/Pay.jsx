@@ -134,6 +134,7 @@ export default function Pay() {
         return {size: e.size, stock: e.quantity };
       });
       const arr = [];
+      
       for (let i = 0; i < productJSON.length; i++) {
         arr.push({
           id: productJSON[i].details.id,
@@ -156,6 +157,7 @@ export default function Pay() {
         setTimeout(() => {
           history.replace("/orders");
         }, 2000);
+        
   }).catch(error =>
     console.log(error)
     )
@@ -192,12 +194,13 @@ export default function Pay() {
 
   return (
     <div className="">
-      <div className="">
+      {/*<div className="">
         <h1 className={styles.title}>CIOCLOTHES</h1>
-      </div>
+  </div>
 
       <br />
       <br />
+      */}
       <PayPalScriptProvider>
         <PayPalButtons
           createOrder={(data, actions) => createOrderPaypal(data, actions)}
