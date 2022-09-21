@@ -1,8 +1,8 @@
 #SizeSeleccionada {
-  color:rgb(92, 202, 129);
+  color:#008000;
   border-radius: 10px;
 }
-  
+
 
 .SizeSoldOut {
   font-size: 30px;
@@ -70,16 +70,15 @@
   padding: 10px 15px;
   outline: none;
   cursor: pointer;
-  background-color: #8f9191;
+  background-color: #008000;
   color: white;
   border-radius: 10px;
   border: none;
   font-size: 1.2rem;
- 
-}
 
+}
 .btnAddCarry:hover {
-  color: rgb(92, 202, 129);
+  color: white;
   margin-right: 5px;
 }
 
@@ -127,17 +126,17 @@
   padding: 10px 15px;
   outline: none;
   cursor: pointer;
-  background-color: #343a40;
+  background-color:#008000;
   color: white;
   border-radius: 10px;
   border: none;
   font-size: 1.2rem;
   margin-bottom:  8px;
-  
+
 
 }
 
 .btnDetails:hover {
   color: white;
-  background-color: rgb(92, 202, 129);
+  background-color: #008000
 }
