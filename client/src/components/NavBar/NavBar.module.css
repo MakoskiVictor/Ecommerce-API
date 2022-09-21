@@ -10,7 +10,7 @@
 }
 
 .letra:hover {
-  color: green;
+  color: #008000;
 }
 
 .btnCarry {
@@ -18,7 +18,7 @@
 }
 
 .btnCarry:hover {
-  color: green;
+  color: #008000;
 }
 
 .NavUl {
@@ -57,7 +57,6 @@
   justify-content: space-evenly;
   width: 40%;
 }
-
 .NavBarComplete .logo {
   border-radius: 5rem;
   margin-left: 3rem;
@@ -80,13 +79,13 @@
   letter-spacing: 1px;
 }
 .buttonlogin:hover {
-  background-color: #02d302;
+  background-color:rgb(38, 241, 38);
 }
-/* CENTRO */
+/* CENTRO /
 
-/* DERECHA */
+/ DERECHA /
 
-/* .right {
+/ .right {
   width: 20%;
 } */
 .ModalAbiertoBackground {

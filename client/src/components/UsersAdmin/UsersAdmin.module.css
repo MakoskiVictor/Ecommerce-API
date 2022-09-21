@@ -1,5 +1,11 @@
 .containMain {
    background-color: aqua;
+
+   font-family: Montserrat;
+    font-size: 20px;
+
+
+
 }
 /* .containMain {
    height: 80%;
@@ -14,6 +20,7 @@
    min-height: 700px;
    display: flex;
    justify-content: center;
+
    /* align-items: center; */
 }
 

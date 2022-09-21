@@ -1,23 +1,23 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { changePaginatedPage,changePaginatedByPage } from "../../redux/actions";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 
 const SizeEnumeracionPaginado = 10;
 const SizeEnumeracionCards_byPage = 10;
-class Paginated extends Component {
 
-  Actualizar() {
-   let NumeracionMaximaPaginas=this.props.NumMaxPag==undefined?SizeEnumeracionPaginado:this.props.NumMaxPag;
-   let NumeracionMaximoTarjetas=this.props.NumMaxtarg==undefined?SizeEnumeracionCards_byPage:this.props.NumMaxtarg;
+export default function Paginated(props) {
+
+function Actualizar() {
+   let NumeracionMaximaPaginas=props.NumMaxPag==undefined?SizeEnumeracionPaginado:props.NumMaxPag;
+   let NumeracionMaximoTarjetas=props.NumMaxtarg==undefined?SizeEnumeracionCards_byPage:props.NumMaxtarg;
 
     let IndiceFinal =
-      Math.floor(this.props.paginated.productsView.length / NumeracionMaximoTarjetas) +
-      (this.props.paginated.productsView.length % NumeracionMaximoTarjetas === 0 ? 0 : 1);
+      Math.floor(props.paginated.productsView.length / NumeracionMaximoTarjetas) +
+      (props.paginated.productsView.length % NumeracionMaximoTarjetas === 0 ? 0 : 1);
     let PaginaStart =
-      this.props.paginated.page - Math.floor(NumeracionMaximaPaginas / 4) < 1
+      props.paginated.page - Math.floor(NumeracionMaximaPaginas / 4) < 1
         ? 1
-        : this.props.paginated.page - Math.floor(NumeracionMaximaPaginas / 2);
+        : props.paginated.page - Math.floor(NumeracionMaximaPaginas / 2);
     PaginaStart =
       IndiceFinal - PaginaStart > NumeracionMaximaPaginas - 1
         ? PaginaStart
@@ -39,37 +39,37 @@ class Paginated extends Component {
     return {IndiceFinal: IndiceFinal,IndicesArray:IndicesArray};
   }
 
-  changePage(page, IndiceFinal) {
-    if (page > 0 && page <= IndiceFinal) this.props.changePaginatedPage(page);
-    this.props.changePaginatedByPage(this.obtenerCountriesPagina(this.props.paginated.productsView))
+  function changePage(page, IndiceFinal) {
+    if (page > 0 && page <= IndiceFinal) props.changePaginatedPage(page);
   }
 
-  obtenerCountriesPagina(productos) {
-    let NumeracionMaximoTarjetas=this.props.NumMaxtarg==undefined?SizeEnumeracionCards_byPage:this.props.NumMaxtarg;
+  function  obtenerCountriesPagina(productos) {
+    let NumeracionMaximoTarjetas=props.NumMaxtarg==undefined?SizeEnumeracionCards_byPage:props.NumMaxtarg;
     console.log(NumeracionMaximoTarjetas) 
     if (productos !== undefined) {
-      let Inicio = (this.props.paginated.page - 1) * NumeracionMaximoTarjetas;
+      let Inicio = (props.paginated.page - 1) * NumeracionMaximoTarjetas;
       return productos.slice(Inicio, Inicio + NumeracionMaximoTarjetas);
     }
     return [];
   }
 
 
-  render() {
-    const { IndiceFinal, IndicesArray }=this.Actualizar()
-    let NewPageProducts=this.obtenerCountriesPagina(this.props.paginated.productsView);
-    if(JSON.stringify(NewPageProducts)!==JSON.stringify(this.props.paginated.productsViewPage)){
-    this.props.changePaginatedByPage(NewPageProducts)}
+    console.log(props)
+    const { IndiceFinal, IndicesArray }=Actualizar()
+    let NewPageProducts=obtenerCountriesPagina(props.paginated.productsView);
+    if(JSON.stringify(NewPageProducts)!==JSON.stringify(props.paginated.productsViewPage)){
+    props.changePaginatedByPage(NewPageProducts)}
 
     return (
-      <nav aria-label="Countries Pagination" className={this.props.stylePaginated.paginationGlobal}>
-        <ul className={this.props.stylePaginated.pagination}>
+      <nav aria-label="Countries Pagination" className={props.stylePaginated.paginationGlobal}>
+        {IndiceFinal!==1 &&
+        <ul className={props.stylePaginated.pagination}>
           <li
             key={0}
             className="page-item"
-            id={this.props.paginated.page === 1 && this.props.stylePaginated.Inhabilitado}
+            id={props.paginated.page === 1 && props.stylePaginated.Inhabilitado}
             onClick={() =>
-              this.changePage(this.props.paginated.page - 1, IndiceFinal)
+              changePage(props.paginated.page - 1, IndiceFinal)
             }
           >
             <AiFillCaretLeft/>
@@ -79,8 +79,8 @@ class Paginated extends Component {
               <li
                 key={index + 1}
                 className="page-item"
-                id={this.props.paginated.page === page && this.props.stylePaginated.pagSeleccionada}
-                onClick={() => this.changePage(page, IndiceFinal)}
+                id={props.paginated.page === page && props.stylePaginated.pagSeleccionada}
+                onClick={() => changePage(page, IndiceFinal)}
               >
                 {page}
               </li>
@@ -89,22 +89,14 @@ class Paginated extends Component {
           <li
             key={IndiceFinal + 1}
             className="page-item"
-            id={this.props.paginated.page === IndiceFinal && this.props.stylePaginated.Inhabilitado}
+            id={props.paginated.page === IndiceFinal && props.stylePaginated.Inhabilitado}
             onClick={() =>
-              this.changePage(this.props.paginated.page + 1, IndiceFinal)
+              changePage(props.paginated.page + 1, IndiceFinal)
             }
           >
             <AiFillCaretRight />
           </li>
-        </ul>
+        </ul>}
       </nav>
     );
-  }
 }
-
-   // paginated: state.paginated,
-   // changePaginatedPage: (page) => dispatch(changePaginatedPage(page)),
-   // changePaginatedByPage:(productsByPage) => dispatch(changePaginatedByPage(productsByPage)),
-
-export default connect(Paginated);
-
