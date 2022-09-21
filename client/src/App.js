@@ -23,6 +23,8 @@ import UsersAdmin from "./components/UsersAdmin/UsersAdmin";
 import DemoTable from "./components/AdminOrders/AdminOrders.tsx";
 import Favorites from "./components/Favs/Favorites";
 import ModifyUser from "./components/ModifyUser/ModifyUser";
+import ModifyUserImage from "./components/ModifyUser/ModifyUserImage";
+import ModifyUserPassword from "./components/ModifyUser/ModifyUserPassword";
 
 import NavUser from "./components/NavUser/NavUser.jsx";
 import Orders2 from "./components/Orders/Orders2";
@@ -36,51 +38,53 @@ import AdminDetailOrder from "./components/AdminOrders/AdminDetailOrder.jsx";
 import PasarelaDePago from "./components/PasarelaDePago/FormularioContactoDelivery.jsx"
 
 function App() {
-  return (
-    <div className={styles.App}>
-      <AuthProvider>
-        {/* nav bar */}
-        <NavBar />
-        <Switch>
-          <Route exact path="/">
-            <Home />{" "}
-          </Route>
-          <Route exact path="/gestionProducts">
-            <ComponentProductsGestion />{" "}
-            {/*Se pone asi porque los componentes estan creadas como Clase*/}
-          </Route>
-          <Route exact path="/products/:gender">
-            <ComponentProducts />{" "}
-            {/*Se pone asi porque los componentes estan creadas como Clase*/}
-          </Route>
-          <Route exact path="/profile" component={Profile} />
-          <Route exact path="/login" component={Login} />
-          <Route path="/details/:id" component={Details}></Route>{" "}
-          <Route exact path="/createProduct" component={Formulario} />{" "}
-          {/*Se pone asi porque los componentes estan creadas como Funcion*/}
-          <Route  exact path="/about" component={About}></Route>
-          <Route exact path="/contact" component={Contact} />
-          <Route exact path="/LoginGoogle" component={LoginGoogle} />
-          <Route exact path="/register" component={Register} />
-          <Route path="/carry">
-            <Carry />{" "}
-          </Route>
-          <Route exact path="/rutaPrueba" component={DemoTable}></Route>   
-          <Route exact path="/rutaPrueba2" component={PasarelaDePago}></Route>   
-          <Route exact path="/payment" component={payment} />
-          <Route exact path="/orders" component={Orders2} />
-          <Route path="/OrderDetails/:id" component={OrdersDetails}/>
-          <Route path="/AdminDetailOrder/:id" component={AdminDetailOrder}/>
-          <Route exact path="/usersAdmin" component={UsersAdmin} />  
-          <Route component={ErrorPage}></Route>
-          {/* sprint 2 */}
-          {/* <Route exact path="/profile">aca va el componente del perfil de usuario</Route> */}
-          {/* <Route exact path="/login">aca va el componente de login/inicio de sesion</Route> */}
-        </Switch>
-      </AuthProvider>
-      <Footer />
-    </div>
-  );
+   return (
+      <div className={styles.App}>
+         <AuthProvider>
+            {/* nav bar */}
+            <NavBar />
+            <Switch>
+               <Route exact path="/">
+                  <Home />{" "}
+               </Route>
+               <Route exact path="/gestionProducts">
+                  <ComponentProductsGestion />{" "}
+                  {/*Se pone asi porque los componentes estan creadas como Clase*/}
+               </Route>
+               <Route exact path="/products/:gender">
+                  <ComponentProducts />{" "}
+                  {/*Se pone asi porque los componentes estan creadas como Clase*/}
+               </Route>
+               <Route exact path="/profile" component={Profile} />
+               <Route exact path="/login" component={Login} />
+               <Route path="/details/:id" component={Details}></Route>{" "}
+               <Route exact path="/createProduct" component={Formulario} />{" "}
+               {/*Se pone asi porque los componentes estan creadas como Funcion*/}
+               <Route path="/favorites" component={Favorites} />
+               <Route exact path="/about" component={About}></Route>
+               <Route exact path="/contact" component={Contact} />
+               <Route exact path="/LoginGoogle" component={LoginGoogle} />
+               <Route exact path="/register" component={Register} />
+               <Route path="/carry">
+                  <Carry />{" "}
+               </Route>
+               <Route exact path="/payment" component={payment} />
+               <Route exact path="/orders" component={Orders2} />
+               <Route path="/OrderDetails/:id" component={OrdersDetails} />
+               <Route exact path="/usersAdmin" component={UsersAdmin} />
+               <Route exact path="/ModifyUser" component={ModifyUser} />
+               <Route exact path="/modifyUserImage" component={ModifyUserImage}></Route>
+               <Route exact path="/modifyUserPassword" component={ModifyUserPassword}></Route>
+
+               <Route component={ErrorPage}></Route>
+               {/* sprint 2 */}
+               {/* <Route exact path="/profile">aca va el componente del perfil de usuario</Route> */}
+               {/* <Route exact path="/login">aca va el componente de login/inicio de sesion</Route> */}
+            </Switch>
+         </AuthProvider>
+         <Footer />
+      </div>
+   );
 }
 
 //  const respuestaGoogle = (respuesta) =>{
