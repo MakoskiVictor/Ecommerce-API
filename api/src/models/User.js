@@ -37,6 +37,10 @@ module.exports = (sequelize) => {
       address: {
         type: DataTypes.STRING,
       },
+      phone: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
       isAdmin: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

@@ -10,16 +10,17 @@ import styleCard from "./ProductGestionCard.module.css";
 import styleFilterDetail from "./FilterDetailGestion.module.css";
 
 export const ComponentProductsGestion = () => {
+
     return (
         <div className={s.containerProductsGlobal}>
             <div>
-            <Filter styleFilter={styleFilter}/>
+                <Filter styleFilter={styleFilter} />
             </div>
             <div className={s.containerProductsGlobal2}>
-            <FilterDetail styleFilterDetail={styleFilterDetail}/>
-            <Paginated stylePaginated={stylePaginated} NumMaxtarg={15}/>
-            <ProductGestion styleCards={styleCards} styleCard={styleCard} />
-            <Paginated stylePaginated={stylePaginated} NumMaxtarg={15}/>            
+                <FilterDetail styleFilterDetail={styleFilterDetail} />
+                <Paginated stylePaginated={stylePaginated} NumMaxtarg={15} />
+                <ProductGestion styleCards={styleCards} styleCard={styleCard} />
+                <Paginated stylePaginated={stylePaginated} NumMaxtarg={15} />
             </div>
         </div>
     )

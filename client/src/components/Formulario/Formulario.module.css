@@ -302,3 +302,21 @@ input {
    border: solid 1px #ccc;
    padding: 5px;
 }
+
+/*                          Description            */
+
+.ContainTextarea {
+   margin-bottom: 30px;
+}
+
+.contactTextarea {
+   resize: none;
+   font-family: "Signika", sans-serif;
+   border-radius: 10px;
+   width: 80%;
+   box-sizing: border-box;
+   padding: 14px;
+   outline: none;
+   border: none;
+   font-size: 1.1rem;
+}
