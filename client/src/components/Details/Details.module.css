@@ -1,7 +1,6 @@
 #SizeSeleccionada {
-  color: #02d302;
+  color: #008000;
   border-radius: 10px;
-  background-color: #343a40;
 }
 
 .SizeSoldOut {
@@ -70,15 +69,15 @@
   padding: 10px 15px;
   outline: none;
   cursor: pointer;
-  background-color: #343a40;
+  background-color: #008000;
   color: white;
   border-radius: 10px;
   border: none;
   font-size: 1.2rem;
 }
-
 .btnAddCarry:hover {
-  color: #008000;
+  color: white;
+  margin-right: 5px;
 }
 
 .cardDetailContainer {
@@ -86,7 +85,7 @@
 }
 
 .cardDetailContainer h1 {
-  color: #343a40;
+  color: rgba(52, 58, 64, 0.75);
   letter-spacing: 1px;
 }
 
@@ -103,15 +102,15 @@
 }
 
 .infoContainer {
+  display: flexbox;
   flex-direction: column;
-  display: flex;
   justify-content: center;
   margin: 0 auto;
   align-items: center;
   border: 1px solid black;
   padding: 15px;
   border-radius: 15px;
-  background-color: #343a40;
+  background-color: #8f9191;
   color: white;
   width: 60%;
 }
@@ -124,14 +123,22 @@
   padding: 10px 15px;
   outline: none;
   cursor: pointer;
-  background-color: #343a40;
+  background-color: #008000;
   color: white;
   border-radius: 10px;
   border: none;
   font-size: 1.2rem;
+  margin-bottom: 8px;
 }
 
 .btnDetails:hover {
   color: white;
-  background-color: #008000;
+  background-color: #05b405;
+}
+
+.btnBackFav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
 }

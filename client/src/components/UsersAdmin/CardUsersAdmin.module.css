@@ -1,20 +1,19 @@
 .productContainer {
-    width: 900px;
-    min-height: 290px;
-    /* background: url("../image/FondoTarjetas.jpg"); */
-    background-size: cover;
-    color: rgb(2, 2, 2);
-    padding: 10px 5px;
-    margin: 10px auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 15px;
-    -webkit-box-shadow: 5px 5px 50px 5px #000000;
-    box-shadow: 5px 5px 50px 5px #575555;
- }
- 
+   width: 900px;
+   min-height: 290px;
+background-size: cover;
+   color: rgb(2, 2, 2);
+   padding: 10px 5px;
+   margin: 10px auto;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   border-radius: 15px;
+   -webkit-box-shadow: 5px 5px 50px 5px #000000;
+   box-shadow: 5px 5px 50px 5px #575555;
+}
+
  .productContainer h3 {
     margin: 1;
  }
@@ -52,7 +51,9 @@
     font-size: 1.1rem;
     font-family:serif;
     letter-spacing: 1px;
-    margin-right: 5px 
+    margin-right: 5px;
+    align-items: center;
+    
  }
  
  .buttonContain .remove:hover {
@@ -68,7 +69,7 @@
  }
  
  .MainContainerInfo {
-    width: 500px;
+    width: 600px;
  }
  
  .brandGender {
@@ -77,7 +78,7 @@
  }
  .brandGender h4,
  p {
-    margin: 2px 8px;
+    margin: 4px 10px;
  }
  
  /*                    STOCK                 */
@@ -108,41 +109,34 @@
  }
  
  .buttonContain .buttonDelete {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 60px;
-    height: 40px;
-    /* padding: 2px 20px; */
-    /* margin-top: 20px; */
-    background-color: #858080;
-    border: 2px solid var(--bitcoin-orange);
-    border-radius: 5px;
-    font-size: 1.1rem;
-    /* font-weight: bold; */
-    text-align: justify;
-    font-family:serif;
-    /* line-height: -80px; */
-    /* color: var(--black); */
-    color: rgb(255, 255, 255);
-    border-width: 0px;
- }
- 
- .buttonDelete span {
-    display: inline-block;
-    margin: 0;
-    width: 40px;
-    height: 40px;
-    background-image: url("../image/icon-warning.png");
-    background-size: contain;
-    /* background-position: center; */
-    background-repeat: no-repeat;
-    /* vertical-align: text-bottom; */
- }
- 
- .buttonContain button:hover {
-    background-color: rgb(73, 72, 72);
-    cursor: pointer;
-    border: 1.5px solid rgb(73, 72, 72);
- }
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   width: 60px;
+   height: 40px;
+background-color: #858080;
+   border: 2px solid var(--bitcoin-orange);
+   border-radius: 5px;
+   font-size: 1.1rem;
+text-align: justify;
+   font-family:serif;
+color: rgb(255, 255, 255);
+   border-width: 0px;
+}
+
+.buttonDelete span {
+   display: inline-block;
+   margin: 0;
+   width: 40px;
+   height: 40px;
+   background-image: url("../image/icon-warning.png");
+   background-size: contain;
+background-repeat: no-repeat;
+}
+
+.buttonContain button:hover {
+   background-color: rgb(73, 72, 72);
+   cursor: pointer;
+   border: 1.5px solid rgb(73, 72, 72);
+}
  

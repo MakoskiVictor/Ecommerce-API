@@ -63,6 +63,7 @@ class Paginated extends Component {
 
     return (
       <nav aria-label="Countries Pagination" className={this.props.stylePaginated.paginationGlobal}>
+        {IndiceFinal!=1 &&
         <ul className={this.props.stylePaginated.pagination}>
           <li
             key={0}
@@ -96,7 +97,7 @@ class Paginated extends Component {
           >
             <AiFillCaretRight />
           </li>
-        </ul>
+        </ul>}
       </nav>
     );
   }
@@ -117,3 +118,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Paginated);
+

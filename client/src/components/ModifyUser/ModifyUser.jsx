@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { useState } from 'react';
 import {Link, useHistory} from "react-router-dom";
@@ -12,7 +13,6 @@ import swal from "sweetalert";
 export default function ModifyUser() {
 
   //TRAEMOS DATOS DEL USER
-
 
   const user_login = useSelector((state) => state.user_login);
   
@@ -166,5 +166,5 @@ export default function ModifyUser() {
           </div>
         </form>
     </div>
-  )
+  );
 }

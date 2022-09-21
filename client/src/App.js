@@ -18,7 +18,7 @@ import Login from "./components/Login/Login";
 import payment from "./components/Pago/Pay";
 import { AuthProvider } from "./context/authContext.jsx";
 import Profile from "./components/Profile/Profile";
-import ModifyItem from "./components/ModifyITem/ModifyItem";
+import ModifyItem from "./components/ModifyITem/ModifyItem";  
 import UsersAdmin from "./components/UsersAdmin/UsersAdmin";
 import DemoTable from "./components/AdminOrders/AdminOrders.tsx";
 import Favorites from "./components/Favs/Favorites";
@@ -35,6 +35,7 @@ import LoginGoogle from "./components/Login/Login Google/LoginGoogle";
 
 import styles from "./App.module.css";
 import AdminDetailOrder from "./components/AdminOrders/AdminDetailOrder.jsx";
+import PasarelaDePago from "./components/PasarelaDePago/FormularioContactoDelivery.jsx"
 
 function App() {
    return (
