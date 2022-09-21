@@ -22,10 +22,9 @@ export default function Details(props) {
   const genderPrevius = useSelector((state) => state.filters.filterGender);
   const carryProducts = useSelector((state) => state.carryProducts);
   const stock_by_ID = useSelector((state) => state.stock_by_ID);
-  const user = useSelector(state=>state.user_login)
+  const user = useSelector((state) => state.user_login);
   const product = useSelector((state) => state.products);
-  console.log(user,"soy user detalle")
-
+  console.log(user, "soy user detalle");
 
   const [stateSize, SetstateSize] = useState({
     size: undefined,
@@ -49,38 +48,41 @@ export default function Details(props) {
   }
 
   function AddOrModifyCarry(carryAdd, carryProducts) {
-    let array = Object.assign([],carryProducts);
-    let alertNo=false
-    let indice = (carryProducts.findIndex(carry => (carry.id === carryAdd.id && JSON.stringify(carry.state.size) === JSON.stringify(carryAdd.state.size))))
+    let array = Object.assign([], carryProducts);
+    let alertNo = false;
+    let indice = carryProducts.findIndex(
+      (carry) =>
+        carry.id === carryAdd.id &&
+        JSON.stringify(carry.state.size) === JSON.stringify(carryAdd.state.size)
+    );
     if (indice == -1) {
-       array.push(carryAdd)
-    }
-    else {
-       let cantidad = array[indice].amount + carryAdd.amount;
-       if(cantidad>carryAdd.state.stock){
-          alertNo=true;
-          cantidad=carryAdd.state.stock;
-          swal.fire({
-             title: `the maximum number of stock of this product(${carryAdd.details.name}) has been addedProduct Added`,
-             position: "bottom-start",
-             icon: "info",
-             showConfirmButton: false,
-             timer: 1000,
-           });
-       }
-       array[indice].amount = cantidad;
-    }
-    if(!alertNo){
-          swal.fire({
-          title: `Product Added ${carryAdd.details.name} to shopping cart!`,
+      array.push(carryAdd);
+    } else {
+      let cantidad = array[indice].amount + carryAdd.amount;
+      if (cantidad > carryAdd.state.stock) {
+        alertNo = true;
+        cantidad = carryAdd.state.stock;
+        swal.fire({
+          title: `the maximum number of stock of this product(${carryAdd.details.name}) has been addedProduct Added`,
           position: "bottom-start",
-          icon: "success",
+          icon: "info",
           showConfirmButton: false,
-          timer: 400,
+          timer: 1000,
         });
+      }
+      array[indice].amount = cantidad;
+    }
+    if (!alertNo) {
+      swal.fire({
+        title: `Product Added ${carryAdd.details.name} to shopping cart!`,
+        position: "bottom-start",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 400,
+      });
     }
     return array;
- }
+  }
 
   function handleAddCarry() {
     let id = props.match.params.id;
@@ -90,7 +92,7 @@ export default function Details(props) {
       amount: stateQuanty,
       details: detail[0],
     };
-    let NewCarry=AddOrModifyCarry(elemento,carryProducts)
+    let NewCarry = AddOrModifyCarry(elemento, carryProducts);
     dispatch(ChangeCarryProducts(NewCarry));
     SetstateQuanty(1);
   }
@@ -109,11 +111,11 @@ export default function Details(props) {
   if (stateSize === undefined)
     SetstateSize({ size: undefined, stock: undefined });
 
-    let producto = product.map((producto) => {
-      if (detail.airlineId === producto.id) {
-        return producto.name
-      }
-    })
+  let producto = product.map((producto) => {
+    if (detail.airlineId === producto.id) {
+      return producto.name;
+    }
+  });
   return (
     <div className={style.cardDetailMainContainer}>
       <div className={style.cardDetailContainer}>
@@ -210,16 +212,18 @@ export default function Details(props) {
           <p>LOADING...</p>
         )}
       </div>
-      <div>
-        <Favs id={props.match.params.id} key="id"/>
+      <div className={style.btnBackFav}>
+        <div>
+          <Favs id={props.match.params.id} key="id" />
+        </div>
+        <div>
+          <Link to={`/products/${genderPrevius}`}>
+            <button className={style.btnDetails}>Go Back</button>
+          </Link>
+        </div>
       </div>
-      <div>
-        <Link to={`/products/${genderPrevius}`}>
-          <button className={style.btnDetails}>Go Back</button>
-        </Link>
-        {/* <Comments userName={user.name} productId={props.match.params.id}></Comments> */}
-        <FeedBack productId={props.match.params.id} products={producto} />  
-      </div>
+      {/* <Comments userName={user.name} productId={props.match.params.id}></Comments> */}
+      <FeedBack productId={props.match.params.id} products={producto} />
     </div>
   );
 }
