@@ -108,8 +108,8 @@ p {
    align-items: center;
    width: 150px;
    height: 44px;
-   /* padding: 2px 20px; /
-   / margin-top: 20px; /
+   padding: 2px 20px; 
+   margin-top: 20px; 
    background-color: rgb(223, 16, 16);
    border: 2px solid var(--bitcoin-orange);
    border-radius: 6px;
@@ -117,7 +117,7 @@ p {
    font-weight: bold;
    text-align: justify;
    font-family:Arial, Helvetica, sans-serif;
-   / line-height: -80px; /
+   line-height: -80px; 
    color: var(--black);
 }
 
@@ -128,9 +128,9 @@ p {
    height: 30px;
    background-image: url("../image/icon-warning.png");
    background-size: contain;
-   / background-position: center; /
+   background-position: center;
    background-repeat: no-repeat;
-   / vertical-align: text-bottom; */
+   vertical-align: text-bottom; 
 }
 
 .buttonContain button:hover {
