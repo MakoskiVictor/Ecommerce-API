@@ -29,7 +29,8 @@ import {
    GET_SEARCH_USER,
    CALENDAR_DAYS,
    CHANGE_DELIVERY,
-   CHANGE_DELIVERY_INITIAL
+   CHANGE_DELIVERY_INITIAL,
+   SEARCH_ID
 } from "../actions";
 
 import { CARRY_LOCALHOST, USER_ID } from "../../components/Globales";
@@ -69,6 +70,11 @@ const rootReducer = (state = initialState, action) => {
       case "value":
          break;
       case SEARCH_NAME:
+         return {
+            ...state,
+            products: action.payload,
+         };
+      case SEARCH_ID:
          return {
             ...state,
             products: action.payload,

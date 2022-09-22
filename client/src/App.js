@@ -81,7 +81,12 @@ function App() {
           <Route path="/OrderDetails/:id" component={OrdersDetails}/>
           <Route path="/AdminDetailOrder/:id" component={AdminDetailOrder}/>
           <Route exact path="/usersAdmin" component={UsersAdmin} />  
+         
+          <Route exact path="/modifyProduct/:id" component={ModifyItem} />  
           <Route component={ErrorPage}></Route>
+          
+
+
           {/* sprint 2 */}
           {/* <Route exact path="/profile">aca va el componente del perfil de usuario</Route> */}
           {/* <Route exact path="/login">aca va el componente de login/inicio de sesion</Route> */}

@@ -13,7 +13,6 @@ orderRouter.get("/", async (req, res, next) => {
    const { type, parameter } = req.query;
    try {
       var allOrders = [];
-      console.log(type, "  ", parameter);
 
       if (type !== "UserID" && type !== "OrderID")
          allOrders = await Order.findAll();
@@ -59,7 +58,7 @@ orderRouter.post("/", async (req, res) => {
       priceTotal = priceTotal.toFixed(2);
 
       let stocksJSON = JSON.stringify(stocks);
-
+      console.log(stocksJSON)
       let newOrder = await Order.create({
          price: priceTotal,
          userId,

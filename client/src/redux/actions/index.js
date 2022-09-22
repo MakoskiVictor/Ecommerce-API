@@ -36,6 +36,7 @@ export const GET_SEARCH_USER = "GET_SEARCH_USER";
 export const CALENDAR_DAYS = "CALENDAR_DAYS";
 export const CHANGE_DELIVERY = "CHANGE_REFERENCE";
 export const CHANGE_DELIVERY_INITIAL = "CHANGE_REFERENCE_INITIAL";
+export const SEARCH_ID = "SEARCH_ID";
 
 
 export function searchNameProduct(name) {
@@ -46,6 +47,22 @@ export function searchNameProduct(name) {
          );
          return dispatch({
             type: SEARCH_NAME,
+            payload: json.data,
+         });
+      } catch (error) {
+         console.log(error);
+      }
+   };
+}
+
+export function searchNameProductID(id) {
+   return async function (dispatch) {
+      try {
+         var json = await axios.get(
+            `http://localhost:3001/product/?id=${id}`
+         );
+         return dispatch({
+            type: SEARCH_ID,
             payload: json.data,
          });
       } catch (error) {
@@ -555,11 +572,11 @@ export function deleteFavs() {
    };
 }
 
-export function getCalendar() {
+export function getCalendar(stock) {
   return async function (dispatch) {
      try {
         var json = await axios.get(
-           `http://localhost:3001/calendar`
+           `http://localhost:3001/calendar/${stock}`
         );
         return dispatch({
            type: CALENDAR_DAYS,

@@ -3,6 +3,7 @@ const { Product, Category, Stock } = require("../db");
 const { Op } = require("sequelize");
 const { v4: uuidv4 } = require("uuid");
 const getApiProducts = require("./getApiProducts");
+const e = require("express");
 
 const router = Router();
 
@@ -52,7 +53,7 @@ router.post("/", async (req, res, next) => {
 });
 
 router.get("/", async (req, res, next) => {
-  const { name, category } = req.query;
+  const { name, category,id } = req.query;
   let ProductosTotales = await Product.findAll({
     include: {
       model: Stock,
@@ -89,7 +90,19 @@ router.get("/", async (req, res, next) => {
         },
       });
       res.send(filteredProducts);
-    } else {
+    } 
+    else if(id){
+      let filteredProducts = await Product.findAll({
+        where: {
+          id: id,
+        },
+        include: {
+          model: Stock,
+        },
+      });
+      res.send(filteredProducts);
+    }
+    else {
       res.send(ProductosTotales);
     }
   } catch (err) {

@@ -25,6 +25,7 @@ router.get("/:stock", async (req, res, next) => {
   const {stock} = req.params;
   const fullCalendar = await Calendar.findAll();
   const fullStock = 100 - stock;
+  console.log(fullStock)
   try {
     if (fullCalendar.length === 0) {
       for (let i = 0; i < 60; i++) {

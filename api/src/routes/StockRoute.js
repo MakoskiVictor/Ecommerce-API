@@ -14,17 +14,19 @@ router.get("/:id", async (req, res, next) => {
 });
 
 router.put("/drop", async (req, res, next) => {
-
+  console.log("Entraaa")
   const { stockProducts } = req.body;
   console.log(req.body, "soy stockProducts")
   const productsChanged = []
   try {
-    for (let i = 0; i < stockProducts?.length; i++) {
+    for (let i = 0; i < stockProducts.length; i++) {
+      console.log("ENTRAAAAAAAAAAAAAAAAAAAAAA",stockProducts[i].id,"  ",stockProducts[i].size)
       const productStock = await Stock.findOne({
         where: { productId: stockProducts[i].id, productSize: stockProducts[i].size },
       });
       if(productStock.stock>0){
         productStock.stock = await productStock.stock - Number(stockProducts[i].stock);
+        console.log(productStock.stock)
       }
       await productStock.save();
       productsChanged.push(productStock)

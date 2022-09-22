@@ -12,9 +12,8 @@ export class FormularioContactoDelivery extends Component {
     this.state = { Dia: undefined, Hour: undefined ,adress:"",phone:"",reference:""};
   }
 
-
   componentDidMount() {
-    this.props.getCalendar();
+    this.props.getCalendar(1);
     this.props.ChangeDeliveryInitial();
   }
 
@@ -161,7 +160,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   //pasandole al componente la posibilidad como props de hacer un dispatch de la function getProducts
   return {
-    getCalendar: () => dispatch(getCalendar()),
+    getCalendar: (e) => dispatch(getCalendar(e)),
     ChangeDeliveryInitial:()=>dispatch(ChangeDeliveryInitial()),
     ChangeDelivery:(objectDelivery)=>dispatch(ChangeDelivery(objectDelivery))
   }
