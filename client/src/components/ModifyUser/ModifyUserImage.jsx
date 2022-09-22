@@ -33,7 +33,7 @@ export default function ModifyProfile () {
                 .then(() => {
                     swal({
                       title: "Image changed successfully!",
-                      text: "Need relogin to see changes",
+                      text: "Changes can take a few seconds to see",
                       icon: "success",
                       button: "Ok",
                     }).then(() => {

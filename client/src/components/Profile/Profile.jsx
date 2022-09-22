@@ -1,23 +1,37 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { useEffect } from "react";
 import style from "./Profile.module.css";
 import ProfileCard from "./ProfileCard.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteUsers, getAllUsers } from "../../redux/actions";
 
-class Profile extends Component {
-    render() {
-        let { user_login } = this.props;
+export default function Profile () {
+
+    const dispatch = useDispatch();
+    const users = useSelector((state) => state.allUsers);
+    const user_login = useSelector((state) => state.user_login);
+
+
+    useEffect(() => {
+        dispatch(getAllUsers())
+        dispatch(deleteUsers())
+    }, [dispatch]);
+
+    const userConected = users.find(user => user.id === user_login.id)
+    
+    
         return (
+ 
             <div className={style.mainContainer}>
-                {user_login !== null && user_login !== undefined && user_login.id != false ? (
+                {userConected ? (
                     <div className={style.containCarry}>
                         <div>
                             <ProfileCard
-                                email={user_login.email}
-                                name={user_login.name}
-                                lastName={user_login.lastName}
-                                image={user_login.image}
-                                address={user_login.address}
-                                isAdmin={user_login.isAdmin}
+                                email={userConected.email}
+                                name={userConected.name}
+                                lastName={userConected.lastName}
+                                image={userConected.image}
+                                address={userConected.address}
+                                isAdmin={userConected.isAdmin}
                             />
                         </div>
                     </div>
@@ -31,20 +45,4 @@ class Profile extends Component {
                 }
             </div>
         )
-    }
-}
-
-
-function mapStateToProps(state) {
-    return {
-        user_login: state.user_login,
     };
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);

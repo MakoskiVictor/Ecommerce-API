@@ -23,10 +23,10 @@ export default function ModifyUser() {
 
   //SETEAMOS ESTADO DE INFO
 
-  const [name, setName] = useState(user_login.name);
-  const [lastName, setLastName] = useState(user_login.lastName);
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
 /*   const [newPhone, setNewPhone] = useState(0); */
-  const [newAddress, setNewAddress] = useState(user_login.address);
+  const [newAddress, setNewAddress] = useState("");
 
 
   //FUNCION DE CAMBIO
@@ -83,16 +83,17 @@ export default function ModifyUser() {
       });
     } */
     await changeProfile()
-      .then(swal({
-        title: "Success",
-        text: "Need to relogin to see the changes",
-        icon: "success",
-        button: "Ok",
-        timer: 3000
-    }))
-      .then(
+      .then(() =>  {
+        swal({
+          title: "Success",
+          text: "Changes can take a few seconds to see",
+          icon: "success",
+          button: "Ok",
+          timer: 1000
+      })})
+      .then(() =>  {
         history.push("/profile")
-      )
+      })
   }
 
 /*   useEffect(()=>{
