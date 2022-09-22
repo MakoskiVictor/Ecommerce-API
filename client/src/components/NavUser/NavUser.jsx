@@ -1,7 +1,7 @@
 import { BiUser } from "react-icons/bi";
 import { IconContext } from "react-icons";
 import Style from "./NavUser.module.css"
-import { useDispatch ,useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Logout } from "../../redux/actions";
 import { useAuth } from "../../context/authContext";
 
@@ -19,7 +19,7 @@ function NavUser() {
     }
   };
 
-  
+
 
 
   // login email

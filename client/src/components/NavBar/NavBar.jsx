@@ -13,8 +13,8 @@ import NavUser from "../NavUser/NavUser";
 
 
 export default function NavBar(props) {
-    const carryProducts = useSelector((state) => state.carryProducts);
-    const user_login = useSelector((state) => state.user_login);
+  const carryProducts = useSelector((state) => state.carryProducts);
+  const user_login = useSelector((state) => state.user_login);
   const [openModal, setOpenModal] = useState(false);
 
   function handleOpen() {
@@ -25,10 +25,10 @@ export default function NavBar(props) {
     setOpenModal(value);
   }
 
-  let Cantidad=0
+  let Cantidad = 0
   for (let index = 0; index < carryProducts.length; index++) {
     var carry = carryProducts[index];
-    Cantidad=Cantidad+carry.amount
+    Cantidad = Cantidad + carry.amount
   }
 
   return (
@@ -85,33 +85,33 @@ export default function NavBar(props) {
                     CONTACT
                   </Link>
                 </li> */}
-            <li>
-              <Link to={"/carry"} className={Style.btnCarry}>
-                <Badge badgeContent={Cantidad} color="primary">
-                  <IconContext.Provider value={{ size: "40px" }}>
-                    <AiOutlineShoppingCart />
-                  </IconContext.Provider>
-                </Badge>
-              </Link>
-            </li>
+            {user_login.isAdmin !== true &&
+              <li>
+                <Link to={"/carry"} className={Style.btnCarry}>
+                  <Badge badgeContent={Cantidad} color="primary">
+                    <IconContext.Provider value={{ size: "40px" }}>
+                      <AiOutlineShoppingCart />
+                    </IconContext.Provider>
+                  </Badge>
+                </Link>
+              </li>
+            }
             {/*<Link to={"/about"} className={Style.letra}>
                         LOGIN
                     </Link>
                     <Link to={"/register"} className={Style.letra}>
                         REGISTER
                     </Link>*/}
-              { user_login.id!==undefined && user_login.id !== false && user_login.isAdmin!==undefined && user_login.isAdmin==true &&
+            {/* { user_login.id!==undefined && user_login.id !== false && user_login.isAdmin!==undefined && user_login.isAdmin==true &&
             <li className={Style.liFormat}>
-              <Link to={"/createProduct"} className={Style.letra}>
-                CREATE_PRODUCT
-              </Link>
+              
             </li>
-            }
+            } */}
           </ul>
-           { user_login.id!==undefined && user_login.id === false ?
-          <button onClick={handleOpen} className={Style.buttonlogin}>
-            Login/Register
-          </button>   : <NavUser />
+          {user_login.id !== undefined && user_login.id === false ?
+            <button onClick={handleOpen} className={Style.buttonlogin}>
+              Login/Register
+            </button> : <NavUser />
           }
         </div>
         {/* <div className={Style.right}>
