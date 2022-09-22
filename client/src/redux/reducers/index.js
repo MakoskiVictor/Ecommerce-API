@@ -227,6 +227,7 @@ const rootReducer = (state = initialState, action) => {
             user_login: action.payload,
          };
       case GET_ORDERS: {
+         console.log(action.payload)
          return {
             ...state,
             orders: action.payload,

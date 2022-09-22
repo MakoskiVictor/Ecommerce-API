@@ -23,7 +23,7 @@ class Orders2 extends Component {
       },
       {
         name: "CREATE",
-        selector: (row) => row.createdAt,
+        selector: (row) => (Date(row.createdAt)),
         sortable: true,
       },
       {

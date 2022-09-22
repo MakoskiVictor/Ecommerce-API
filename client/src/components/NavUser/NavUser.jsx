@@ -48,7 +48,7 @@ function NavUser() {
           <div>
           <a href="/gestionProducts">Administracion Productos</a>
           <a href="/usersAdmin">Administracion Usuarios</a>
-          <a href="/orders">Administracion Ventas</a>
+          <a href="/adminOrders">Administracion Ventas</a>
           </div>
           }
           {/*<a href="#">Link 2</a>

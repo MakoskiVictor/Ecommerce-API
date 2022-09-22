@@ -40,6 +40,7 @@ export class ResumenPago extends Component {
         }
       }),
       userId: this.props.user_login.id,
+      estado:'Creada'
     };
     this.props.createOrder(sendOrderPP);
 

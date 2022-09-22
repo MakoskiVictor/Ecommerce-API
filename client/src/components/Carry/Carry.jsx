@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getStockbyIDTotalFilterCarry,ChangeCarryProducts, createOrder} from "../../redux/actions";
+import { getStockbyIDTotalFilterCarry,ChangeCarryProducts, createOrder,getOrders} from "../../redux/actions";
 import style from "./Carry.module.css";
 import CarryCard from "./CarryCard.jsx";
 import CARRY_LOCALHOST from "../Globales";
@@ -17,6 +17,7 @@ class Carry extends Component {
   componentDidMount() {
     let Data=this.props.carryProducts;
     this.props.getStockbyIDTotalFilterCarry(Data);
+    this.props.getOrders("UserID", this.props.user_login.id);
   }
 
   DecreaseElementCarry(carryElements, index) {
@@ -107,25 +108,20 @@ class Carry extends Component {
     }
     else{
       if (actualiceBuy) return
-      //////////////////////////////////
-      
-      const sendOrderPP = {
-        stocks: this.props.carryProducts.map((e) => {
-          return {
-            amount: e.amount,
-            value: e.details.price,
-            productId: e.id,
-            image: e.details.image
-          }
-        }),
-        userId: this.props.user_login.id,
-      };
-      console.log(sendOrderPP)
-
-      this.props.createOrder(sendOrderPP)
-
-      /////////////////////////////////////
-      this.props.history.push("/FormDelivery");
+     console.log(this.props.orders)
+      for (let index = 0; index < this.props.orders.length; index++) {
+        const element = this.props.orders[index];
+        console.log(element)
+        if(element.stateOrder==="Cancelada" || element.stateOrder==="Creada"){
+        Swal.fire({
+          title: `You have a pending order`,
+          icon: "warning",
+          button: "Ok",
+        });
+       return
+      }
+      }
+     this.props.history.push("/FormDelivery");
     }
   }
 
@@ -212,7 +208,7 @@ class Carry extends Component {
     let carryProducts = this.props.carryProducts;
     let { priceTotal } = this.VerificarStocks();
     let fraseNoResultados = "There are no products added to the shopping cart";
-    console.log(this.props.carryProducts);
+    console.log(this.props.orders);
 
     return (
       <div className={style.mainContainer}>
@@ -265,6 +261,7 @@ function mapStateToProps(state) {
     carryProductsStocks: state.carryProductsStocks,
     carryProducts: state.carryProducts,
     user_login:state.user_login,
+    orders:state.orders
   };
 }
 
@@ -274,6 +271,7 @@ function mapDispatchToProps(dispatch) {
       getStockbyIDTotalFilterCarry: (carry) => dispatch(getStockbyIDTotalFilterCarry(carry)),
       ChangeCarryProducts: (carrynew) => dispatch(ChangeCarryProducts(carrynew)),
       createOrder:(SendPP)=>dispatch(createOrder(SendPP)),
+      getOrders:(type,parameter)=>dispatch(getOrders(type,parameter)),
     //changePaginatedPage: (page) => dispatch(changePaginatedPage(page)),
   };
 }

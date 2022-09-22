@@ -89,6 +89,7 @@ export default function Pay() {
           }
         }),
         userId: user.id,
+        estado:'Cancelada'
       };
       dispatch(createOrder(sendOrderPP));
 
@@ -102,6 +103,7 @@ export default function Pay() {
       function CambioPagina(){
         dispatch(ChangeCarryProducts([]))
         history.push("/orders")  
+        window.location.reload();
       }
 
       await axios({
@@ -109,7 +111,7 @@ export default function Pay() {
         url: `${PATH}/stock/drop`,
         data: stockProducts,
       })
-        .then((e)=>e.data,)
+        .then((e)=>e.data,CambioPagina())
         .catch((e) => console.log(e),CambioPagina());
 
   }).catch(error =>
