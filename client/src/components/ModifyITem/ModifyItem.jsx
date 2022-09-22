@@ -74,7 +74,7 @@ export class ModifyItem extends Component {
 
     if (this.props.products != undefined && this.props.products.length > 0) {
       Swal.fire({
-        title: "Do you want to remove this product from the database?",
+        title: "Do you want to save these changes?",
         showDenyButton: true,
         showCancelButton: false,
         confirmButtonText: "Yes",
@@ -92,9 +92,15 @@ export class ModifyItem extends Component {
               await changeProduct(this.props.products[0].id, "image", { image: this.state.image })
               Swal.fire({
                 title: "successful change",
-                icon: "success",
-                button: "Ok",
-              });
+                showDenyButton: false,
+                showCancelButton: false,
+                confirmButtonText: "Yes",
+                denyButtonText: `No`,
+              }).then((result) => {
+                if (result.isConfirmed) {
+                this.props.history.push("/gestionProducts")
+                }
+              }) 
             } catch (error) {
               Swal.fire({
                 title: error,
