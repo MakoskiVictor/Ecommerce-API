@@ -37,6 +37,8 @@ export const CALENDAR_DAYS = "CALENDAR_DAYS";
 export const CHANGE_DELIVERY = "CHANGE_REFERENCE";
 export const CHANGE_DELIVERY_INITIAL = "CHANGE_REFERENCE_INITIAL";
 export const SEARCH_ID = "SEARCH_ID";
+export const PUT_STOCKS = "PUT_STOCKS";
+
 
 
 export function searchNameProduct(name) {
@@ -512,6 +514,21 @@ export function putUser(input, id) {
     }
   };
 }
+
+
+
+export function putStocks(data) {
+   console.log(data)
+   return async function () {
+      console.log(data)
+      const response = await axios.put(
+         "http://localhost:3001/stock/AddStocks/",
+         data
+      );
+      return response;
+   };
+} 
+
 // export function getUserId(id) {
 //   console.log(id)
 //   return function (dispatch) {

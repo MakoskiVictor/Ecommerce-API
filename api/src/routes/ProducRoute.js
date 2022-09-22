@@ -115,6 +115,7 @@ router.put("/:id", async (req, res, next) => {
   const { id } = req.params;
   const { name, price, image, brand, gender, categoryId, description } =
     req.body;
+  console.log(id,type,name,price,image)
   const product = await Product.findOne({ where: { id: id } });
   try {
     switch (type) {
