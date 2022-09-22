@@ -1,6 +1,6 @@
 .productContainer {
    min-width: 500px;
-   height: 40vh;
+   height: 50vh;
    background-size:contain;
    color: black;
    padding: 15px;
@@ -110,6 +110,63 @@
    border: 1px solid #1c1c1c;
    align-items: center;
 }
+
+.buttonChanImg{
+
+   padding: 10px 15px;
+   outline: none;
+   cursor: pointer;
+   background-color: #008000;
+   color: white;
+   border-radius: 5px;
+   border: none;
+   font-size: 1.2rem;
+   margin-right: 1px;
+   margin-bottom: 2px;
+   
+}
+.buttonChanImg:hover{
+   background-color: #05b405;
+
+
+}
+
+
+.buttonChangePass{
+  padding: 10px 15px;
+  outline: none;
+  cursor: pointer;
+  background-color: #008000;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  font-size: 1.2rem;
+  margin-bottom: 2px;
+  margin-left: 1px;
+  
+
+}
+.buttonChangePass:hover{
+   background-color: #05b405;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*                     ANTIGUO CSS             */
 

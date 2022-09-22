@@ -4,6 +4,7 @@ import { getAllFavs, deleteFavs } from "../../redux/actions";
 import FavoritesCards from "./FavoritesCards";
 import Login from "../Login/Login";
 import { style as s} from "@mui/system" ;
+import styles from "./Favorites.module.css";
 
 export default function Favorites () {
 
@@ -23,8 +24,8 @@ export default function Favorites () {
     return (
         <>
             {user_login.id ?
-                <div className={s.containerFav}>
-                    <span className={s.tituloFav}>FAVORITES</span>
+                <div className={styles.containerFav}>
+                    <span className={styles.tituloFav}>FAVORITES</span>
                     {favorites.length > 0 && favorites ? favorites.map((f) => {
                         return( 
                             <FavoritesCards 
@@ -36,7 +37,7 @@ export default function Favorites () {
                             />
                         )})
 
-                    : <span className={s.nothingFav}>NOTHING HERE</span>
+                    : <span className={styles.nothingFav}>NOTHING HERE</span>
                 }
                 </div>
             :

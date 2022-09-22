@@ -41,7 +41,7 @@ background-size: cover;
  
  .buttonContain .remove {
     width: 20%;
-    background-color: #858080;
+    background-color: #008000;
     padding: 10px 10px;
     border-radius: 5px;
     cursor: pointer;
@@ -57,7 +57,7 @@ background-size: cover;
  }
  
  .buttonContain .remove:hover {
-   background-color: rgb(73, 72, 72);
+   background-color: #05b405;
  }
  
  .containerMain {
@@ -114,7 +114,7 @@ background-size: cover;
    align-items: center;
    width: 60px;
    height: 40px;
-background-color: #858080;
+   background-color: #008000;
    border: 2px solid var(--bitcoin-orange);
    border-radius: 5px;
    font-size: 1.1rem;
@@ -135,8 +135,31 @@ background-repeat: no-repeat;
 }
 
 .buttonContain button:hover {
-   background-color: rgb(73, 72, 72);
+   background-color: #05b405;
    cursor: pointer;
    border: 1.5px solid rgb(73, 72, 72);
+}
+
+.promote{
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   width: 90px;
+   height: 40px;
+   background-color: #008000;
+   border: 1px solid var(--bitcoin-orange);
+   border-radius: 5px;
+   font-size: 1.1rem;
+   text-align: justify;
+   font-family:serif;
+   color: rgb(255, 255, 255);
+   border-width: 0px;
+   margin-right: 4px;
+
+}
+
+.promote:hover{
+   background-color: #05b405;
+
 }
  

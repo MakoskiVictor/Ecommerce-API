@@ -124,7 +124,7 @@ export default function CardUsersAdmin({ image, name, lastName, id, email, addre
                     </section>
                     <br />
                     <div className={s.buttonContain}>
-                        {isAdmin === false ? <button className={s.promote} onClick={handleAdmin} name="adminButton">PROMOTE TO ADMIN</button> : <button className={s.remove} onClick={handleAdmin} name="adminButton">REMOVE</button>}
+                        {isAdmin === false ? <button className={s.promote} onClick={handleAdmin} name="adminButton">PROMOTE</button> : <button className={s.remove} onClick={handleAdmin} name="adminButton">REMOVE</button>}
                         {/* // <button className={s.remove} onClick={handleAdmin} name="adminButton" > {isAdmin === false ? "PROMOTE TO ADMIN" : "REMOVE ADMIN"} </button> */}
                         <button className={s.buttonDelete} onClick={handleBan}> {isBaned === false ? "BAN" : "REMOVE BAN"} </button>
                     </div>
