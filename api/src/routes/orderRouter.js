@@ -39,7 +39,7 @@ orderRouter.get("/", async (req, res, next) => {
 
 orderRouter.post("/", async (req, res) => {
    // email para orden creada osea se compro
-   const { userId, stocks } = req.body;
+   const { userId, stocks ,estado} = req.body;
    try {
       // ENVIAR EMAIL
       let userEmail = await User.findAll({
@@ -63,9 +63,10 @@ orderRouter.post("/", async (req, res) => {
          price: priceTotal,
          userId,
          stocks: stocksJSON,
-         stateOrder: "Creada",
+         stateOrder: estado,
       });
       //email
+
       const { id, price } = newOrder.dataValues;
       await transporter.sendMail({
          from: '"Ecommerce Clothes BUY SUCCESSFULLY!👻" <dominicode.xyz@gmail.com>', // sender address
