@@ -5,15 +5,17 @@ import { Link } from "react-router-dom";
 import Orders2Cards from "./Orders2Cards.jsx";
 import styles from "./Order.module.css";
 //import { withRouter } from "react-router-dom";
+import ErrorPage from "../ErrorPage/ErrorPage";
 
 class Orders2 extends Component {
-
+    
     componentDidMount() {
         this.props.getOrders("UserID",this.props.user.id)
     }
     render() {
         const { orders } = this.props
         return (
+            <>{this.props.user.id && this.props.user.isAdmin === true ?
             <div className={styles.cards}>
                 {orders.length !== 0 ?
                     orders.map((c) => (
@@ -34,7 +36,9 @@ class Orders2 extends Component {
                     </div>
                 }
             </div>
-        );
+            :
+            <ErrorPage></ErrorPage>   }
+        </>);
 
     }
 }

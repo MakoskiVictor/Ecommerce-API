@@ -4,6 +4,7 @@ import style from "./Formulario.module.css";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { CreateNewProduct } from "../../redux/actions";
+import ErrorPage from "../ErrorPage/ErrorPage.jsx";
 import swal from "sweetalert";
 import {
   getCategorys,
@@ -119,6 +120,7 @@ function validate(input) {
 
 function Formulario() {
   const dispatch = useDispatch();
+  const user_login = useSelector((state) => state.user_login);
   const categorys = useSelector((state) => state.categorys);
   const [error, SetErrors] = useState({});
   const history = useHistory();
@@ -306,6 +308,8 @@ function Formulario() {
 
   console.log(input.categorysGender)
   return (
+    <>
+    {user_login.id && user_login.isAdmin === true ?
     < div className={style.containerMain} >
       {console.log(error)}
       <form className={style.form} onSubmit={(e) => handleSubmit(e)}>
@@ -500,6 +504,10 @@ function Formulario() {
         </div>
       </form>
     </div >
+    :
+    <ErrorPage/> }
+    
+    </>
   );
 }
 

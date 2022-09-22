@@ -8,21 +8,30 @@ import stylePaginated from "./Paginated.module.css";
 import styleCards from "./ProductGestionCards.module.css";
 import styleCard from "./ProductGestionCard.module.css";
 import styleFilterDetail from "./FilterDetailGestion.module.css";
+import { useSelector } from "react-redux";
+import ErrorPage from "../ErrorPage/ErrorPage.jsx"  
 
 export const ComponentProductsGestion = () => {
 
+    const user_login = useSelector((state) => state.user_login);
+
     return (
-        <div className={s.containerProductsGlobal}>
-            <div>
-                <Filter styleFilter={styleFilter} />
+        <> 
+        {user_login.id && user_login.isAdmin === true ?
+            <div className={s.containerProductsGlobal}>
+                <div>
+                    <Filter styleFilter={styleFilter} />
+                </div>
+                <div className={s.containerProductsGlobal2}>
+                    <FilterDetail styleFilterDetail={styleFilterDetail} />
+                    <Paginated stylePaginated={stylePaginated} NumMaxtarg={15} />
+                    <ProductGestion styleCards={styleCards} styleCard={styleCard} />
+                    <Paginated stylePaginated={stylePaginated} NumMaxtarg={15} />
+                </div>
             </div>
-            <div className={s.containerProductsGlobal2}>
-                <FilterDetail styleFilterDetail={styleFilterDetail} />
-                <Paginated stylePaginated={stylePaginated} NumMaxtarg={15} />
-                <ProductGestion styleCards={styleCards} styleCard={styleCard} />
-                <Paginated stylePaginated={stylePaginated} NumMaxtarg={15} />
-            </div>
-        </div>
+            :
+            <ErrorPage /> }
+        </>
     )
 }
 export default ComponentProductsGestion
