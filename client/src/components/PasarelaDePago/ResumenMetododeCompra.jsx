@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getCalendar,ChangeReferenceInitial,ChangeReference} from '../../redux/actions'
+import {ChangeCarryProducts,createOrder} from '../../redux/actions'
 import { withRouter } from "react-router";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,12 +10,55 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Pay from "../Pago/Pay";
+import axios from "axios";
+import Swal from "sweetalert";
+const PATH = "http://localhost:3001";
 
 export class ResumenPago extends Component {
   
   HistoryPushPaypal(){
     this.props.history.push("/payment")
   }
+  
+  CambiarPagina(){
+    this.props.ChangeCarryProducts([])
+    this.props.history.push("/orders")
+    window.location.reload();
+  }
+
+
+
+ async Compra(){
+    const sendOrderPP = {
+      stocks: this.props.carry.map((e) => {
+        return {
+          amount: e.amount,
+          value: e.details.price,
+          productId: e.id,
+          image: e.details.image,
+          delivery: this.props.delivery,
+        }
+      }),
+      userId: this.props.user_login.id,
+    };
+    this.props.createOrder(sendOrderPP);
+
+    let arregloObjetosIdQuantity = this.props.carry.map((e) => {
+      return {size: e.state.size, stock: e.amount ,id:e.id};
+    });
+
+    let stockProducts ={stockProducts:arregloObjetosIdQuantity};
+
+    await axios({
+      method: "put",
+      url: `${PATH}/stock/drop`,
+      data: stockProducts,
+    })
+      .then((e)=>e.data,this.CambiarPagina())
+      .catch((e) => console.log(e));
+  }
+
+
   render() {
     var total=0;
    let rows=this.props.carry.map((elemento) => {
@@ -60,7 +103,7 @@ export class ResumenPago extends Component {
     </TableContainer>
     <p>TOTAL : {total}</p>
     <p>Do you want to pay in cash or by PayPal/Credit Card?</p>
-    <button>Pay in cash </button>
+    <button onClick={()=>this.Compra()}>Pay in cash </button>
      <Pay/>
     </div>
     );
@@ -71,13 +114,17 @@ const ResumenPagoRouter = withRouter(ResumenPago);
 
 function mapStateToProps(state) {
   return {
-    carry:state.carryProducts
+    carry:state.carryProducts,
+    delivery:state.delivery,
+    user_login:state.user_login,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   //pasandole al componente la posibilidad como props de hacer un dispatch de la function getProducts
   return {
+    ChangeCarryProducts:(elementos)=>dispatch(ChangeCarryProducts(elementos)),
+    createOrder:(productos)=>dispatch(createOrder(productos))
   }
 }
 

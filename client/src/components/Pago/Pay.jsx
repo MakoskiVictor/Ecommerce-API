@@ -12,27 +12,15 @@ import { useDispatch, useSelector } from "react-redux";
 export default function Pay() {
   const dispatch = useDispatch();
   const carryProducts = useSelector((state) => state.carryProducts);
-
   const PATH = "http://localhost:3001";
-
-  console.log(JSON.parse(localStorage.getItem(CARRY_LOCALHOST)));
-
   const history = useHistory();
-
   const user = useSelector(state=>state.user_login)
-
+  const delivery= useSelector(state=>state.delivery)
   let [arrProduc,setArrProduc] = useState([])
   let [arrPrecio,setArrPrecio] = useState(0)
-  let product = localStorage.getItem(CARRY_LOCALHOST);
-
-  let productJSON = JSON.parse(product);
 
   useEffect(()=>{
-
-    let product = localStorage.getItem(CARRY_LOCALHOST);
-    let productJSON = JSON.parse(product);
-
-    let articulos = productJSON.map((e) => {
+    let articulos = carryProducts.map((e) => {
       return {
         name: e.details.name,
         description: e.details.name + "-" + e.details.id,
@@ -44,7 +32,6 @@ export default function Pay() {
       };
     });
     setArrProduc(articulos)
-    console.log(articulos, "jajaja")
     let PrecioTotalArticulos = articulos[0].unit_amount.value * articulos[0].quantity;
   
     let multiplicacionEntreValueYQuantity = articulos.map((e) => {
@@ -63,7 +50,6 @@ export default function Pay() {
 
   
   const createOrderPaypal = (data, actions) => {
-    console.log(actions,"soy actions")
     return actions.order
       .create({
         purchase_units: [
@@ -90,74 +76,42 @@ export default function Pay() {
   };
 
   const onApprove = (data, actions) => {
-    console.log(actions, "soy actions onApprove")
     return actions.order.capture().then(async function (detalles) {
-      // en detalles esta todo lo que pasa en nuestro pago en un objeto
-      // console.log(detalles.stocks)
-      console.log(detalles, "soy detalles")
 
-      // const productsArray = articulos.map((e) => {
-      //   return { stock: e.stocks, userId: e.userId, price: e.price, idpurchase:e.idpurchase, creationdate:e.creationdate};
-      // });
-      // await History(detalles.stocks,detalles.purchase_units[0].amount.value,user.id,detalles.id, detalles.create_time)
-      // console.log("history",detalles.purchase_units[0].amount.value,user.id,detalles.id, detalles.create_time)
-      console.log("")
-            const sendOrderPP = {
-        price: arrPrecio.toFixed(2),
-        stocks: productJSON.map((e) => {
+       const sendOrderPP = {
+        stocks: carryProducts.map((e) => {
           return {
             amount: e.amount,
-            value: e.price,
-            productId: e.productId,
-            //  moreinfo: {
-            //    product: e.product,
-            //    destination: e.destination,
-            //    departureHour: e.departureHour,
-            //    arrivalHour: e.arrivalHour
-            //  }
+            value: e.details.price,
+            productId: e.id,
+            image: e.details.image,
+            dateDelivery:delivery,
           }
         }),
         userId: user.id,
-        idpurchase: detalles.id,
-        creationdate: detalles.create_time,
       };
-
       dispatch(createOrder(sendOrderPP));
-      console.log(createOrder("hola soy sendOrder",sendOrderPP))
-      
-      Swal.fire({
-        icon: "success",
-        title: "Payment Successful!",
+
+      let arregloObjetosIdQuantity = carryProducts.map((e) => {
+        return {size: e.state.size, stock: e.amount ,id:e.id};
       });
-      
-      let arregloObjetosIdQuantity = productJSON.map((e) => {
-        return {size: e.size, stock: e.quantity };
-      });
-      const arr = [];
-      
-      for (let i = 0; i < productJSON.length; i++) {
-        arr.push({
-          id: productJSON[i].details.id,
-          stock: productJSON[i].amount,
-          size: productJSON[i].state.size,
-        });
+
+      let stockProducts = {stockProducts:arregloObjetosIdQuantity};
+
+
+      function CambioPagina(){
+        dispatch(ChangeCarryProducts([]))
+        history.push("/orders")  
       }
-      dispatch(DeleteDrop(arr));
-
-
-      let stockProducts = arregloObjetosIdQuantity;
 
       await axios({
         method: "put",
         url: `${PATH}/stock/drop`,
         data: stockProducts,
       })
-        .then((e)=>e.data,dispatch(ChangeCarryProducts([])))
-        .catch((e) => console.log(e));
-        setTimeout(() => {
-          history.replace("/orders");
-        }, 2000);
-        
+        .then((e)=>e.data,)
+        .catch((e) => console.log(e),CambioPagina());
+
   }).catch(error =>
     console.log(error)
     )
