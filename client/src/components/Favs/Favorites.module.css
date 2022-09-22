@@ -1,6 +1,6 @@
 .containerFav{
   align-items: center;
-    height: 100vh;
+    height: 80vh;
    font-family: Montserrat;
     font-size: 20px;
     background-image: url(../image/fondo.png);
@@ -8,22 +8,27 @@
 }
   
 .tituloFav{
-  display: flex;
+  
+  display: block;
+  font-size: 2.1em;
   min-height: 20px;
   padding: 15px 20px;
+  position: relative;
   cursor: pointer;
   font-weight:900;
-  align-content: center;
+  transition: all .15s ease-out;
   font-family: Montserrat;
   font-size: 30px;
-  height: 20vh;
-  width: 20vh;
+  color: #444;
+  text-transform: uppercase;
+  margin: 5px 5px 30px;
+ 
 
 }
 
-.nothingFav{
+/* .nothingFav{
   font-family: Montserrat;
   
 }
 
-
+ */
