@@ -49,6 +49,7 @@ function NavUser() {
           <a href="/gestionProducts">Administracion Productos</a>
           <a href="/usersAdmin">Administracion Usuarios</a>
           <a href="/adminOrders">Administracion Ventas</a>
+          <a href="/createProduct">Create Product</a>
           </div>
           }
           {/*<a href="#">Link 2</a>
