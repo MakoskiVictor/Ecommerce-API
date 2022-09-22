@@ -20,7 +20,7 @@ import { AuthProvider } from "./context/authContext.jsx";
 import Profile from "./components/Profile/Profile";
 import ModifyItem from "./components/ModifyITem/ModifyItem";  
 import UsersAdmin from "./components/UsersAdmin/UsersAdmin";
-import DemoTable from "./components/AdminOrders/AdminOrders.tsx";
+import AdminOrders from "./components/AdminOrders/AdminOrders.tsx";
 import Favorites from "./components/Favs/Favorites";
 import ModifyUser from "./components/ModifyUser/ModifyUser";
 import ModifyUserImage from "./components/ModifyUser/ModifyUserImage";
@@ -73,7 +73,7 @@ function App() {
           <Route path={"/ModifyUser"} component={ModifyUser}></Route>
           <Route path={"/ModifyUserImage"} component={ModifyUserImage}></Route>
           <Route path={"/ModifyUserPassword"} component={ModifyUserPassword}></Route>
-          <Route exact path="/rutaPrueba" component={DemoTable}></Route>   
+          <Route exact path="/adminOrders" component={AdminOrders}></Route>   
           <Route exact path="/FormDelivery" component={FormDelivery}></Route>
           <Route exact path="/MethodPay" component={MethodPay}></Route>      
           <Route exact path="/payment" component={payment} />

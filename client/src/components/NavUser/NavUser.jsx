@@ -43,14 +43,13 @@ function NavUser() {
         <div className={Style.dropdown_content}>
           <a href="#" onClick={handleLogout}>Logout</a>
           <a href="/profile">Profile</a>
-          {user2.id != undefined && user2.id != false &&
-            user2.isAdmin != undefined && user2.isAdmin == true &&
-            <div>
-              <a href="/createProduct">Create Product</a>
-              <a href="/gestionProducts"> Product Management</a>
-              <a href="/usersAdmin">Users Management</a>
-              <a href="/orders">Sales administration</a>
-            </div>
+          {user2.id!=undefined && user2.id!=false &&
+          user2.isAdmin!=undefined && user2.isAdmin==true &&
+          <div>
+          <a href="/gestionProducts">Administracion Productos</a>
+          <a href="/usersAdmin">Administracion Usuarios</a>
+          <a href="/adminOrders">Administracion Ventas</a>
+          </div>
           }
           {/*<a href="#">Link 2</a>
           <a href="#">Link 3</a>*/}

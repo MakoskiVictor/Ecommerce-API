@@ -458,6 +458,7 @@ export function getOrders(type, parameter) {
             `http://localhost:3001/orders?type=${type}&parameter=${parameter}`
          )
          .then((res) => {
+            console.log("ENTRAAAAAAAAAAAAAAAAAAAAA")
             dispatch({
                type: GET_ORDERS,
                payload: res.data,
@@ -514,20 +515,6 @@ export function putUser(input, id) {
     }
   };
 }
-
-
-
-export function putStocks(data) {
-   console.log(data)
-   return async function () {
-      console.log(data)
-      const response = await axios.put(
-         "http://localhost:3001/stock/AddStocks/",
-         data
-      );
-      return response;
-   };
-} 
 
 // export function getUserId(id) {
 //   console.log(id)
