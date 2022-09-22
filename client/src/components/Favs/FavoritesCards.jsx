@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import swal from "sweetalert";
+import { style as s} from "@mui/system" ;
+import styles from "./FavoritesCards.module.css";
 
 export default function FavoritesCards ({id, name, image, user_login}) {
 
@@ -29,12 +31,16 @@ export default function FavoritesCards ({id, name, image, user_login}) {
 
 
     return(
-        <div>
+        <div className= {styles.cointainerFavCards}>
+            <div className={styles.cointainerFavImg}>
             <Link to={`/details/${id}`}>
-                <img src={`https://${image}`} alt="Image Not Found" width="140" height="150"/> 
-                <p>{name}</p>
+                <img className={styles.imageFav} src={`https://${image}`} alt="Image Not Found" width="140" height="150"/> 
+                <span className={styles.nameFavimg}>{name}</span>
             </Link>
-            <button onClick={handleClickRemoveFav}>X</button>
+            </div>
+            <div className={styles.cointainerCloseBtn}>
+            <button className={styles.closeXBtn} onClick={handleClickRemoveFav}>Delete</button>
+            </div>
         </div>
     )
 };

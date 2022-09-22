@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Stock } = require("../db");
+const { Stock ,Product} = require("../db");
 
 const router = Router();
 
@@ -19,12 +19,11 @@ router.put("/drop", async (req, res, next) => {
   console.log(req.body, "soy stockProducts")
   const productsChanged = []
   try {
-    for (let i = 0; i < stockProducts.length; i++) {
-      console.log("ENTRAAAAAAAAAAAAAAAAAAAAAA",stockProducts[i].id,"  ",stockProducts[i].size)
+    for (let i = 0; i < stockProducts?.length; i++) {
       const productStock = await Stock.findOne({
         where: { productId: stockProducts[i].id, productSize: stockProducts[i].size },
       });
-      if(productStock.stock>0){
+      if (productStock.stock > 0) {
         productStock.stock = await productStock.stock - Number(stockProducts[i].stock);
         console.log(productStock.stock)
       }
@@ -45,7 +44,7 @@ router.put("/drop", async (req, res, next) => {
   }
 });
 
-router.put('/add', async (req, res, next)=> {
+router.put('/add', async (req, res, next) => {
   const { stockProducts } = req.body;
   const productsChanged = []
   try {
@@ -72,9 +71,8 @@ router.put('/add', async (req, res, next)=> {
 })
 
 
-
-///RUTA EN DESARROLLO
-/*router.post("/Add_Stock_Size", async (req, res, next) => {
+/*
+router.put("/Add_Stock_Size", async (req, res, next) => {
   const { idProduct, size, stock } = req.body;
   try {
     const product = await Product.findOne({
@@ -87,32 +85,82 @@ router.put('/add', async (req, res, next)=> {
     });
 
     if (product !== undefined && product.length !== 0) {
-    var FraseRespuesta="No found Stock"
+      var FraseRespuesta = "No found Stock"
       for (let index = 0; index < product.stocks.length; index++) {
         const stockData = product.stocks[index];
         if (stockData.productSize == size) {
-          console.log(Number.parseInt(stockData.stock),"  ",Number.parseInt(stock))
-          FraseRespuesta=`Product "${product.name}" (Size ${size}) modified a Stock ${stockData.stock}` 
-          console.log( (Number.isInteger(stockData.stock) + Number.isInteger(stock)))
+          console.log(Number.parseInt(stockData.stock), "  ", Number.parseInt(stock))
+          FraseRespuesta = `Product "${product.name}" (Size ${size}) modified a Stock ${stockData.stock}`
+          console.log((Number.isInteger(stockData.stock) + Number.isInteger(stock)))
           product.stocks[index].stock = Number.isInteger(stockData.stock) + Number.isInteger(stock)
           await product.save()
           break;
         }
       }
-      if(FraseRespuesta=="No found Stock"){
-      Stock.create({
-        productSize: size,
-        stock: stock,
-        productId: idProduct,
-      });
-      FraseRespuesta=`Product "${product.name}" (Size ${size}) created with Stock ${stockData.stock}` 
-    }}
+      if (FraseRespuesta == "No found Stock") {
+        Stock.create({
+          productSize: size,
+          stock: stock,
+          productId: idProduct,
+        });
+        FraseRespuesta = `Product "${product.name}" (Size ${size}) created with Stock ${stockData.stock}`
+      }
+    }
 
     res.status(202).send(FraseRespuesta);
   } catch (err) {
     next(err);
   }
 });*/
+
+
+router.put("/AddStocks", async (req, res, next) => {
+  const { idProduct, Sizes } = req.body;
+  console.log(idProduct,"  ",Sizes)
+  try {
+    const product = await Product.findOne({
+      where: {
+        id: idProduct
+      },
+      include: {
+        model: Stock,
+      }
+    });
+    var FraseRespuesta = "No found Product"
+
+    if (product !== undefined && product.length !== 0) {
+      for (const property in Sizes) {
+        let size = property;
+        let amount = Sizes[property];
+
+        FraseRespuesta = "No found Stock"
+
+        for (let index = 0; index < product.stocks.length; index++) {
+          const stockData = product.stocks[index];
+          if (stockData.productSize == size) {
+            FraseRespuesta = `Product "${product.name}" (Size ${size}) modified a Stock ${stockData.stock}`
+            product.stocks[index].stock = Number.isInteger(amount)
+            await product.save()
+            break;
+          }
+        }
+        if (FraseRespuesta == "No found Stock") {
+          Stock.create({
+            productSize: size,
+            stock: amount,
+            productId: idProduct,
+          });
+          FraseRespuesta = `Product "${product.name}" (Size ${size}) created with Stock ${stockData.stock}`
+
+        }
+      }
+    }
+
+    res.status(202).send(FraseRespuesta);
+  } catch (err) {
+    next(err);
+  }
+});
 
 
 module.exports = router;

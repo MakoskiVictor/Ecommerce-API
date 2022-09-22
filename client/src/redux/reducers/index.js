@@ -40,6 +40,7 @@ const PAGE_START = 1;
 
 const initialState = {
    products: [],
+   productsId:[],
    details: [],
    categorys: [],
    filters: {
@@ -77,7 +78,7 @@ const rootReducer = (state = initialState, action) => {
       case SEARCH_ID:
          return {
             ...state,
-            products: action.payload,
+            productsId: action.payload,
          };
       case SEARCH_PRODUCT_ID:
          return {

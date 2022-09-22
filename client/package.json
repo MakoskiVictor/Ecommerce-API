@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emailjs/browser": "3.7.0",
-    "@emotion/react": "11.10.4",
-    "@emotion/styled": "11.10.4",
+    "@emailjs/browser": "^3.7.0",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@material/menu": "^14.0.0",
     "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.10.4",
     "@mui/x-data-grid": "^5.17.3",
