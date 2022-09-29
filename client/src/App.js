@@ -38,7 +38,6 @@ import AdminDetailOrder from "./components/AdminOrders/AdminDetailOrder.jsx";
 import FormDelivery from "./components/PasarelaDePago/FormularioContactoDelivery"
 import MethodPay from "./components/PasarelaDePago/ResumenMetododeCompra"
 
-
 function App() {
   return (
     <div className={styles.App}>
@@ -66,6 +65,7 @@ function App() {
           <Route exact path="/contact" component={Contact} />
           <Route exact path="/LoginGoogle" component={LoginGoogle} />
           <Route exact path="/register" component={Register} />
+          <Route exact path="/prueba" component={Map} />
           <Route path="/carry">
             <Carry />{" "}
           </Route>

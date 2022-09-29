@@ -116,31 +116,27 @@ router.put("/Add_Stock_Size", async (req, res, next) => {
 
 router.put("/AddStocks", async (req, res, next) => {
   const { idProduct, Sizes } = req.body;
-  console.log(idProduct,"  ",Sizes)
+  console.log("ACAAAAAAA ",idProduct,"  ",Sizes)
   try {
-    const product = await Product.findOne({
-      where: {
-        id: idProduct
-      },
-      include: {
-        model: Stock,
-      }
-    });
-    var FraseRespuesta = "No found Product"
+    const stock = await Stock.findAll({ where: { productId: idProduct } });
 
-    if (product !== undefined && product.length !== 0) {
+    var FraseRespuesta = "No found Product"
+      
+    console.log(stock)
+
+    if (stock !== undefined && stock.length !== 0) {
       for (const property in Sizes) {
         let size = property;
         let amount = Sizes[property];
-
+        
         FraseRespuesta = "No found Stock"
 
-        for (let index = 0; index < product.stocks.length; index++) {
-          const stockData = product.stocks[index];
+       for (let index = 0; index < stock.length; index++) {
+          const stockData = stock[index];
           if (stockData.productSize == size) {
-            FraseRespuesta = `Product "${product.name}" (Size ${size}) modified a Stock ${stockData.stock}`
-            product.stocks[index].stock = Number.isInteger(amount)
-            await product.save()
+            FraseRespuesta = `Product "${stockData.name}" (Size ${size}) modified a Stock ${amount}`
+            stock[index].stock = parseInt(amount)
+            await stock[index].save()
             break;
           }
         }
@@ -151,11 +147,10 @@ router.put("/AddStocks", async (req, res, next) => {
             productId: idProduct,
           });
           FraseRespuesta = `Product "${product.name}" (Size ${size}) created with Stock ${stockData.stock}`
-
         }
       }
     }
-
+    console.log("ACA  ",FraseRespuesta);
     res.status(202).send(FraseRespuesta);
   } catch (err) {
     next(err);

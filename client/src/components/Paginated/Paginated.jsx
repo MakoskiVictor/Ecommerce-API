@@ -4,7 +4,7 @@ import { changePaginatedPage,changePaginatedByPage } from "../../redux/actions";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 
 const SizeEnumeracionPaginado = 10;
-const SizeEnumeracionCards_byPage = 10;
+const SizeEnumeracionCards_byPage = 8;
 class Paginated extends Component {
 
   Actualizar() {

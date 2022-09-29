@@ -17,6 +17,7 @@ class Carry extends Component {
   componentDidMount() {
     let Data=this.props.carryProducts;
     this.props.getStockbyIDTotalFilterCarry(Data);
+    console.log(this.props.user_login.id)
     this.props.getOrders("UserID", this.props.user_login.id);
   }
 
@@ -99,6 +100,7 @@ class Carry extends Component {
 
   onContinueBuy() {
     let { actualiceBuy } = this.VerificarStocks();
+    console.log(this.props.user_login);
     if(this.props.user_login==false || this.props.user_login.id==undefined || this.props.user_login.id==false){
       Swal.fire({
         title: `You must log in before buying`,
