@@ -50,6 +50,7 @@ export default function Pay() {
 
   
   const createOrderPaypal = (data, actions) => {
+    console.log("Entra aca")
     return actions.order
       .create({
         purchase_units: [
@@ -99,7 +100,6 @@ export default function Pay() {
 
       let stockProducts = {stockProducts:arregloObjetosIdQuantity};
 
-
       function CambioPagina(){
         dispatch(ChangeCarryProducts([]))
         history.push("/orders")  
@@ -114,8 +114,7 @@ export default function Pay() {
         .then((e)=>e.data,CambioPagina())
         .catch((e) => console.log(e),CambioPagina());
 
-  }).catch(error =>
-    console.log(error)
+  }).catch(error =>console.log(error)
     )
   };
 
@@ -129,7 +128,8 @@ export default function Pay() {
   //   status: "COMPLETED"
   //   update_time: "2022-06-29T17:22:20Z"
 
-  const onCancel = (data) => {
+  function onCancel() {
+    console.log("cancel")
     Swal.fire({
       icon: "error",
       title: "Payment Cancelled",
@@ -138,7 +138,8 @@ export default function Pay() {
     history.push("/");
   };
 
-  const onError = (error) => {
+  function onError (error){
+
     Swal.fire({
       icon: "error",
       title: "Payment Error",
@@ -157,12 +158,12 @@ export default function Pay() {
       <br />
       <br />
       */}
-      <PayPalScriptProvider>
+      <PayPalScriptProvider deferLoading = { false }>
         <PayPalButtons
           createOrder={(data, actions) => createOrderPaypal(data, actions)}
           onApprove={(data, actions) => onApprove(data, actions)}
-          onCancel={onCancel}
-          onError={onError}
+          onCancel={()=>onCancel()}
+          onError={(error)=>onError(error)}
         />
       </PayPalScriptProvider>
       <a href="/">

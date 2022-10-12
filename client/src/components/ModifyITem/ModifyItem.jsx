@@ -43,6 +43,10 @@ export class ModifyItem extends Component {
     this.props.searchNameProductID(Id);
   }
 
+  componentWillUnmount() {
+    this.props.searchNameProductID(0);
+  }
+
   SelectSize(e) {
     let objeto = {
       ...this.state,
@@ -94,6 +98,7 @@ export class ModifyItem extends Component {
                 Sizes: this.state.stocks,
                 idProduct: this.props.products[0].id,
               };
+              console.log(objeto)
               await putStocks(objeto).then(console.log("cambio Stock Exitoso"));
               await changeProduct(this.props.products[0].id, "name", {
                 name: this.state.name,
